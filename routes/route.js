@@ -39,6 +39,15 @@ router.get("/users/:id", (req, res, next) => {
     })
 });
 
+router.delete("/users/:id", (req, res, next) => {
+    var id = req.params.id;
+    User.remove({
+        _id: id
+    }, function (err, user) {
+        if (err) return res.send(err);
+        res.json({ message: 'Deleted' });
+    });
+});
 
 router.get("/menu", (req, res, next) => {
     Menu.find(function(err, menu){
@@ -69,6 +78,16 @@ router.get("/menu/:id", (req, res, next) => {
     Menu.findById(id,function(err, menu){
         res.json(menu);
     })
+});
+
+router.delete("/menu/:id", (req, res, next) => {
+    var id = req.params.id;
+    Menu.remove({
+        _id: id
+    }, function (err, user) {
+        if (err) return res.send(err);
+        res.json({ message: 'Deleted' });
+    });
 });
 module.exports = router;
 
