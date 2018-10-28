@@ -1,8 +1,9 @@
 var express = require("express");
 var router = express.Router();
 
-const User = require("../models/users");
 
+const User = require("../models/users");
+const Menu = require("../models/menu");
 
 router.get("/users", (req, res, next) => {
     User.find(function(err, users){
@@ -17,6 +18,7 @@ router.post("/users", (req, res, next) => {
         password: req.body.password,
         role: req.body.role,
         orders: req.body.orders,
+        cart:req.body.cart
     });
     newUser.save((err, user) =>{
         if(err){
@@ -32,11 +34,42 @@ router.post("/users", (req, res, next) => {
 
 router.get("/users/:id", (req, res, next) => {
     var id = req.params.id;
-    User.find(function(err, users){
+    User.findById(id,function(err, users){
         res.json(users);
     })
 });
 
+
+router.get("/menu", (req, res, next) => {
+    Menu.find(function(err, menu){
+        res.json(menu);
+        //console.log(menu);
+    })
+});
+
+router.post("/menu", (req, res, next) => {
+    let newitem = new Menu({
+        item_name: req.body.item_name,
+        item_cost: req.body.item_cost
+    });
+    newitem.save((err, menu) =>{
+        if(err){
+            console.log(err);
+            res.json({msg:"Failed to add menu item"});
+        }
+        else{
+            res.json({msg:"menu item added sucessfully"});
+        }
+    });
+});
+
+
+router.get("/menu/:id", (req, res, next) => {
+    var id = req.params.id;
+    Menu.findById(id,function(err, menu){
+        res.json(menu);
+    })
+});
 module.exports = router;
 
 // router.get("/api/orders", (req, res, next) => {
