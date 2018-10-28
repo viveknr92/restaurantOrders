@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
-    username:{
+    user_name:{
         type: String,
         required : true
     },
-    email:{
+    mail_id:{
         type: String,
         required : true
     },
@@ -16,7 +16,10 @@ const UserSchema = mongoose.Schema({
     role:{
         type: String,
         required: true
-    }
+    },
+    orders:[
+     
+    ]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

@@ -12,10 +12,11 @@ router.get("/users", (req, res, next) => {
 
 router.post("/users", (req, res, next) => {
     let newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
+        user_name: req.body.user_name,
+        mail_id: req.body.mail_id,
         password: req.body.password,
-        role: req.body.role
+        role: req.body.role,
+        orders: req.body.orders,
     });
     newUser.save((err, user) =>{
         if(err){
