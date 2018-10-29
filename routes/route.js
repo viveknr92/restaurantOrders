@@ -11,6 +11,22 @@ router.get("/users", (req, res, next) => {
     })
 });
 
+router.put('/users/:id', function(req, res){
+    User.updateMany({
+        _id: req.params.id
+    },
+    {
+        user_name: req.body.user_name,
+        mail_id: req.body.mail_id,
+        password: req.body.password,
+        role: req.body.role
+    }, function(err, user){
+        if (err) throw err;
+
+        res.json(User);
+    });
+});
+
 router.post("/users", (req, res, next) => {
     let newUser = new User({
         user_name: req.body.user_name,
@@ -78,6 +94,20 @@ router.get("/menu/:id", (req, res, next) => {
     Menu.findById(id,function(err, menu){
         res.json(menu);
     })
+});
+
+router.put('/menu/:id', function(req, res){
+    Menu.update({
+        _id: req.params.id
+    },
+    {
+        item_name: req.body.item_name,
+        item_cost: req.body.item_cost
+    }, function(err, menu){
+        if (err) throw err;
+
+        res.json(Menu);
+    });
 });
 
 router.delete("/menu/:id", (req, res, next) => {
