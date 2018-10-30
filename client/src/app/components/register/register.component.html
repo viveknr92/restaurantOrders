@@ -1,5 +1,5 @@
 
-<label><h3>Register Form</h3></label>
+<label><h3>Register</h3></label>
 <form #user_form="ngForm" (ngSubmit)="onSubmit()" novalidate>
   <div class="container">
     <!-- (from login component)
@@ -16,7 +16,7 @@
     
     <br />
     <label>Password :</label>
-    <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="userdataModel.password">
+    <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
     
     <br />
   
