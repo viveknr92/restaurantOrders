@@ -36,15 +36,23 @@ router.post("/users", (req, res, next) => {
         orders: req.body.orders,
         cart:req.body.cart
     });
-    newUser.save((err, user) =>{
+
+    User.addUser(newUser,(err,user) =>{
         if(err){
-            console.log(err);
-            res.json({msg:"Failed to create user"});
-        }
-        else{
-            res.json({msg:"User added sucessfully"});
+            res.json({success: false,msg:'Failed to register user'});
+        }else{
+            res.json({success: true,msg:'User registered!!!'});
         }
     });
+    // newUser.save((err, user) =>{
+    //     if(err){
+    //         console.log(err);
+    //         res.json({msg:"Failed to create user"});
+    //     }
+    //     else{
+    //         res.json({msg:"User added sucessfully"});
+    //     }
+    // });
 });
 
 
