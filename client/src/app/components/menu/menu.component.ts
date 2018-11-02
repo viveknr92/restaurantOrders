@@ -12,10 +12,7 @@ export class MenuComponent implements OnInit {
   constructor(private _foodservice: FoodService) { }
 
   ngOnInit() {
-    this._foodservice.getMenu()
-    .subscribe(
-      data => {this.menu = data; console.log(data)},
-      err => {console.log(err)});
+    this._foodservice.getMenu().subscribe(data => this.menu = data);
   }
 
 }
