@@ -8,6 +8,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './components/menu/menu.component';
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { MenuComponent } from './components/menu/menu.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

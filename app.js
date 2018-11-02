@@ -5,7 +5,7 @@ const passport = require("passport");
  
 const route = require("./routes/route");
 
-var cors = require('cors')
+var cors = require('cors');
 app.use(cors())
 
 app.use(express.static("public"));
@@ -16,7 +16,7 @@ var mongoose = require("mongoose");
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
+    
 mongoose.connect('mongodb://localhost:27017/Restaurant', { useNewUrlParser: true });
 
 mongoose.connection.on('connected', ()=>{

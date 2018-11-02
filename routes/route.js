@@ -129,20 +129,3 @@ router.delete("/menu/:id", (req, res, next) => {
 });
 module.exports = router;
 
-// router.get("/api/orders", (req, res, next) => {
-//     User.find(function(err, users){
-//         res.json(users);
-//     })
-// });
-
-// router.get("/api/items", (req, res, next) => {
-//     User.find(function(err, users){
-//         res.json(users);
-//     })
-// });
-
-// router.get("/api/users/:id/cart", (req, res, next) => {
-//     User.find(function(err, users){
-//         res.json(users.cart);
-//     })
-// });

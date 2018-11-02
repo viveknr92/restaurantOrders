@@ -13,6 +13,6 @@ export class FoodService {
 
   getMenu():Observable<Menu[]>  {
     console.log(this._url);
-  	return this._http.get<Menu[]>(this._url);
+  	return this._http.get<Menu[]>(this._url);   
   }
 }
