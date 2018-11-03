@@ -7,6 +7,22 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 const Menu = require("../models/menu");
 
+function verifyToken(req, res, next){
+    if(req.headers.authorization === undefined){
+        return res.status(401).send('Unauthorized request')
+    }
+    let token = req.headers.authorization.split(" ")[1];
+    if (token === undefined || token === 'null'){
+        return res.status(401).send('Unauthorized request')
+    }
+    let payload = jwt.verify(token, 'secretKey');
+    if (!payload){
+        return res.status(401).send('Unauthorized request')
+    }
+    req.userId = payload.subject
+    next()
+}
+
 router.get("/users", (req, res, next) => {
     User.find(function(err, users){
         res.json(users);
@@ -89,7 +105,6 @@ router.post("/users", (req, res, next) => {
     // });
 });
 
-
 router.get("/users/:id", (req, res, next) => {
     var id = req.params.id;
     User.findById(id,function(err, users){
@@ -107,7 +122,7 @@ router.delete("/users/:id", (req, res, next) => {
     });
 });
 
-router.get("/menu", (req, res, next) => {
+router.get("/menu",verifyToken, (req, res, next) => {
     Menu.find(function(err, menu){
         res.json(menu);
         //console.log(menu);
