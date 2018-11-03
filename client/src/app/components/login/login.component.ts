@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
      console.log(loginInfo);
      this.authservice.LoginUser(loginInfo)
      .subscribe(res =>{
+       localStorage.setItem("token", res.token);
        if(this.authservice.loggedIn()){
         console.log("Login Success");
-        localStorage.setItem("token", res.token);
         this.flashMessage.show("You are now logged in. Enjoy ordering", {cssClass : 'alert-success', timeout : 3000})
         this.route.navigate(['menu']);
        }else{
