@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './components/menu/menu.component';
 import {AuthService} from './services/auth.service';
 import { FlashMessagesModule } from 'angular2-flash-messages/module';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
     HttpClientModule,
     FlashMessagesModule.forRoot()
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

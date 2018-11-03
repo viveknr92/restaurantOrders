@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
       res => {
         if(res){   //is this condition fine to check??
          console.log("Login Success");
+         localStorage.setItem("token", res.token);
          this.flashMessage.show("You are now registered. Verification mail has been sent to the email given. Please Verify.", {cssClass : 'alert-success', timeout : 4000})
          this.route.navigate(['login']);
         }},

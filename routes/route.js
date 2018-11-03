@@ -1,6 +1,7 @@
 var express = require("express");
 const bcrypt = require("bcrypt");
 var router = express.Router();
+const jwt = require("jsonwebtoken");
 
 
 const User = require("../models/users");
@@ -26,7 +27,10 @@ router.post("/login", (req, res, next) => {
                 bcrypt.compare(userdata.password,users.password,(err,result) =>{
                     if(err){console.log(err)}
                     else{
-                      res.send(result)
+                        let payload = {subject:users._id};
+                        let token = jwt.sign(payload, "secretKey");
+                        res.status(200).send({token});
+                        //res.send(result)
                     }
                 });
             }
@@ -69,7 +73,9 @@ router.post("/users", (req, res, next) => {
         if(err){
             res.json({success: false,msg:'Failed to register user'});
         }else{
-            res.json({success: true,msg:'User registered!!!'});
+            let payload = {subject:user._id};
+            let token = jwt.sign(payload, "secretKey");
+            res.status(200).send({token});
         }
     });
     // newUser.save((err, user) =>{
