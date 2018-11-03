@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import { Router } from '@angular/router';
+import {FlashMessagesService} from 'angular2-flash-messages/module'
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService : AuthService,
-    private route : Router
+    private route : Router,
+    private flashMessage : FlashMessagesService,
   ) { }
 
   ngOnInit() {
@@ -38,9 +40,11 @@ export class RegisterComponent implements OnInit {
       res => {
         if(res){   //is this condition fine to check??
          console.log("Login Success");
+         this.flashMessage.show("You are now registered. Verification mail has been sent to the email given. Please Verify.", {cssClass : 'alert-success', timeout : 4000})
          this.route.navigate(['login']);
         }},
       err => console.log(err)
+      
     )  
   }
 }

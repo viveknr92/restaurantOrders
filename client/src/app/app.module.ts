@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './components/menu/menu.component';
 import {AuthService} from './services/auth.service';
+import { FlashMessagesModule } from 'angular2-flash-messages/module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {AuthService} from './services/auth.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlashMessagesModule.forRoot()
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
