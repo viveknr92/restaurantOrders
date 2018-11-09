@@ -36,11 +36,10 @@
     <div class="row mt-5">
       <div class="col-md-4 mb-3" *ngFor="let m of menu">
         <div class="card text-center">
-          <img class="card-img-top" src="../assets/1.jpg" alt="" class="card-img">
           <div class="card-body">
             <h5 class="card-title">{{m.item_name}}</h5>
             <p class="card-text">Price: {{ m.item_cost}}</p>
-            <a href="#" class="btn btn-primary">Add to Cart</a>
+            <a href="#" class="btn btn-primary">Order Food</a>
           </div>
         </div>
       </div>
@@ -49,7 +48,7 @@
 
   <div class="col-md-3 ">
     <div class="row">
-      <p>Cart</p>
+      <h2>Cart</h2>
     </div>
   </div>
 </div>
