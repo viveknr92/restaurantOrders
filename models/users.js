@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
 const UserSchema = mongoose.Schema({
@@ -19,11 +20,17 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     orders:[
-     
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "order"  
+        }
     ],
-    cart:[
-    
-    ]
+    cart:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "cart"
+    }
+},{
+    usePushEach: true
 });
 
 const User = module.exports = mongoose.model('User', UserSchema,'users');

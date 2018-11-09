@@ -5,7 +5,10 @@ const jwt = require("jsonwebtoken");
 
 
 const User = require("../models/users");
-const Menu = require("../models/menu");
+//const Menu = require("../models/menu");
+var menu= require("./menu");
+
+router.use("/menu",menu);
 
 function verifyToken(req, res, next){
     if(req.headers.authorization === undefined){
@@ -122,59 +125,59 @@ router.delete("/users/:id", (req, res, next) => {
     });
 });
 
-router.get("/menu",verifyToken, (req, res, next) => {
-    Menu.find(function(err, menu){
-        res.json(menu);
-        //console.log(menu);
-    })
-});
+// router.get("/menu",verifyToken, (req, res, next) => {
+//     Menu.find(function(err, menu){
+//         res.json(menu);
+//         //console.log(menu);
+//     })
+// });
 
-router.post("/menu", (req, res, next) => {
-    let newitem = new Menu({
-        item_name: req.body.item_name,
-        item_cost: req.body.item_cost
-    });
-    newitem.save((err, menu) =>{
-        if(err){
-            console.log(err);
-            res.json({msg:"Failed to add menu item"});
-        }
-        else{
-            res.json({msg:"menu item added sucessfully"});
-        }
-    });
-});
+// router.post("/menu", (req, res, next) => {
+//     let newitem = new Menu({
+//         item_name: req.body.item_name,
+//         item_cost: req.body.item_cost
+//     });
+//     newitem.save((err, menu) =>{
+//         if(err){
+//             console.log(err);
+//             res.json({msg:"Failed to add menu item"});
+//         }
+//         else{
+//             res.json({msg:"menu item added sucessfully"});
+//         }
+//     });
+// });
 
 
-router.get("/menu/:id", (req, res, next) => {
-    var id = req.params.id;
-    Menu.findById(id,function(err, menu){
-        res.json(menu);
-    })
-});
+// router.get("/menu/:id", (req, res, next) => {
+//     var id = req.params.id;
+//     Menu.findById(id,function(err, menu){
+//         res.json(menu);
+//     })
+// });
 
-router.put('/menu/:id', function(req, res){
-    Menu.update({
-        _id: req.params.id
-    },
-    {
-        item_name: req.body.item_name,
-        item_cost: req.body.item_cost
-    }, function(err, menu){
-        if (err) throw err;
+// router.put('/menu/:id', function(req, res){
+//     Menu.update({
+//         _id: req.params.id
+//     },
+//     {
+//         item_name: req.body.item_name,
+//         item_cost: req.body.item_cost
+//     }, function(err, menu){
+//         if (err) throw err;
 
-        res.json(Menu);
-    });
-});
+//         res.json(Menu);
+//     });
+// });
 
-router.delete("/menu/:id", (req, res, next) => {
-    var id = req.params.id;
-    Menu.remove({
-        _id: id
-    }, function (err, user) {
-        if (err) return res.send(err);
-        res.json({ message: 'Deleted' });
-    });
-});
+// router.delete("/menu/:id", (req, res, next) => {
+//     var id = req.params.id;
+//     Menu.remove({
+//         _id: id
+//     }, function (err, user) {
+//         if (err) return res.send(err);
+//         res.json({ message: 'Deleted' });
+//     });
+// });
 module.exports = router;
 
