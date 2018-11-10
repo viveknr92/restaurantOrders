@@ -32,6 +32,27 @@ router.get("/:user_id",verifyToken, (req, res, next) => {
     })
 });
 
+router.delete("/:user_id/:fid",verifyToken, (req, res, next) => {
+    var id = req.params.user_id;
+    var fid = req.params.fid;
+    User.findById(id,function(err, user){
+        if(user.cart !== undefined || user.cart !== null){
+            Cart.findById(user.cart, function(err, cart){
+                cart.foods.forEach((food, idx, foods)=>{
+                    console.log("HIIIII");
+                    console.log(food.menu + " " + fid);
+                    if(food.menu == fid){
+                        console.log('HOIIIIIIIII' + food);
+                        foods.splice(idx,1);
+                    }        
+                });
+                console.log(cart.foods);
+                res.json(cart);
+            })
+        }
+    })
+});
+
 
 router.post("/:uid/:fid",verifyToken, (req, res, next) => {
     User.findById(req.params.uid,(err,user)=>{
