@@ -1,13 +1,7 @@
-var express = require("express");
-var router = express.Router();
-
-var menu= require("./menu");
-var user= require("./user");
-var cart= require("./cart");
-
-router.use("/menu",menu);
-router.use("/users", user);
-router.use("/cart", cart);
+const express = require("express");
+const router = express.Router();
+var Order = require("../models/order");
+const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next){
     if(req.headers.authorization === undefined){
@@ -24,7 +18,3 @@ function verifyToken(req, res, next){
     req.userId = payload.subject
     next()
 }
-
-module.exports = router;
-
-
