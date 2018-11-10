@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 var Menu = require("../models/menu");
+const jwt = require("jsonwebtoken");
 
 // router.get("/menu",verifyToken, (req, res, next) => {
 //     Menu.find(function(err, menu){
@@ -9,12 +10,23 @@ var Menu = require("../models/menu");
 //     })
 // });
 
-router.get("/",(req,res)=>{
-    res.send("in MENU");
-})
+function verifyToken(req, res, next){
+    if(req.headers.authorization === undefined){
+        return res.status(401).send('Unauthorized request')
+    }
+    let token = req.headers.authorization.split(" ")[1];
+    if (token === undefined || token === 'null'){
+        return res.status(401).send('Unauthorized request')
+    }
+    let payload = jwt.verify(token, 'secretKey');
+    if (!payload){
+        return res.status(401).send('Unauthorized request')
+    }
+    req.userId = payload.subject
+    next()
+}
 
-
-router.get("/:item_type/:item_name",(req,res)=>{
+router.get("/:item_type/:item_name",verifyToken , (req,res)=>{
     var q;
     console.log(req.params.item_type + " " + req.params.item_name)
     var item= {

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class FoodService {
 
-  _url = "http://localhost:3000/api/menu";
+  _url = "http://localhost:3000/api/menu/all/all";
   constructor( private _http : HttpClient) { }
 
   getMenu():Observable<Menu[]>  {
