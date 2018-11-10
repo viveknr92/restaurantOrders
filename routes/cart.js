@@ -39,15 +39,21 @@ router.delete("/:user_id/:fid",verifyToken, (req, res, next) => {
         if(user.cart !== undefined || user.cart !== null){
             Cart.findById(user.cart, function(err, cart){
                 cart.foods.forEach((food, idx, foods)=>{
-                    console.log("HIIIII");
                     console.log(food.menu + " " + fid);
                     if(food.menu == fid){
-                        console.log('HOIIIIIIIII' + food);
                         foods.splice(idx,1);
                     }        
                 });
+                Cart.findByIdAndUpdate(user.cart,{ $set : {foods : cart.foods}},(err,resp)=>{
+                    if (err){
+                        console.log("something went wrong");
+                        res.json({ success: false, message: 'Could not delete from cart '  + err });
+                    }else{
+                        res.json({ success: true, message: 'Deleted successfully from cart' });
+                    }
+                });	
                 console.log(cart.foods);
-                res.json(cart);
+                //res.json(cart);
             })
         }
     })
