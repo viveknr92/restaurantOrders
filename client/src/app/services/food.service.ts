@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Menu } from '../models/menu';
+import { Cart } from '../models/cart';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,6 +21,10 @@ export class FoodService {
   	var headers = new Headers();
   	headers.append('Content-Type', 'application/json');
   	return this._http.post('http://localhost:3000/api/cart/'+ uid +'/'+ fid,{headers:headers});  	
+  }
+
+  getCart(uid):Observable<Cart[]>{
+  	return this._http.get<Cart[]>('http://localhost:3000/api/cart/'+uid);
   }
 
 }

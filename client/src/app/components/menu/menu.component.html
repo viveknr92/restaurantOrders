@@ -51,7 +51,12 @@
     <div class = "sidebarParent">
       <div class = "sidebar">
         <h3>Cart </h3>
-      </div>  
+        <div *ngFor="let c of cart.foods">
+          <p>ID: {{c.menu}},
+            Quantity:{{c.quantity}}</p>
+        </div>  
+        <p>CART TOTAL: {{cart.total_cost}}</p>
     </div>
   </div>
-</div>
+  </div>
+  

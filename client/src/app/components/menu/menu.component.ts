@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
   todayDate: Date;
 
   public menu = [];
+  public cart = [];
   constructor(private _foodservice: FoodService,
               private _router: Router,
               private _authService: AuthService,
@@ -65,22 +66,27 @@ export class MenuComponent implements OnInit {
           }
         }
       });
+
+    this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data=>{ 
+      this.cart = data,
+      console.log(this.cart);
+    });
   }
   
   AddToCart(fid){
     console.log("clicked item: "+fid+" for user id"+ localStorage.getItem("user_id"));
-    this._foodservice.addToCart(fid,localStorage.getItem("user_id")).subscribe(info=>{
+    this._foodservice.addToCart(fid,localStorage.getItem("user_id")).subscribe((info : any) =>{
       console.log(info);
-      // if (info.success){
-      //   console.log(info.message);
-      //   this._flashMessages.show("Successfully added to cart",{cssClass : "alert-success", timeout: 1000});
-      //   //this.cartComponent.ngOnInit();
-      // }else{
-      //   this._flashMessages.show("Failed to insert to cart",{cssClass : "alert-danger", timeout: 2500});
+      if (info.success){
+        console.log(info.message);
+        this._flashMessages.show("Successfully added to cart",{cssClass : "alert-success", timeout: 1000});
+        //this.cartComponent.ngOnInit();
+      }else{
+        this._flashMessages.show("Failed to insert to cart",{cssClass : "alert-danger", timeout: 2500});
 
-      // }
+      }
     })
-
+  this.ngOnInit();
   }
 
 }
