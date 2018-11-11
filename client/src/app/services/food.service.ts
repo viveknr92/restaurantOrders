@@ -15,4 +15,11 @@ export class FoodService {
     console.log(this._url);
   	return this._http.get<Menu[]>(this._url);   
   }
+
+  addToCart(fid,uid){
+  	var headers = new Headers();
+  	headers.append('Content-Type', 'application/json');
+  	return this._http.post('http://localhost:3000/api/cart/'+ uid +'/'+ fid,{headers:headers});  	
+  }
+
 }

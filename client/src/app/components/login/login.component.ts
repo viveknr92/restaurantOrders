@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
      this.authservice.LoginUser(loginInfo)
      .subscribe(res =>{
        localStorage.setItem("token", res.token);
+       localStorage.setItem("user_id",res.user._id);
+       //console.log("HIII "+ res.user._id);
        if(this.authservice.loggedIn()){
         console.log("Login Success");
         this.flashMessage.show("You are now logged in. Enjoy ordering", {cssClass : 'alert-success', timeout : 3000})

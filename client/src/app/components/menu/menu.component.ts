@@ -65,5 +65,22 @@ export class MenuComponent implements OnInit {
           }
         }
       });
-	}
+  }
+  
+  AddToCart(fid){
+    console.log("clicked item: "+fid+" for user id"+ localStorage.getItem("user_id"));
+    this._foodservice.addToCart(fid,localStorage.getItem("user_id")).subscribe(info=>{
+      console.log(info);
+      // if (info.success){
+      //   console.log(info.message);
+      //   this._flashMessages.show("Successfully added to cart",{cssClass : "alert-success", timeout: 1000});
+      //   //this.cartComponent.ngOnInit();
+      // }else{
+      //   this._flashMessages.show("Failed to insert to cart",{cssClass : "alert-danger", timeout: 2500});
+
+      // }
+    })
+
+  }
+
 }
