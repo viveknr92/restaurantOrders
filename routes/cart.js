@@ -29,9 +29,12 @@ router.get("/:user_id", (req, res, next) => {
     var id = req.params.user_id;
     User.findById(id,function(err, user){
         if(user.cart !== undefined || user.cart !== null){
-            Cart.findById(user.cart, function(err, cart){
-                res.json(cart);
-            })
+            // Cart.findById(user.cart, function(err, cart){
+            //     res.json(cart);
+			// })
+			Cart.findById(user.cart).populate("foods.menu").exec((err, carts)=>{
+                res.json(carts);
+            });
         }
     })
 });
