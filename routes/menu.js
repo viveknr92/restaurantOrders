@@ -98,5 +98,24 @@ router.delete("/:id", (req, res, next) => {
     });
 });
 
+var multer  = require('multer')
+var upload = multer({ dest: 'public/uploads/' })
+router.post('/upload/:id', upload.single('item_image'), function (req, res, next) {
+    console.log(req.file);
+    Menu.findByIdAndUpdate(req.params.id, {$set : {item_image : req.file.filename}}, function(err, menu){
+        if (err) return res.status(500).send({err});
+        res.json({ message: 'Menu item Updated with image path', menu : menu });
+    });
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+})
+
+router.get ('/upload/:name',(req,res)=>{
+    console.log("get image");
+    //var dir = path.join(__dirname, 'public/uploads/'+req.params.name)
+    console.log("here for image " + dir);
+    //res.sendFile(dir);
+})
+
 
 module.exports = router;
