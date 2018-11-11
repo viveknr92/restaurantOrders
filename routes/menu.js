@@ -3,30 +3,29 @@ const router = express.Router();
 var Menu = require("../models/menu");
 const jwt = require("jsonwebtoken");
 
-// router.get("/menu",verifyToken, (req, res, next) => {
-//     Menu.find(function(err, menu){
-//         res.json(menu);
-//         //console.log(menu);
-//     })
-// });
-
-function verifyToken(req, res, next){
-    if(req.headers.authorization === undefined){
+router.use(function (req, res, next) {
+    if (req.headers.authorization === undefined) {
         return res.status(401).send('Unauthorized request')
     }
     let token = req.headers.authorization.split(" ")[1];
-    if (token === undefined || token === 'null'){
+    if (token === undefined || token === 'null') {
         return res.status(401).send('Unauthorized request')
     }
     let payload = jwt.verify(token, 'secretKey');
-    if (!payload){
+    if (!payload) {
         return res.status(401).send('Unauthorized request')
     }
     req.userId = payload.subject
     next()
-}
+});
 
-router.get("/:item_type/:item_name",verifyToken , (req,res)=>{
+router.get("/", (req, res, next) => {
+    Menu.find(function(err, menu){
+        res.json(menu);
+    })
+});
+
+router.get("/:item_type/:item_name" , (req,res)=>{
     var q;
     console.log(req.params.item_type + " " + req.params.item_name)
     var item= {
@@ -67,45 +66,37 @@ router.post("/", (req, res, next) => {
         item_availability: req.body.item_availability
     });
     newitem.save((err, menu) =>{
-        if(err){
-            console.log(err);
-            res.json({msg:"Failed to add menu item"});
-        }
-        else{
-            res.json({msg:"menu item added sucessfully"});
-        }
+        if (err) return res.status(500).send({err});
+        res.json({ message: 'Menu item Created', menu_id: menu._id });
     });
 });
 
 
-// router.get("/menu/:id", (req, res, next) => {
-//     var id = req.params.id;
-//     Menu.findById(id,function(err, menu){
-//         res.json(menu);
-//     })
-// });
+router.get("/:id", (req, res, next) => {
+    Menu.findById(req.params.id,function(err, menu){
+        if (err) return res.status(500).send({err});
+        if (menu.item_availability === "Y"){
+            res.send({success: true, message : "Menu item avaliable"});
+        }
+        else{
+            res.send({success: false, message : "Menu item not avaliable"});
+        }      
+    })
+});
 
-// router.put('/menu/:id', function(req, res){
-//     Menu.update({
-//         _id: req.params.id
-//     },
-//     {
-//         item_name: req.body.item_name,
-//         item_cost: req.body.item_cost
-//     }, function(err, menu){
-//         if (err) throw err;
+router.put('/:id', function(req, res){
+    Menu.findByIdAndUpdate(req.params.id, req.body, function(err, menu){
+        if (err) return res.status(500).send({err});
+        res.json({ message: 'Menu item Updated', menu : menu });
+    });
+});
 
-//         res.json(Menu);
-//     });
-// });
+router.delete("/:id", (req, res, next) => {
+    Menu.findByIdAndDelete(req.params.id, function (err, menu) {
+        if (err) return res.status(500).send({err});
+        res.json({ message: 'Menu item Deleted', menu : menu});
+    });
+});
 
-// router.delete("/menu/:id", (req, res, next) => {
-//     var id = req.params.id;
-//     Menu.remove({
-//         _id: id
-//     }, function (err, user) {
-//         if (err) return res.send(err);
-//         res.json({ message: 'Deleted' });
-//     });
-// });
+
 module.exports = router;
