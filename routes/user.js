@@ -30,28 +30,29 @@ router.post("/login", (req, res, next) => {
     let userdata = req.body;
     User.findOne({user_name:userdata.user_name},(err, users) => {
         if(err){
-            console.log(err)
-        }else{
+            console.log(err);
+            res.status(500).send({success : false, message : "Server Error"});
+        }
+        else{
             if(!users){
-                res.status(401).send('Invalid User')
-            }else{
-
-               // res.json(users.password+" "+userdata.password)   
+                res.status(401).send({success : false, message : "Invalid Username"});
+            }
+            else{ 
                 bcrypt.compare(userdata.password,users.password,(err,result) =>{
-                    if(err){console.log(err)}
-                    else{
+                    if (err){
+                        res.status(500).send({success : false, message : "Server Error"});
+                    }
+                    console.log("result : " + result);
+                    if(result){
                         let payload = {subject:users._id};
                         let token = jwt.sign(payload, "secretKey");
-                        res.status(200).send({token});
-                        //res.send(result)
+                        res.status(200).send({success : true, token : token, user_id : users._id});
+                    }
+                    else{
+                        res.status(401).send({success : false, message : "Invalid password"});
                     }
                 });
             }
-            // if(users.password !== userdata.password){
-            //     res.status(401).send('Invalid Password')
-            // }else{
-            //     res.send(true);
-            // }
         }
     })
 });
