@@ -22,6 +22,7 @@ function verifyToken(req, res, next){
 
 router.get("/",verifyToken, (req, res, next) => {
     User.find(function(err, users){
+        if (err) return res.status(500).send({err});
         res.json(users);
     })
 });
@@ -31,7 +32,7 @@ router.post("/login", (req, res, next) => {
     User.findOne({user_name:userdata.user_name},(err, users) => {
         if(err){
             console.log(err);
-            res.status(500).send({success : false, message : "Server Error"});
+            res.status(500).send({err});
         }
         else{
             if(!users){
@@ -40,7 +41,7 @@ router.post("/login", (req, res, next) => {
             else{ 
                 bcrypt.compare(userdata.password,users.password,(err,result) =>{
                     if (err){
-                        res.status(500).send({success : false, message : "Server Error"});
+                        res.status(500).send({err});
                     }
                     console.log("result : " + result);
                     if(result){
@@ -58,19 +59,25 @@ router.post("/login", (req, res, next) => {
 });
 
 router.put('/:id',verifyToken, function(req, res){
-    User.updateMany({
-        _id: req.params.id
-    },
-    {
-        user_name: req.body.user_name,
-        mail_id: req.body.mail_id,
-        password: req.body.password,
-        role: req.body.role
-    }, function(err, user){
-        if (err) throw err;
-
-        res.json(User);
-    });
+    updatedUser = req.body;
+    if (updatedUser.password) {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(updatedUser.password, salt, (err, hash) => {
+                if (err) return res.status(500).send({err});
+                updatedUser.password = hash;
+                User.findByIdAndUpdate(req.params.id, updatedUser, function(err, user){
+                    if (err) return res.status(500).send(err);
+                    res.status(200).send({success : true, message : "User updated with password"});
+                });
+            })
+        })
+    }
+    else{
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+            if (err) return res.status(500).send({err});
+            res.status(200).send({success : true, message : "User updated"});
+        });
+    }
 });
 
 router.post("/register",verifyToken, (req, res, next) => {
@@ -92,20 +99,12 @@ router.post("/register",verifyToken, (req, res, next) => {
             res.status(200).send({token});
         }
     });
-    // newUser.save((err, user) =>{
-    //     if(err){
-    //         console.log(err);
-    //         res.json({msg:"Failed to create user"});
-    //     }
-    //     else{
-    //         res.json({msg:"User added sucessfully"});
-    //     }
-    // });
 });
 
 router.get("/:id",verifyToken, (req, res, next) => {
     var id = req.params.id;
     User.findById(id,function(err, users){
+        if (err) return res.status(500).send({err});
         res.json(users);
     })
 });
@@ -115,7 +114,7 @@ router.delete("/:id",verifyToken, (req, res, next) => {
     User.remove({
         _id: id
     }, function (err, user) {
-        if (err) return res.send(err);
+        if (err) return res.status(500).send({err});
         res.json({ message: 'Deleted' });
     });
 });
