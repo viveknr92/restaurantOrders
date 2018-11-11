@@ -69,7 +69,7 @@ export class MenuComponent implements OnInit {
 
     this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data=>{ 
       this.cart = data,
-      console.log(this.cart);
+      console.log(" CART ITEMS "+this.cart);
     });
   }
   
@@ -80,13 +80,17 @@ export class MenuComponent implements OnInit {
       if (info.success){
         console.log(info.message);
         this._flashMessages.show("Successfully added to cart",{cssClass : "alert-success", timeout: 1000});
+        this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data=>{ 
+          this.cart = data,
+          console.log(this.cart);
+        });
         //this.cartComponent.ngOnInit();
       }else{
         this._flashMessages.show("Failed to insert to cart",{cssClass : "alert-danger", timeout: 2500});
 
       }
     })
-  this.ngOnInit();
+    
   }
 
 }

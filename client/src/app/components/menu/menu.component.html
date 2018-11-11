@@ -51,11 +51,32 @@
     <div class = "sidebarParent">
       <div class = "sidebar">
         <h3>Cart </h3>
-        <div *ngFor="let c of cart.foods">
-          <p>ID: {{c.menu}},
-            Quantity:{{c.quantity}}</p>
-        </div>  
-        <p>CART TOTAL: {{cart.total_cost}}</p>
+        <table>
+          <thead>
+            <tr class = "table-success">
+                <th scope="col">Item </th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+        <tr *ngFor="let food of cart.foods">
+            <th scope="row" >{{food.menu.item_name | uppercase}}</th>
+			      <td>${{food.menu.item_cost}}</td>
+            <td>
+                <button class="btn btn-light" (click) = "incQuantity(food._id)" ><i class="fa fa-plus-square fa-2x text-info" aria-hidden="true" ></i></button>
+                <input (input) = "onChange(food._id)" style="width: 50px;" type="number" [(ngModel)] = "food.quantity" name="quantity"  min = 1 class ="quantity" oninput="validity.valid||(value='');" default =1 required>
+                <button class="btn btn-light" (click) = "decQuantity(food._id)"><i class="fa fa-minus-square fa-2x text-info" aria-hidden="true" ></i></button>
+            </td>
+            <td><input type="button" (click) = "deleteCart(food._id)" value="X" class ="btn btn-primary"></td>
+          </tr>  
+      </tbody>
+      </table>
+      <hr>
+      <label><h4>Cart Total: ${{cart.total_cost}}</h4></label>
+      <hr>
+      <button class="btn btn-primary"> PROCEED TO CHECK OUT</button>
     </div>
   </div>
   </div>

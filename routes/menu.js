@@ -36,7 +36,7 @@ router.get("/:item_type/:item_name" , (req,res)=>{
     if(item.item_name === "all" && item.item_type === "all"){
         console.log(item.item_type + " " + item.item_name)
         Menu.find((err,menu)=>{
-            console.log(menu+err);
+            //console.log(menu+err);
             res.json(menu);
         })
     }else if(item.item_name!== "all" && item.item_type === "all"){
