@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
     }
     console.log(loginInfo);
     this.authservice.LoginUser(loginInfo)
-
       .subscribe(res => {
         console.log("token");
         localStorage.setItem("token", res.token);
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
       }, err => {
         console.log("Login Failed");
         console.log(err);
-        this.flashMessage.show("User not logged in", { cssClass: "alert-danger", timeout: 1000 });
+        this.flashMessage.show("Login Failed", { cssClass: "alert-danger", timeout: 1000 });
       })
   }
 }
