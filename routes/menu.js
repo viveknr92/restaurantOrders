@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 var Menu = require("../models/menu");
 const jwt = require("jsonwebtoken");
+var multer  = require('multer');
+const path = require("path");
 
 router.use(function (req, res, next) {
     if (req.headers.authorization === undefined) {
@@ -19,8 +21,24 @@ router.use(function (req, res, next) {
     next()
 });
 
+router.get('/image/:name',(req,res)=>{
+    var dir = path.join(__dirname, '../public/uploads/' + req.params.name)
+    console.log(dir);
+    res.sendFile(dir);
+})
+
+var upload = multer({ dest: 'public/uploads/' })
+router.post('/upload/:id', upload.single('item_image'), function (req, res, next) {
+    console.log(req.file);
+    Menu.findByIdAndUpdate(req.params.id, {$set : {item_image : req.file.filename}}, function(err, menu){
+        if (err) return res.status(500).send({err});
+        res.json({ message: 'Menu item Updated with image path', menu : menu });
+    });
+})
+
 router.get("/", (req, res, next) => {
     Menu.find(function(err, menu){
+        if (err) return res.status(500).send({err});
         res.json(menu);
     })
 });
@@ -36,22 +54,26 @@ router.get("/:item_type/:item_name" , (req,res)=>{
     if(item.item_name === "all" && item.item_type === "all"){
         console.log(item.item_type + " " + item.item_name)
         Menu.find((err,menu)=>{
+            if (err) return res.status(500).send({err});
             //console.log(menu+err);
             res.json(menu);
         })
     }else if(item.item_name!== "all" && item.item_type === "all"){
         console.log(item.item_type + " " + item.item_name)
         Menu.find({item_name: item.item_name.toLowerCase()},(err,menu)=>{
+            if (err) return res.status(500).send({err});
             res.json(menu);
         });
     }else if(item.item_name === "all" && item.item_type !== "all"){
         console.log(item.item_type + " " + item.item_name)
         Menu.find({item_type: item.item_type.toLowerCase()},(err,menu)=>{
+            if (err) return res.status(500).send({err});
             res.json(menu);
         });
     }else{
         console.log(item.item_type + " " + item.item_name)
         Menu.find({item_type: item.item_type.toLowerCase(),item_name: item.item_name.toLowerCase()},(err,menu)=>{
+            if (err) return res.status(500).send({err});
             res.json(menu);
         });
 
@@ -97,25 +119,6 @@ router.delete("/:id", (req, res, next) => {
         res.json({ message: 'Menu item Deleted', menu : menu});
     });
 });
-
-var multer  = require('multer')
-var upload = multer({ dest: 'public/uploads/' })
-router.post('/upload/:id', upload.single('item_image'), function (req, res, next) {
-    console.log(req.file);
-    Menu.findByIdAndUpdate(req.params.id, {$set : {item_image : req.file.filename}}, function(err, menu){
-        if (err) return res.status(500).send({err});
-        res.json({ message: 'Menu item Updated with image path', menu : menu });
-    });
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
-})
-
-router.get ('/upload/:name',(req,res)=>{
-    console.log("get image");
-    //var dir = path.join(__dirname, 'public/uploads/'+req.params.name)
-    console.log("here for image " + dir);
-    //res.sendFile(dir);
-})
 
 
 module.exports = router;
