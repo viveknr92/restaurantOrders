@@ -5,7 +5,7 @@ var User = require("../models/users");
 var Menu = require("../models/menu");
 const jwt = require("jsonwebtoken");
 
-function verifyToken(req, res, next){
+router.use(function (req, res, next){
     if(req.headers.authorization === undefined){
         return res.status(401).send('Unauthorized request')
     }
@@ -19,9 +19,13 @@ function verifyToken(req, res, next){
     }
     req.userId = payload.subject
     next()
-}
+});
 
-router.get("/:user_id",verifyToken, (req, res, next) => {
+router.get("/", function(req, res, next){
+    res.json("Cart API");
+})
+
+router.get("/:user_id", (req, res, next) => {
     var id = req.params.user_id;
     User.findById(id,function(err, user){
         if(user.cart !== undefined || user.cart !== null){
@@ -32,7 +36,7 @@ router.get("/:user_id",verifyToken, (req, res, next) => {
     })
 });
 
-router.delete("/:user_id/:fid",verifyToken, (req, res, next) => {
+router.delete("/:user_id/:fid", (req, res, next) => {
     var id = req.params.user_id;
     var fid = req.params.fid;
     User.findById(id,function(err, user){
@@ -60,7 +64,7 @@ router.delete("/:user_id/:fid",verifyToken, (req, res, next) => {
 });
 
 
-router.post("/:uid/:fid",verifyToken, (req, res, next) => {
+router.post("/:uid/:fid", (req, res, next) => {
     User.findById(req.params.uid,(err,user)=>{
 		console.log(user+err);
 		var fid = req.params.fid;

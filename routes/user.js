@@ -80,7 +80,7 @@ router.put('/:id',verifyToken, function(req, res){
     }
 });
 
-router.post("/register",verifyToken, (req, res, next) => {
+router.post("/register", (req, res, next) => {
     let newUser = new User({
         user_name: req.body.user_name,
         mail_id: req.body.mail_id,

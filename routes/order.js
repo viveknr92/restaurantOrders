@@ -3,7 +3,7 @@ const router = express.Router();
 var Order = require("../models/order");
 const jwt = require("jsonwebtoken");
 
-function verifyToken(req, res, next){
+router.use(function (req, res, next){
     if(req.headers.authorization === undefined){
         return res.status(401).send('Unauthorized request')
     }
@@ -17,4 +17,12 @@ function verifyToken(req, res, next){
     }
     req.userId = payload.subject
     next()
-}
+});
+
+router.get("/", function(req, res, next){
+    res.json("Orders API");
+});
+
+
+
+module.exports = router;
