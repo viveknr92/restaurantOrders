@@ -37,6 +37,7 @@ router.get("/:user_id", (req, res, next) => {
 });
 
 router.get("/:user_id/:fid", (req, res, next) => {
+	var isValidfid = false;
 	User.findById(req.params.user_id, function (err, user) {
 		if (err) return res.status(500).send({ err });
 		if (user.cart !== undefined || user.cart !== null) {
@@ -46,11 +47,14 @@ router.get("/:user_id/:fid", (req, res, next) => {
 				cart.foods.forEach((food, idx, foods) => {
 					console.log(food);
 					if (food.menu == req.params.fid) {
+						isValidfid = true;
 						console.log("food.menu == fid");
 						return res.send(food);
 					}
 				});
-				//res.status(400).send({message: 'Item not found in cart' });
+				if(isValidfid === false){
+					res.status(400).send({message: 'Item not found in cart' });
+				}
 			});
 		}
 	})
