@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FoodService {
-
+  
   _url = "http://localhost:3000/api/menu/all/all";
   constructor( private _http : HttpClient) { }
 
@@ -21,6 +21,13 @@ export class FoodService {
   	var headers = new Headers();
   	headers.append('Content-Type', 'application/json');
   	return this._http.post('http://localhost:3000/api/cart/'+ uid +'/'+ fid,{headers:headers});  	
+  }
+
+  DeleteFromCart(fid,uid,info){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    console.log("in food service "+info.quantity+ " "+info.newtotal);
+  	return this._http.put('http://localhost:3000/api/cart/'+ uid +'/'+ fid, info);
   }
 
   getCart(uid):Observable<Cart[]>{
