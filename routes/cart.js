@@ -41,26 +41,29 @@ router.get("/:user_id", (req, res, next) => {
 
 router.delete("/:user_id/:fid", (req, res, next) => {
     var id = req.params.user_id;
-    var fid = req.params.fid;
+	var fid = req.params.fid;
+	var isValidfid = false;	
     User.findById(id,function(err, user){
         if(user.cart !== undefined || user.cart !== null){
             Cart.findById(user.cart, function(err, cart){
                 cart.foods.forEach((food, idx, foods)=>{
                     console.log(food.menu + " " + fid);
                     if(food.menu == fid){
-                        foods.splice(idx,1);
+						foods.splice(idx,1); 
+						isValidfid = true;
                     }        
-                });
-                Cart.findByIdAndUpdate(user.cart,{ $set : {foods : cart.foods}},(err,resp)=>{
+				});
+				if (isValidfid === false){
+					return res.json({ success: false, message: 'Item not found in cart'});
+				}
+                Cart.findOneAndUpdate(user.cart,{ $set : {foods : cart.foods}},(err,resp)=>{
                     if (err){
-                        console.log("something went wrong");
                         res.json({ success: false, message: 'Could not delete from cart '  + err });
                     }else{
+						console.log(resp);
                         res.json({ success: true, message: 'Deleted successfully from cart' });
                     }
-                });	
-                console.log(cart.foods);
-                //res.json(cart);
+                });
             })
         }
     })
