@@ -29,11 +29,28 @@ router.get("/:user_id", (req, res, next) => {
 	var id = req.params.user_id;
 	User.findById(id, function (err, user) {
 		if (user.cart !== undefined || user.cart !== null) {
-			// Cart.findById(user.cart, function(err, cart){
-			//     res.json(cart);
-			// })
 			Cart.findById(user.cart).populate("foods.menu").exec((err, carts) => {
 				res.json(carts);
+			});
+		}
+	})
+});
+
+router.get("/:user_id/:fid", (req, res, next) => {
+	User.findById(req.params.user_id, function (err, user) {
+		if (err) return res.status(500).send({ err });
+		if (user.cart !== undefined || user.cart !== null) {
+			Cart.findById(user.cart, (err, cart) => {
+				if (err) return res.status(500).send({ err });
+				console.log("food.menu ? fid");
+				cart.foods.forEach((food, idx, foods) => {
+					console.log(food);
+					if (food.menu == req.params.fid) {
+						console.log("food.menu == fid");
+						return res.send(food);
+					}
+				});
+				//res.status(400).send({message: 'Item not found in cart' });
 			});
 		}
 	})
