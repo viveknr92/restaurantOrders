@@ -28,6 +28,9 @@ router.get("/", function (req, res, next) {
 router.get("/:user_id", (req, res, next) => {
 	var id = req.params.user_id;
 	User.findById(id, function (err, user) {
+		if (user === null){
+			return res.status(400).send({ msg: "user not found" });
+		}
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart).populate("foods.menu").exec((err, carts) => {
 				res.json(carts);
@@ -40,6 +43,9 @@ router.get("/:user_id/:fid", (req, res, next) => {
 	var isValidfid = false;
 	User.findById(req.params.user_id, function (err, user) {
 		if (err) return res.status(500).send({ err });
+		if (user === null){
+			return res.status(400).send({ msg: "user not found" });
+		}
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart, (err, cart) => {
 				if (err) return res.status(500).send({ err });
@@ -64,6 +70,9 @@ router.put("/:user_id/:fid", (req, res, next) => {
 	console.log(req.body);
 	User.findById(id, function (err, user) {
 		if (err) return res.status(500).send({ err });
+		if (user === null){
+			return res.status(400).send({ msg: "user not found" });
+		}
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart, function (err, cart) {
 				if (err) return res.status(500).send({ err });
@@ -95,14 +104,19 @@ router.put("/:user_id/:fid", (req, res, next) => {
 
 router.post("/:uid/:fid", (req, res, next) => {
 	User.findById(req.params.uid, (err, user) => {
+		if (err) return res.status(500).send({ err });
+		if (user === null){
+			return res.status(400).send({ msg: "user not found" });
+		}
 		console.log(user + err);
 		var fid = req.params.fid;
 		console.log(fid);
 
 		Menu.findById(req.params.fid, (err, food) => {
-			console.log("user.cart " + user.cart);
+			if (err) return res.status(500).send({ err });
+			//console.log("user.cart " + user.cart);
 			console.log(user);
-			if (user.cart == undefined || user.cart == null) {
+			if (user.cart === undefined || user.cart === null) {
 				let newCart = new Cart({
 					mail_id: user.mail_id.toLowerCase(),
 					total_cost: food.item_cost,
