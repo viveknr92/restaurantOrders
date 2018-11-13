@@ -64,6 +64,7 @@ router.put("/:user_id/:fid", (req, res, next) => {
 	var id = req.params.user_id;
 	var fid = req.params.fid;
 	var isValidfid = false;
+	console.log(req.body);
 	User.findById(id, function (err, user) {
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart, function (err, cart) {

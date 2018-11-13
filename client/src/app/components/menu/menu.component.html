@@ -61,6 +61,7 @@
               </tr>
             </thead>
             <tbody>
+              
         <tr *ngFor="let food of cart.foods">
             <th scope="row" >{{food.menu.item_name | uppercase}}</th>
 			      <td>${{food.menu.item_cost}}</td>

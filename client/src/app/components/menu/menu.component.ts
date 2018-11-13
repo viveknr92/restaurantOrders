@@ -4,7 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages/module';
 import {AuthService} from '../../services/auth.service';
-import {Cart} from '../../models/cart';
+import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+//import {Cart} from '../../models/cart';
 
 @Component({
   selector: 'app-menu',
@@ -22,10 +23,16 @@ export class MenuComponent implements OnInit {
   totalPages : number;
   itemToBeDeleted : string;
   todayDate: Date;
-  cart: Cart[];
+  //cart: Cart;
 
   public menu = [];
- // public cart = [];
+  public cart = {};
+  public temp={
+    quantity:Number,
+    _id:String,
+    menu:String
+  }
+  public prev_quant;
  
   constructor(private _foodservice: FoodService,
               private _router: Router,
@@ -85,7 +92,7 @@ export class MenuComponent implements OnInit {
         this._flashMessages.show("Successfully added to cart",{cssClass : "alert-success", timeout: 1000});
         this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data=>{ 
           this.cart = data,
-          console.log("THIS>CART>>>>"+this.cart.quantity);
+          console.log("THIS>CART>>>>"+this.cart);
         });
         //this.cartComponent.ngOnInit();
       }else{
@@ -127,9 +134,11 @@ export class MenuComponent implements OnInit {
   UpdateCart(fid,cost,quantity,total){
     
     this._foodservice.getCartQuantById(fid,localStorage.getItem("user_id")).subscribe((data:any) =>{
-      this.cart= data,
-      console.log("CART1--> "+this.cart)});
-    var total_cost ;
+      this.temp= data,
+      this.prev_quant= this.temp.quantity,
+      console.log("TEMP--> "+this.temp.quantity)});
+    var total_cost = total + ((quantity - this.prev_quant)*cost);
+     console.log("ToTALCOST "+ total_cost);
     //quantity = 0;its made 0 for delete
     console.log("QUANTITY "+quantity);
     var info;
@@ -142,22 +151,19 @@ export class MenuComponent implements OnInit {
       console.log(info);
       if (info.success){
         console.log(info.message);
-        this._flashMessages.show("Successfully deleted cart",{cssClass : "alert-success", timeout: 1000});
+        this._flashMessages.show("Successfully updated cart",{cssClass : "alert-success", timeout: 1000});
         this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data=>{ 
           this.cart = data,
           console.log("CART--> "+this.cart);
         });
         //this.cartComponent.ngOnInit();
       }else{
-        this._flashMessages.show("Failed to delete from cart",{cssClass : "alert-danger", timeout: 2500});
+        this._flashMessages.show("Failed to update  cart",{cssClass : "alert-danger", timeout: 2500});
 
       }
     })
 
   }
 
-  // UpdateCart(){
-
-  // }
 
 }

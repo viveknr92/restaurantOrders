@@ -18,7 +18,7 @@ export class FoodService {
   }
 
   getCartQuantById(fid,uid){
-     return this._http.get<Menu>('http://localhost:3000/api/cart/'+uid+'/'+fid);
+     return this._http.get('http://localhost:3000/api/cart/'+uid+'/'+fid);
   }
 
   addToCart(fid,uid){
@@ -30,12 +30,12 @@ export class FoodService {
   UpdateCart(fid,uid,info){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    console.log("in food service "+info.quantity+ " "+info.newtotal);
+    console.log("in food service "+info.quantity+ " "+info.total_cost);
   	return this._http.put('http://localhost:3000/api/cart/'+ uid +'/'+ fid, info);
   }
 
-  getCart(uid):Observable<Cart[]>{
-  	return this._http.get<Cart[]>('http://localhost:3000/api/cart/'+uid);
+  getCart(uid):Observable<Cart>{
+  	return this._http.get<Cart>('http://localhost:3000/api/cart/'+uid);
   }
 
 }
