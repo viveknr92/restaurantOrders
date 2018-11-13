@@ -44,17 +44,14 @@ router.get("/:user_id/:fid", (req, res, next) => {
 			Cart.findById(user.cart, (err, cart) => {
 				if (err) return res.status(500).send({ err });
 				console.log("food.menu ? fid");
-				cart.foods.forEach((food, idx, foods) => {
-					console.log(food);
-					if (food.menu == req.params.fid) {
-						isValidfid = true;
-						console.log("food.menu == fid");
-						return res.send(food);
-					}
-				});
-				if(isValidfid === false){
-					res.status(400).send({message: 'Item not found in cart' });
-				}
+				Menu.findById(req.params.fid, (err, menu)=>{
+					if (err) return res.status(500).send({ err });
+					res.send({
+						mail_id : cart.mail_id, 
+						total_cost : cart.total_cost, 
+						foods : menu
+					})
+				})
 			});
 		}
 	})
