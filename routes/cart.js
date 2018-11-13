@@ -66,8 +66,10 @@ router.put("/:user_id/:fid", (req, res, next) => {
 	var isValidfid = false;
 	console.log(req.body);
 	User.findById(id, function (err, user) {
+		if (err) return res.status(500).send({ err });
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart, function (err, cart) {
+				if (err) return res.status(500).send({ err });
 				cart.foods.forEach((food, idx, foods) => {
 					if (food.menu == fid) {
 						isValidfid = true;
