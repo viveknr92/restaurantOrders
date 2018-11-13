@@ -65,9 +65,9 @@
             <th scope="row" >{{food.menu.item_name | uppercase}}</th>
 			      <td>${{food.menu.item_cost}}</td>
             <td>
-                <button class="btn btn-light" (click) = "incQuantity(food.menu._id)" ><i class="fa fa-plus-square fa-2x text-info" aria-hidden="true" ></i></button>
-                <input (input) = "onChange(food._id)" style="width: 50px;" type="number" [(ngModel)] = "food.quantity" name="quantity"  min = 1 class ="quantity" oninput="validity.valid||(value='');" default =1 required>
-                <button class="btn btn-light" (click) = "decQuantity(food.menu._id)"><i class="fa fa-minus-square fa-2x text-info" aria-hidden="true" ></i></button>
+                <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity + 1,cart.total_cost)" ><i class="fa fa-plus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
+                <input (change) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity,cart.total_cost)" style="width: 50px;" type="number" [(ngModel)] = "food.quantity" name="quantity"  min =1  class ="quantity"  required>
+                <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity - 1,cart.total_cost)"><i class="fa fa-minus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
             </td>
             <td><input type="button" (click) = "DeleteFromCart(food.menu._id,food.menu.item_cost,food.quantity,cart.total_cost)" value="X" class ="btn btn-primary"></td>
           </tr>  
