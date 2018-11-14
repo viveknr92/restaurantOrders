@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
     private _router: Router,
     private _authService: AuthService,
     private _flashMessages: FlashMessagesService,
-    private globals : Globals
+    private globals: Globals
   ) { }
 
   ngOnInit() {
@@ -152,5 +152,31 @@ export class MenuComponent implements OnInit {
       }
     })
   }
+
+  // addNewItem() {
+  //   console.log("Here");
+  //   console.log(this.image);
+  //   if (this.image == undefined)
+  //     this.image = null;
+  //   var newItem = {
+  //     name: this.name,
+  //     type: this.type,
+  //     price: this.price,
+  //     image: this.image
+  //   };
+  //   console.log(newItem);
+  //   this.foodService.addNewItem(newItem).subscribe(info => {
+  //     if (info.success) {
+  //       console.log(info.message);
+  //       this.flashMessages.show("Successfully added to cart", { cssClass: "alert-success", timeout: 500 });
+  //       this.router.navigate(['/menu']);
+  //     } else {
+  //       this.flashMessages.show("Failed to add item " + info.message, { cssClass: "alert-danger", timeout: 500 });
+
+  //     }
+  //   })
+
+
+ // }
 }
 
