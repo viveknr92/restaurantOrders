@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'client';
+  admin :string;
   constructor(private _authService:AuthService) {
     
   }

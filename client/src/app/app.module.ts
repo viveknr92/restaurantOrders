@@ -13,6 +13,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
 import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { Globals } from './global';
+import { AdminGuard } from './guards/admin.guard';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { Globals } from './global';
     HttpClientModule,
     FlashMessagesModule.forRoot(),
   ],
-  providers: [AuthService, AuthGuard,
+  providers: [AuthService, AuthGuard,AdminGuard,
   {
     provide: HTTP_INTERCEPTORS,
     useClass:TokenInterceptorService,

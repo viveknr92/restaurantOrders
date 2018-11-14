@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages/module';
 import { AuthService } from '../../services/auth.service';
 import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+import { Globals } from '../../global';
 //import {Cart} from '../../models/cart';
 
 @Component({
@@ -37,7 +38,8 @@ export class MenuComponent implements OnInit {
   constructor(private _foodservice: FoodService,
     private _router: Router,
     private _authService: AuthService,
-    private _flashMessages: FlashMessagesService
+    private _flashMessages: FlashMessagesService,
+    private globals : Globals
   ) { }
 
   ngOnInit() {
