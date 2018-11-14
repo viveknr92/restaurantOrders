@@ -31,7 +31,10 @@ router.get("/:user_id", (req, res, next) => {
     var id = req.params.user_id;
     User.findById(id, function (err, user) {
         if (err) return res.status(500).send({ err });
-        user.orders.forEach((ord, idx, order) => {
+        if (user.orders.length == 0 || user.orders === undefined){
+            return res.status(400).send({ success : false, msg: "No orders placed" });
+        }
+        user.orders.forEach((ord, idx, orders) => {
             //console.log(ord + " " + idx);
             Order.findById(ord, function (err, order_details) {
                 if (err) return res.status(500).send({ err });
@@ -48,7 +51,10 @@ router.get("/:user_id", (req, res, next) => {
 
 router.post("/:user_id", (req, res, next) => {
     User.findById(req.params.user_id, function (err, user) {
-
+        if (err) return res.status(500).send({ success : false, msg: "User not found - " + err});
+        if (user === null){
+            return res.status(400).send({ success : false, msg: "User not found" });
+        }
         cart_id = user.cart;
         Cart.findById(cart_id, function (err, cart) {
             if (err) return res.status(500).send({ err });
