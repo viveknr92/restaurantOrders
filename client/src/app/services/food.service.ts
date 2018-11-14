@@ -30,7 +30,7 @@ export class FoodService {
   UpdateCart(fid,uid,info){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    console.log("in food service "+info.quantity+ " "+info.total_cost);
+    console.log("In FS ------------------"+info.quantity);
   	return this._http.put('http://localhost:3000/api/cart/'+ uid +'/'+ fid, info);
   }
 
