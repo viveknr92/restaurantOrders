@@ -104,17 +104,12 @@ export class MenuComponent implements OnInit {
   }
 
 
-  DeleteFromCart(fid, cost, quantity, total) {
-    var total_cost = total - (cost * quantity);
-    //quantity = 0;its made 0 for delete
-    console.log("QUANTITY " + quantity);
+  DeleteFromCart(fid) {
+
     var info;
     info = {
-      quantity: 0,
-      total_cost: total_cost
+      quantity: 0
     };
-
-
     console.log("clicked item: " + fid + " for user id" + localStorage.getItem("user_id"));
     this._foodservice.UpdateCart(fid, localStorage.getItem("user_id"), info).subscribe((info: any) => {
       console.log(info);
@@ -133,45 +128,27 @@ export class MenuComponent implements OnInit {
     })
 
   }
-  UpdateCart(fid, cost, quantity, total) {
+  UpdateCart(fid, quantity) {
+    var info;
+    info = {
+      quantity: quantity
+    };
+    console.log("clicked item: " + fid + " for user id" + localStorage.getItem("user_id"));
+    this._foodservice.UpdateCart(fid, localStorage.getItem("user_id"), info).subscribe((info: any) => {
+      console.log(info);
+      if (info.success) {
+        console.log(info.message);
+        this._flashMessages.show("Successfully updated cart", { cssClass: "alert-success", timeout: 1000 });
+        this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
+          this.cart = data,
+            console.log("CART--> " + this.cart);
+        });
+        //this.cartComponent.ngOnInit();
+      } else {
+        this._flashMessages.show("Failed to update  cart", { cssClass: "alert-danger", timeout: 2500 });
 
-    this._foodservice.getCartQuantById(fid, localStorage.getItem("user_id")).subscribe((data: any) => {
-      this.temp = data,
-      this.prev_quant = this.temp.quantity,
-      console.log("TEMP--> " + this.temp.quantity)
-      var total_cost = total + ((quantity - this.prev_quant) * cost);
-      console.log("ToTALCOST " + total_cost);
-      console.log("QUANTITY " + quantity);
-      var info;
-      info = {
-        quantity: quantity,
-        total_cost: total_cost
-      };
-      console.log("clicked item: " + fid + " for user id" + localStorage.getItem("user_id"));
-      this._foodservice.UpdateCart(fid, localStorage.getItem("user_id"), info).subscribe((info: any) => {
-        console.log(info);
-        if (info.success) {
-          console.log(info.message);
-          this._flashMessages.show("Successfully updated cart", { cssClass: "alert-success", timeout: 1000 });
-          this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
-            this.cart = data,
-              console.log("CART--> " + this.cart);
-          });
-          //this.cartComponent.ngOnInit();
-        } else {
-          this._flashMessages.show("Failed to update  cart", { cssClass: "alert-danger", timeout: 2500 });
-
-        }
-      })
-    });
-
-    //quantity = 0;its made 0 for delete
-
-
-
-
-
+      }
+    })
   }
-
-
 }
+

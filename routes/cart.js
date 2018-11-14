@@ -93,63 +93,67 @@ router.put("/:user_id/:fid", (req, res, next) => {
 		if (user === null) {
 			return res.status(400).send({ msg: "user not found" });
 		}
-		console.log(user.cart);
+		//console.log(user.cart);
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart, function (err, cart) {
 				if (err) return res.status(500).send({ err });
-				console.log(cart.foods);
+			//	console.log(cart.foods);
 				if (cart.foods === undefined || cart.foods.length == 0) {
 					return res.status(400).send({ msg: "Cart Empty" });
 				}
-				for (food of cart.foods) {
+				cart.foods.forEach((food, idx, foods) => {
 					if (food.menu == fid) {
 						isValidfid = true;
 						if (req.body.quantity === 0) {
-							console.log(food.quantity);
-							console.log(cart.total_cost);
+							//console.log(food.quantity);
+							//console.log(cart.total_cost);
 							Menu.findById(fid, (err, menu) => {
 								if (err) return res.status(500).send({ err });
 
 								cart.total_cost = cart.total_cost - (food.quantity * menu.item_cost)
-								cart.foods.splice(cart.foods.indexOf(food), 1);
-								console.log("req.body.quantity === 0");
-								console.log(cart.foods);
-								console.log(user.cart);
+								cart.foods.splice(idx, 1);
+								//console.log("req.body.quantity === 0");
+								//console.log(cart.foods);
+							//console.log(user.cart);
 								Cart.findByIdAndUpdate(user.cart, {
 									$set: {
 										foods: cart.foods, total_cost: cart.total_cost
 									}
 								}, (err, resp) => {
 									if (err) return res.status(500).send({ err });
-									console.log(resp);
+								//	console.log(resp);
 									res.json({ success: true, message: 'Deleted successfully from cart' });
 								});
 							})
 
 						}
 						else {
-							console.log("food.quantity = req.body.quantity;");
+							console.log("food.quantity = req.body.quantity "+req.body.quantity);
 
 							Menu.findById(fid, (err, menu) => {
 								if (err) return res.status(500).send({ err });
-
+								
+								
 								cart.total_cost = cart.total_cost + ((req.body.quantity - food.quantity) * menu.item_cost)
+								//var idx = cart.foods.indexOf(food);
+								console.log("index --------------------" + idx+"------"+food);
+								cart.foods[idx].quantity = req.body.quantity;
 								console.log(cart.foods);
-								console.log(user.cart);
-								food.quantity = req.body.quantity;
+								console.log(cart.total_cost);
+								//food.quantity = req.body.quantity;
 								Cart.findByIdAndUpdate(user.cart, {
 									$set: {
 										foods: cart.foods, total_cost: cart.total_cost
 									}
 								}, (err, resp) => {
 									if (err) return res.status(500).send({ err });
-									console.log(resp);
+									console.log("RESP+++++++++"+resp);
 									res.json({ success: true, message: 'Updated successfully from cart' });
 								});
 							})
 						}
 					}
-				}
+				});
 				if (isValidfid === false) {
 					return res.status(400).send({ success: false, message: 'Item not found in cart' });
 				}
