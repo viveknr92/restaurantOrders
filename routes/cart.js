@@ -52,11 +52,14 @@ router.get("/:user_id/:fid", (req, res, next) => {
 				console.log("food.menu ? fid");
 				Menu.findById(req.params.fid, (err, menu)=>{
 					if (err) return res.status(500).send({ err });
+					else{
+						console.log(menu);
 					res.send({
 						mail_id : cart.mail_id, 
 						total_cost : cart.total_cost, 
 						foods : menu
 					})
+				}
 				})
 			});
 		}
@@ -67,14 +70,17 @@ router.put("/:user_id/:fid", (req, res, next) => {
 	var id = req.params.user_id;
 	var fid = req.params.fid;
 	var isValidfid = false;
+	console.log(id);
 	console.log(req.body);
 	User.findById(id, function (err, user) {
 		if (err) return res.status(500).send({ err });
 		if (user === null){
 			return res.status(400).send({ msg: "user not found" });
 		}
+		console.log(user.cart);
 		if (user.cart !== undefined || user.cart !== null) {
 			Cart.findById(user.cart, function (err, cart) {
+				console.log(cart.foods);
 				if (err) return res.status(500).send({ err });
 				cart.foods.forEach((food, idx, foods) => {
 					if (food.menu == fid) {
@@ -89,12 +95,17 @@ router.put("/:user_id/:fid", (req, res, next) => {
 						}
 					}
 				});
+				console.log(cart.foods);
 				if (isValidfid === false) {
 					return res.status(400).send({ success: false, message: 'Item not found in cart' });
 				}
-				Cart.findOneAndUpdate(user.cart, { $set: { foods: cart.foods, total_cost: req.body.total_cost } }, (err, resp) => {
+				console.log(user.cart);
+				Cart.findByIdAndUpdate(user.cart, { $set: { foods: cart.foods , total_cost: req.body.total_cost
+				} }, (err, resp) => {
 					if (err) return res.status(500).send({ err });
-					res.json({ success: true, message: 'Updated successfully from cart' });
+					else{
+						console.log(resp);
+					res.json({ success: true, message: 'Updated successfully from cart' });}
 				});
 			})
 		}
@@ -122,7 +133,6 @@ router.post("/:uid/:fid", (req, res, next) => {
 					total_cost: food.item_cost,
 					foods: [{ menu: fid, quantity: 1 }]
 				});
-
 				newCart.save((err, resp) => {
 					if (err) {
 						console.log("something went wrong" + err);
