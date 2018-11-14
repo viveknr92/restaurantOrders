@@ -89,7 +89,7 @@ export class MenuComponent implements OnInit {
       console.log(info);
       if (info.success) {
         console.log(info.message);
-        this._flashMessages.show("Successfully added to cart", { cssClass: "alert-success", timeout: 1000 });
+        //this._flashMessages.show("Successfully added to cart", { cssClass: "alert-success", timeout: 1000 });
         this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
           this.cart = data,
             console.log("THIS>CART>>>>" + this.cart);
@@ -115,7 +115,7 @@ export class MenuComponent implements OnInit {
       console.log(info);
       if (info.success) {
         console.log(info.message);
-        this._flashMessages.show("Successfully deleted cart", { cssClass: "alert-success", timeout: 1000 });
+        //this._flashMessages.show("Successfully deleted cart", { cssClass: "alert-success", timeout: 1000 });
         this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
           this.cart = data,
             console.log("CART--> " + this.cart);
@@ -138,7 +138,7 @@ export class MenuComponent implements OnInit {
       console.log(info);
       if (info.success) {
         console.log(info.message);
-        this._flashMessages.show("Successfully updated cart", { cssClass: "alert-success", timeout: 1000 });
+        //this._flashMessages.show("Successfully updated cart", { cssClass: "alert-success", timeout: 1000 });
         this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
           this.cart = data,
             console.log("CART--> " + this.cart);
