@@ -12,6 +12,7 @@ import {AuthService} from './services/auth.service';
 import { FlashMessagesModule } from 'angular2-flash-messages/module';
 import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { Globals } from './global';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     provide: HTTP_INTERCEPTORS,
     useClass:TokenInterceptorService,
     multi:true
-  }],
+  }, Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
