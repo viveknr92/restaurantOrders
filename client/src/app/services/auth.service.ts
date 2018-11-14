@@ -1,15 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Globals } from '../global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-
+  role : any;
   private _registerurl = "http://localhost:3000/api/users/register"
   private _loginurl = "http://localhost:3000/api/users/login"
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private globals : Globals) { }
+
+  storeUserRole(role){
+     console.log(role);
+     this.role = role;
+     if(role == "admin"){
+       this.globals.admin = true;
+     }
+     else{
+       this.globals.admin = false;
+       console.log(this.globals.admin);
+     }    
+   }
 
   registerUser(userInfo){
     return this.http.post<any>(this._registerurl, userInfo)

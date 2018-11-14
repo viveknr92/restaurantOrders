@@ -12,6 +12,7 @@ import { FlashMessagesService } from 'angular2-flash-messages/module'
 export class LoginComponent implements OnInit {
   user_name: string;
   password: string;
+  role: string;
 
   constructor(
     private authservice: AuthService,
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
   Login() {
     const loginInfo = {
       user_name: this.user_name,
-      password: this.password
+      password: this.password,
+      role: this.role
     }
     console.log(loginInfo);
     this.authservice.LoginUser(loginInfo)
@@ -33,6 +35,9 @@ export class LoginComponent implements OnInit {
         console.log("token");
         localStorage.setItem("token", res.token);
         localStorage.setItem("user_id", res.user._id);
+        localStorage.setItem("role", res.user.role);
+        //Set role here
+        this.authservice.storeUserRole(res.user.role);
         console.log("Login Success");
         this.flashMessage.show("You are now logged in. Enjoy ordering", { cssClass: 'alert-success', timeout: 3000 })
         this.route.navigate(['menu']);
