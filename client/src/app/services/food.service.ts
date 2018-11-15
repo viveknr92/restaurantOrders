@@ -38,4 +38,16 @@ export class FoodService {
   	return this._http.get<Cart>('http://localhost:3000/api/cart/'+uid);
   }
 
+  PlaceOrder(uid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.post('http://localhost:3000/api/order/'+uid,{headers:headers});
+  }
+
+  ViewOrders(uid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/order/'+uid);
+  }
+
 }

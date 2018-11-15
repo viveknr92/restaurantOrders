@@ -150,5 +150,31 @@ export class MenuComponent implements OnInit {
       }
     })
   }
+
+  PlaceOrder(){
+    this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
+      console.log(info);
+     
+      if (info.success) {
+        console.log(info.message);
+        this._flashMessages.show("Successfully placed order", { cssClass: "alert-success", timeout: 1000 });
+        this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
+          this.cart = data,
+            console.log("CART--> " + this.cart);
+        });
+
+    }else{
+      this._flashMessages.show("Failed to place Order", { cssClass: "alert-danger", timeout: 2500 });
+    }
+  })
+
+      
+  }
+
+  ViewOrders(){
+      
+    this._router.navigate(['order']);
+  }
+
 }
 
