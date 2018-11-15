@@ -13,11 +13,11 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
 import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { Globals } from './global';
-<<<<<<< HEAD
+
 import { OrderComponent } from './components/order/order.component';
-=======
+
 import { AdminGuard } from './guards/admin.guard';
->>>>>>> 3f1d707ddaf51b6de0279f3e2a4cead51ee5a8a0
+
 
 @NgModule({
   declarations: [
