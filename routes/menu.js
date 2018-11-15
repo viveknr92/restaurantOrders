@@ -5,21 +5,21 @@ const jwt = require("jsonwebtoken");
 var multer  = require('multer');
 const path = require("path");
 
-router.use(function (req, res, next) {
-    if (req.headers.authorization === undefined) {
-        return res.status(401).send('Unauthorized request')
-    }
-    let token = req.headers.authorization.split(" ")[1];
-    if (token === undefined || token === 'null') {
-        return res.status(401).send('Unauthorized request')
-    }
-    let payload = jwt.verify(token, 'secretKey');
-    if (!payload) {
-        return res.status(401).send('Unauthorized request')
-    }
-    req.userId = payload.subject
-    next()
-});
+// router.use(function (req, res, next) {
+//     if (req.headers.authorization === undefined) {
+//         return res.status(401).send('Unauthorized request')
+//     }
+//     let token = req.headers.authorization.split(" ")[1];
+//     if (token === undefined || token === 'null') {
+//         return res.status(401).send('Unauthorized request')
+//     }
+//     let payload = jwt.verify(token, 'secretKey');
+//     if (!payload) {
+//         return res.status(401).send('Unauthorized request')
+//     }
+//     req.userId = payload.subject
+//     next()
+// });
 
 router.get('/image/:name',(req,res)=>{
     var dir = path.join(__dirname, '../public/uploads/' + req.params.name)

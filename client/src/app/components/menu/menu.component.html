@@ -32,53 +32,62 @@
       <li *ngFor="let m of menu">{{ m.item_name }} , {{ m.item_cost }}</li>
     </ul>
   </div> -->
-
+  
     <div class="row mt-5">
       <div class="col-md-4 mb-3" *ngFor="let m of menu">
+        <button type="button" (click)="getImageFromService(m.item_image)">Get Image</button>
         <div class="card text-center">
           <div class="card-body" (click)="AddToCart(m._id)">
             <h5 class="card-title">{{m.item_name}}</h5>
-            <img src="" alt="image of item">
+            <p>{{m.item_image}}</p>
+            
+            <img [src]="this.imageToShow" alt="Place image title"> 
+            <!-- *ngIf="!isImageLoading; else noImageFound"> -->
+            <!-- <ng-template #noImageFound>
+              <img src="fallbackImage.png" alt="Fallbackimage">
+            </ng-template> -->
             <p class="card-text">Price: {{ m.item_cost}}</p>
-            <a  class="btn btn-primary">Add to Cart</a>
+            <a class="btn btn-primary">Add to Cart</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <div class="col-md-3" style="border-left:2px solid grey" >
-    <div class = "sidebarParent">
-      <div class = "sidebar">
+
+  <div class="col-md-3" style="border-left:2px solid grey">
+    <div class="sidebarParent">
+      <div class="sidebar">
         <h3>Cart </h3>
         <table class="table">
           <thead>
-            <tr class = "table-success">
-                <th scope="col">Item </th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              
-        <tr *ngFor="let food of cart.foods">
-            <th scope="row" >{{food.menu.item_name | uppercase}}</th>
-			      <td>${{food.menu.item_cost}}</td>
-            <td>
+            <tr class="table-success">
+              <th scope="col">Item </th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let food of cart.foods">
+              <th scope="row">{{food.menu.item_name | uppercase}}</th>
+              <td>${{food.menu.item_cost}}</td>
+              <td>
                 <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity + 1,cart.total_cost)" ><i class="fa fa-plus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
-                <input (change) = "UpdateCart(food.menu._id,food.quantity)" style="width: 50px;" type="number" [(ngModel)] = "food.quantity" name="quantity"  min =1  class ="quantity"  required>
+                <input (change)="UpdateCart(food.menu._id,food.quantity)" style="width: 50px;" type="number"
+                  [(ngModel)]="food.quantity" name="quantity" min=1 class="quantity" required>
                 <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity - 1,cart.total_cost)"><i class="fa fa-minus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
-            </td>
-            <td><input type="button" (click) = "DeleteFromCart(food.menu._id)" value="X" class ="btn btn-primary"></td>
-          </tr>  
-      </tbody>
-      </table>
-      <hr>
-      <label><h4>Cart Total: ${{cart.total_cost}}</h4></label>
-      <hr>
-      <button class="btn btn-primary"> PROCEED TO CHECK OUT</button>
+              </td>
+              <td><input type="button" (click)="DeleteFromCart(food.menu._id)" value="X" class="btn btn-primary"></td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <label>
+          <h4>Cart Total: ${{cart.total_cost}}</h4>
+        </label>
+        <hr>
+        <button class="btn btn-primary"> PROCEED TO CHECK OUT</button>
+      </div>
     </div>
   </div>
-  </div>
-  
