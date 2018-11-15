@@ -42,5 +42,17 @@ export class FoodService {
     //return this._http.get('https://picsum.photos/200/300/?random',{ responseType: 'blob' });
     return this._http.get('http://localhost:3000/api/menu/image/'+ name,{ responseType: 'blob' });
   }
+  
+  PlaceOrder(uid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.post('http://localhost:3000/api/order/'+uid,{headers:headers});
+  }
+
+  ViewOrders(uid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/order/'+uid);
+  }
 
 }

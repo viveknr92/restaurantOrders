@@ -36,7 +36,11 @@ router.get("/:user_id", (req, res, next) => {
         }
         user.orders.forEach((ord, idx, orders) => {
             //console.log(ord + " " + idx);
-            Order.findById(ord, function (err, order_details) {
+            // Cart.findById(user.cart).populate("foods.menu").exec((err, carts) => {
+			// 	res.json(carts);
+			// });
+            //Order.findById(ord, function (err, order_details) {
+            Order.findById(ord).populate("foods.menu").exec((err, order_details)=> {   
                 if (err) return res.status(500).send({ err });
                 //console.log(order_details);
                 order_array.push(order_details);

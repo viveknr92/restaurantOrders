@@ -14,13 +14,19 @@ import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { Globals } from './global';
 
+import { OrderComponent } from './components/order/order.component';
+
+import { AdminGuard } from './guards/admin.guard';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     routingcomponents,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +35,7 @@ import { Globals } from './global';
     HttpClientModule,
     FlashMessagesModule.forRoot(),
   ],
-  providers: [AuthService, AuthGuard,
+  providers: [AuthService, AuthGuard,AdminGuard,
   {
     provide: HTTP_INTERCEPTORS,
     useClass:TokenInterceptorService,
