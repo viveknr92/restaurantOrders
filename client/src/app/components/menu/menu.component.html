@@ -6,6 +6,7 @@
 <div class="container-fluid row">
   <div class="col-md-9">
     <h1>Menu</h1>
+    <a *ngIf = "globals.admin" (submit) = "addNewItem()" ngNativeValidate  class = "delete btn btn-primary pull-right text-light">Add item<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
     <hr>
     <form>
       <div class="form-group query">
@@ -41,6 +42,10 @@
             <img src="" alt="image of item">
             <p class="card-text">Price: {{ m.item_cost}}</p>
             <a  class="btn btn-primary">Add to Cart</a>
+            <hr/>
+            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
+            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
+            </a>
           </div>
         </div>
       </div>
