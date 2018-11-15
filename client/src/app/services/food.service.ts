@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Menu } from '../models/menu';
 import { Cart } from '../models/cart';
 import { Observable } from 'rxjs';
@@ -43,6 +43,23 @@ export class FoodService {
 
   getCart(uid):Observable<Cart>{
   	return this._http.get<Cart>('http://localhost:3000/api/cart/'+uid);
+  }
+
+  fetchImage(name:string): Observable<Blob>{
+    //return this._http.get('https://picsum.photos/200/300/?random',{ responseType: 'blob' });
+    return this._http.get('http://localhost:3000/api/menu/image/'+ name,{ responseType: 'blob' });
+  }
+  
+  PlaceOrder(uid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.post('http://localhost:3000/api/order/'+uid,{headers:headers});
+  }
+
+  ViewOrders(uid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get('http://localhost:3000/api/order/'+uid);
   }
 
 }

@@ -13,8 +13,12 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
 import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { Globals } from './global';
+
+import { OrderComponent } from './components/order/order.component';
+
 import { AdminGuard } from './guards/admin.guard';
 import { FoodComponent } from './components/food/food.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { FoodComponent } from './components/food/food.component';
     routingcomponents,
     HomeComponent,
     MenuComponent,
-    FoodComponent
+    FoodComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

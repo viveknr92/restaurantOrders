@@ -70,8 +70,14 @@ export class MenuComponent implements OnInit {
 
     this._foodservice.getMenu()
       .subscribe(
-        data => this.menu = data,
-        err => {
+        data => {
+          this.menu = data; 
+          console.log("Menu : "+this.menu[0].item_image);
+          // this.menu.forEach((m, idx ,menu) => {
+          //   console.log(m.item_image);
+            this.getImageFromService(this.menu[0].item_image);
+          // })
+        },err => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
               this._router.navigate(['/login']);
@@ -83,7 +89,36 @@ export class MenuComponent implements OnInit {
       this.cart = data,
         console.log(" CART ITEMS " + this.cart);
     });
+    
+    //this.getImageFromService();
   }
+
+  getImageFromService(image) {
+    this.isImageLoading = true;
+    this._foodservice.fetchImage(image).subscribe(data => {
+      console.log("fetchImage subscribe");
+      this.createImageFromBlob(data);
+      this.isImageLoading = false;
+      console.log(this.isImageLoading);
+    }, error => {
+      this.isImageLoading = false;
+      console.log(error);
+    });
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      console.log(reader);
+       this.imageToShow = reader.result;
+       console.log(this.imageToShow);
+       console.log("image to show is set");
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+ }
 
   AddToCart(fid) {
     console.log("clicked item: " + fid + " for user id" + localStorage.getItem("user_id"));
@@ -151,6 +186,31 @@ export class MenuComponent implements OnInit {
 
       }
     })
+  }
+
+  PlaceOrder(){
+    this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
+      console.log(info);
+     
+      if (info.success) {
+        console.log(info.message);
+        this._flashMessages.show("Successfully placed order", { cssClass: "alert-success", timeout: 1000 });
+        this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
+          this.cart = data,
+            console.log("CART--> " + this.cart);
+        });
+
+    }else{
+      this._flashMessages.show("Failed to place Order", { cssClass: "alert-danger", timeout: 2500 });
+    }
+  })
+
+      
+  }
+
+  ViewOrders(){
+      
+    this._router.navigate(['order']);
   }
 }
 
