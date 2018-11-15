@@ -49,7 +49,7 @@
             </ng-template> -->
             <p class="card-text">Price: {{ m.item_cost}}</p>
             <a class="btn btn-primary">Add to Cart</a>
-            <a  class="btn btn-primary">Add to Cart</a>
+          
             <hr/>
             <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
             <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
@@ -67,19 +67,6 @@
         <div *ngIf="cart;else elseblock">
         <table class="table">
           <thead>
-            <tr class="table-success">
-              <th scope="col">Item </th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr *ngFor="let food of cart.foods">
-              <th scope="row">{{food.menu.item_name | uppercase}}</th>
-              <td>${{food.menu.item_cost}}</td>
-              <td>
             <tr class = "table-success">
                 <th scope="col">Item </th>
                 <th scope="col">Price</th>
