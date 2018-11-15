@@ -5,12 +5,14 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { AuthGuard } from './guards/auth.guard';
+import { FoodComponent } from './components/food/food.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/home', pathMatch:'full'},
   { path:'login',component:LoginComponent},
   { path:'register',component:RegisterComponent},
   { path:'home', component:HomeComponent},
+  { path:'food',component:FoodComponent},
   { path:'menu', component:MenuComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo:'/home', pathMatch:'full'}
 ];

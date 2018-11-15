@@ -7,7 +7,7 @@ import { FlashMessagesService } from 'angular2-flash-messages/module'
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [AuthService]
+  providers: [AuthService]  
 })
 export class LoginComponent implements OnInit {
   user_name: string;

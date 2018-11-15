@@ -21,6 +21,13 @@ export class FoodService {
      return this._http.get('http://localhost:3000/api/cart/'+uid+'/'+fid);
   }
 
+  addNewItem(newItem){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.post('http://localhost:3000/api/menu', newItem);
+      // .map(res =>res.json());  
+  }
+
   addToCart(fid,uid){
   	var headers = new Headers();
   	headers.append('Content-Type', 'application/json');
