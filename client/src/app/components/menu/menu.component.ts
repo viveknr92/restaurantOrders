@@ -153,7 +153,6 @@ export class MenuComponent implements OnInit {
     })
   }
 
-<<<<<<< HEAD
   PlaceOrder(){
     this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
       console.log(info);
@@ -179,7 +178,6 @@ export class MenuComponent implements OnInit {
     this._router.navigate(['order']);
   }
 
-=======
   // addNewItem() {
   //   console.log("Here");
   //   console.log(this.image);
@@ -205,6 +203,5 @@ export class MenuComponent implements OnInit {
 
 
  // }
->>>>>>> 3f1d707ddaf51b6de0279f3e2a4cead51ee5a8a0
 }
 
