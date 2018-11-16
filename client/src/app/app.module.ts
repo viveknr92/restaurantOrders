@@ -18,6 +18,7 @@ import { OrderComponent } from './components/order/order.component';
 
 import { AdminGuard } from './guards/admin.guard';
 import { FoodComponent } from './components/food/food.component';
+import { EditFoodComponent } from './components/edit-food/edit-food.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { FoodComponent } from './components/food/food.component';
     HomeComponent,
     MenuComponent,
     FoodComponent,
-    OrderComponent
+    OrderComponent,
+    EditFoodComponent
   ],
   imports: [
     BrowserModule,

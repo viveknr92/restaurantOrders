@@ -38,7 +38,7 @@
       <div class="col-md-4 mb-3" *ngFor="let m of menu">
         <button type="button" (click)="getImageFromService(m.item_image)">Get Image</button>
         <div class="card text-center">
-          <div class="card-body" (click)="AddToCart(m._id)">
+          <div class="card-body">
             <h5 class="card-title">{{m.item_name}}</h5>
             <p>{{m.item_image}}</p>
             
@@ -48,11 +48,11 @@
               <img src="fallbackImage.png" alt="Fallbackimage">
             </ng-template> -->
             <p class="card-text">Price: {{ m.item_cost}}</p>
-            <a class="btn btn-primary">Add to Cart</a>
+            <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
           
             <hr/>
-            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
-            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
+            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light"  [routerLink]="['/edit-food']">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
+            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light" (click) = "deleteItem()">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
             </a>
           </div>
         </div>

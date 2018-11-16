@@ -12,6 +12,12 @@ export class FoodService {
   _url = "http://localhost:3000/api/menu/all/all";
   constructor( private _http : HttpClient) { }
 
+  getAvailableFood(fid){
+    var url = 'http://localhost:3000/api/menu/'+fid;
+    console.log(url);
+    return this._http.get(url);       
+  } 
+
   getMenu():Observable<Menu[]>  {
     console.log(this._url);
   	return this._http.get<Menu[]>(this._url);   
@@ -27,6 +33,18 @@ export class FoodService {
     return this._http.post('http://localhost:3000/api/menu', newItem);
       // .map(res =>res.json());  
   }
+
+  deleteItem(fid){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.delete('http://localhost:3000/api/menu/'+ fid); 
+  }
+
+  editItem(editedItem){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.put('http://localhost:3000/api/menu/'+ editedItem._id,editedItem); 
+  }  
 
   addToCart(fid,uid){
   	var headers = new Headers();

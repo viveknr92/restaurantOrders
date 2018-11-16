@@ -56,4 +56,8 @@ export class FoodComponent implements OnInit {
     })
   }
 
+  // onUploadFinished(event)  {
+	// 	this.image = JSON.parse(event.serverResponse._body).filename;
+  // }
+
 }
