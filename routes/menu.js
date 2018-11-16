@@ -24,13 +24,14 @@ const path = require("path");
 router.get('/image/:name',(req,res)=>{
     var dir = path.join(__dirname, '../public/uploads/' + req.params.name)
     console.log(dir);
+    res.setHeader("Content-Type","image/jpeg");
     res.sendFile(dir);
 })
 
 var upload = multer({ dest: 'public/uploads/' })
-router.post('/upload/:id', upload.single('item_image'), function (req, res, next) {
+router.post('/image/:menu_id', upload.single('item_image'), function (req, res, next) {
     console.log(req.file);
-    Menu.findByIdAndUpdate(req.params.id, {$set : {item_image : req.file.filename}}, function(err, menu){
+    Menu.findByIdAndUpdate(req.params.menu_id, {$set : {item_image : req.file.filename}}, function(err, menu){
         if (err) return res.status(500).send({err});
         res.json({ message: 'Menu item Updated with image path', menu : menu });
     });
