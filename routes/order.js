@@ -62,7 +62,8 @@ router.post("/:user_id", (req, res, next) => {
         cart_id = user.cart;
         Cart.findById(cart_id, function (err, cart) {
             if (err) return res.status(500).send({ err });
-            if (!cart) return res.status(400).send({ success: false, err: "Cannot place order with an empty cart" });
+            if (cart === null) return res.status(400).send({ success: false, err: "Cannot place order with an empty cart" });
+            if (cart.foods.length == 0) return res.status(400).send({ success: false, err: "Cannot place order with an empty cart" });
             var newOrder = new Order({
                 mail_id: user.mail_id,
                 total_cost: cart.total_cost,
