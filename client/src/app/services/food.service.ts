@@ -80,4 +80,10 @@ export class FoodService {
     return this._http.get('http://localhost:3000/api/order/'+uid);
   }
 
+  searchItem(item_type, item_name):Observable<Menu[]>{
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this._http.get<Menu[]>('http://localhost:3000/api/menu/'+ item_type + "/" + item_name);
+  }
+
 }

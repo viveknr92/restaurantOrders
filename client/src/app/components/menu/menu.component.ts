@@ -16,8 +16,8 @@ import { Menu } from 'src/app/models/menu';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  q: string;
-  type: string;
+  itemSearchName: string;
+  itemSearchType: string;
   food: Menu;
   curPage: number;
   pageLength: number;
@@ -48,39 +48,25 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.type = null;
-    this.q = "";
+    this.itemSearchType = "all";
+    this.itemSearchName = "";
     this.pageLength = 12;
     this.fetchFoods();
-    // this._foodservice.getMenu()
-    // .subscribe(
-    //   data => this.menu = data,
-    //   err => {
-    //     if (err instanceof HttpErrorResponse){
-    //       if(err.status === 401){
-    //         this._router.navigate(['/login']);
-    //       }
-    //     }
-    //   });
   }
 
   fetchFoods() {
-    var q = this.q;
-    if (this.q == "") {
-      q = "all";
+    let item_name = this.itemSearchName;
+    if (this.itemSearchName == "") {
+      item_name = "all";
     }
 
-    var loopIdx = 0;
-    console.log("q " + this.q + " type " + this.type);
-
-    this._foodservice.getMenu()
-      .subscribe(
+    this._foodservice.searchItem(this.itemSearchType, item_name).subscribe(
         data => {
-          this.menu = data; 
-          console.log("Menu : "+this.menu[0].item_image);
+          this.menu = data;
           this.menu.forEach((m, idx ,menu) => {
-            console.log("Menu image : " + m.item_image);
-            this.getImageFromService(m.item_image, idx);
+            let item_image_name = m.item_image;
+            m.item_image = null;
+            this.getImageFromService(item_image_name, idx);
           })
         },err => {
           if (err instanceof HttpErrorResponse) {
