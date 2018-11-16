@@ -76,13 +76,13 @@ export class MenuComponent implements OnInit {
     this._foodservice.getMenu()
       .subscribe(
         data => {
-          this.menu = data;
-          console.log("Menu : " + this.menu[0].item_image);
-          // this.menu.forEach((m, idx ,menu) => {
-          //   console.log(m.item_image);
-          this.getImageFromService(this.menu[0].item_image);
-          // })
-        }, err => {
+          this.menu = data; 
+          console.log("Menu : "+this.menu[0].item_image);
+          this.menu.forEach((m, idx ,menu) => {
+            console.log(m.item_image);
+            this.getImageFromService(m.item_image);
+          })
+        },err => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
               this._router.navigate(['/login']);
@@ -94,8 +94,6 @@ export class MenuComponent implements OnInit {
       this.cart = data,
         console.log(" CART ITEMS " + this.cart);
     });
-
-    //this.getImageFromService();
   }
 
   getImageFromService(image) {
@@ -107,7 +105,7 @@ export class MenuComponent implements OnInit {
       console.log(this.isImageLoading);
     }, error => {
       this.isImageLoading = false;
-      console.log(error);
+      console.log("Could not find file : " + this.isImageLoading);
     });
   }
 
