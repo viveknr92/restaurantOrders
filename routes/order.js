@@ -45,7 +45,7 @@ router.get("/:user_id", (req, res, next) => {
                 //console.log(order_details);
                 order_array.push(order_details);
                 if (order_array.length === user.orders.length){
-                    console.log(order_array);
+                    console.log("ORDER ARRAY----------"+order_array);
                     res.json(order_array);
                 }
             })

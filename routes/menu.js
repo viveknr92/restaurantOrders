@@ -115,8 +115,14 @@ router.put('/:id', function(req, res){
 });
 
 router.delete("/:id", (req, res, next) => {
-    Menu.findByIdAndDelete(req.params.id, function (err, menu) {
+    Menu.findByIdAndUpdate(req.params.id,{$set: {
+        item_availability:'N'
+    }},function(err, menu){
         if (err) return res.status(500).send({err});
+       
+
+    // Menu.findByIdAndDelete(req.params.id, function (err, menu) {
+    //     if (err) return res.status(500).send({err});
         res.json({ message: 'Menu item Deleted', menu : menu});
     });
 });
