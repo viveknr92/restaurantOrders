@@ -218,16 +218,22 @@ export class MenuComponent implements OnInit {
     this._router.navigate(['order']);
   }
 
-  deleteItem() {
-    this._foodservice.deleteItem(localStorage.getItem("user_id")).subscribe(info => {
+  deleteItem(fid) {
+    this._foodservice.deleteItem(fid).subscribe(info => {
       // if (info.success == true) {
       // this.modalRef.hide();
       this._flashMessages.show("Successfully deleted Item ", { cssClass: "alert-success", timeout: 2000 });
-      this._router.navigate(['/menu']);
+      // this._router.navigate(['/menu']);
+      this.fetchFoods();
       // } else {
       // this. _flashMessages.show("Something went wrong", { cssClass: "alert-danger", timeout: 2000 });
       // }
     })
+  }
+
+  editItem(fid){
+    localStorage.setItem("fid", fid);
+    this._router.navigate(['/edit-food']);
   }
 }
 

@@ -35,10 +35,10 @@ export class EditFoodComponent implements OnInit {
       item_image: null
     };
     this.route.params.subscribe(params => {
-      console.log(params['id']);
-      this.fid = params['id'];
-      // this.foodService.getAvailableFood(this.fid).subscribe(info => {
-      //   this.food = info.menu;
+      console.log(params['_id']);
+      this.fid = params['_id'];
+      this.foodService.getAvailableFood(localStorage.getItem("fid")).subscribe(info => {
+        // this.food = info.menu;
       //   this.foodService.fetchImage(info.food.image).subscribe(data => {
       //     let reader = new FileReader();
       //     reader.addEventListener("load", () => {
@@ -51,7 +51,7 @@ export class EditFoodComponent implements OnInit {
       //   }, error => {
       //     console.log(error);
       //   });
-      // })
+      })
     });
   }
 
@@ -61,7 +61,7 @@ export class EditFoodComponent implements OnInit {
     this.food.item_type = this.type;
     this.food.item_cost = this.price;
     this.food.item_availability = "Y";
-    this.foodService.editItem(this.food).subscribe(info=>{
+    this.foodService.editItem(localStorage.getItem("fid")).subscribe(info=>{
       // if(info.success == true){
         this.flashMessages.show("Successfully Updated Item ",{cssClass : "alert-success", timeout: 2000});
         this.router.navigate(['/menu']);		
@@ -69,6 +69,6 @@ export class EditFoodComponent implements OnInit {
         // this.flashMessages.show("Something went wrong",{cssClass : "alert-danger", timeout: 2000});
       // }
     })		
-}
+  }
 
 }

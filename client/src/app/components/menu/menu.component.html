@@ -51,8 +51,8 @@
             <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
           
             <hr/>
-            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light"  [routerLink]="['/edit-food']">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
-            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light" (click) = "deleteItem()">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
+            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light"  (click) = "editItem(m._id)">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
+            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light" (click) = "deleteItem(m._id)">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
             </a>
           </div>
         </div>
