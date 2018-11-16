@@ -41,15 +41,15 @@
           <img [src]="this.imageToShow" alt="Place image title" *ngIf="!isImageLoading; else noImageFound" class="card-img-top">
           <ng-template #noImageFound><img src="../../../assets/1.jpg" alt="Fallbackimage" class="card-img-top">
           </ng-template>
-          <div class="card-body" (click)="AddToCart(m._id)">
+          <div class="card-body">
             <h5 class="card-title">{{m.item_name}}</h5>
             <p class="card-text">Price: {{ m.item_cost}}</p>
-            <a class="btn btn-primary">Add to Cart</a>
+            <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
             <div *ngIf="globals.admin">
               <hr>
-              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light">Edit<i class="fa fa-edit fa-3x"
+              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light" [routerLink]="['/edit-food']">Edit<i class="fa fa-edit fa-3x"
                   aria-hidden="true"></i></a><span> | </span>
-              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light">Delete<i class="fa fa-edit fa-3x"
+              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light" (click) = "deleteItem()">Delete<i class="fa fa-edit fa-3x"
                   aria-hidden="true"></i></a>
             </div>
           </div>

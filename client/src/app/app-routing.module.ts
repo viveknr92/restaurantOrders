@@ -7,6 +7,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { OrderComponent } from './components/order/order.component';
 import { AuthGuard } from './guards/auth.guard';
 import { FoodComponent } from './components/food/food.component';
+import { EditFoodComponent } from './components/edit-food/edit-food.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/home', pathMatch:'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path:'register',component:RegisterComponent},
   { path:'home', component:HomeComponent},
   { path:'food',component:FoodComponent},
+  { path:'edit-food',component:EditFoodComponent},
   { path:'order', component:OrderComponent},
   { path:'menu', component:MenuComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo:'/home', pathMatch:'full'}

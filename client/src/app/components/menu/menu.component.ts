@@ -6,6 +6,8 @@ import { FlashMessagesService } from 'angular2-flash-messages/module';
 import { AuthService } from '../../services/auth.service';
 import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 import { Globals } from '../../global';
+import { Menu } from 'src/app/models/menu';
+// import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 //import {Cart} from '../../models/cart';
 
 @Component({
@@ -16,6 +18,7 @@ import { Globals } from '../../global';
 export class MenuComponent implements OnInit {
   q: string;
   type: string;
+  food: Menu;
   curPage: number;
   pageLength: number;
   uid: string;
@@ -24,6 +27,7 @@ export class MenuComponent implements OnInit {
   totalPages: number;
   itemToBeDeleted: string;
   todayDate: Date;
+  // modalRef: BsModalRef;
   //cart: Cart;
 
   public menu = [];
@@ -39,7 +43,8 @@ export class MenuComponent implements OnInit {
     private _router: Router,
     private _authService: AuthService,
     private _flashMessages: FlashMessagesService,
-    private globals: Globals
+    private globals: Globals,
+    // private modalService : BsModalService
   ) { }
 
   ngOnInit() {
@@ -108,15 +113,15 @@ export class MenuComponent implements OnInit {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
       console.log(reader);
-       this.imageToShow = reader.result;
-       console.log(this.imageToShow);
-       console.log("image to show is set");
+      this.imageToShow = reader.result;
+      console.log(this.imageToShow);
+      console.log("image to show is set");
     }, false);
- 
+
     if (image) {
-       reader.readAsDataURL(image);
+      reader.readAsDataURL(image);
     }
- }
+  }
 
   AddToCart(fid) {
     console.log("clicked item: " + fid + " for user id" + localStorage.getItem("user_id"));
@@ -186,10 +191,10 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  PlaceOrder(){
+  PlaceOrder() {
     this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
       console.log(info);
-     
+
       if (info.success) {
         console.log(info.message);
         this._flashMessages.show("Successfully placed order", { cssClass: "alert-success", timeout: 1000 });
@@ -198,17 +203,29 @@ export class MenuComponent implements OnInit {
             console.log("CART--> " + this.cart);
         });
 
-    }else{
-      this._flashMessages.show("Failed to place Order", { cssClass: "alert-danger", timeout: 2500 });
-    }
-  })
+      } else {
+        this._flashMessages.show("Failed to place Order", { cssClass: "alert-danger", timeout: 2500 });
+      }
+    })
 
-      
+
   }
 
-  ViewOrders(){
-      
+  ViewOrders() {
+
     this._router.navigate(['order']);
+  }
+
+  deleteItem() {
+    this._foodservice.deleteItem(localStorage.getItem("user_id")).subscribe(info => {
+      // if (info.success == true) {
+      // this.modalRef.hide();
+      this._flashMessages.show("Successfully deleted Item ", { cssClass: "alert-success", timeout: 2000 });
+      this._router.navigate(['/menu']);
+      // } else {
+      // this. _flashMessages.show("Something went wrong", { cssClass: "alert-danger", timeout: 2000 });
+      // }
+    })
   }
 }
 
