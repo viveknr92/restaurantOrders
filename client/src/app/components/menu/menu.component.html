@@ -6,7 +6,8 @@
 <div class="container-fluid row">
   <div class="col-md-9">
     <h1>Menu</h1>
-    <a *ngIf = "globals.admin" [routerLink]="['/food']"  class = "delete btn btn-primary pull-right text-light">Add item<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
+    <a *ngIf="globals.admin" [routerLink]="['/food']" class="delete btn btn-primary pull-right text-light">Add item<i
+        class="fa fa-edit fa-3x" aria-hidden="true"></i></a>
     <hr>
     <form>
       <div class="form-group query">
@@ -33,27 +34,24 @@
       <li *ngFor="let m of menu">{{ m.item_name }} , {{ m.item_cost }}</li>
     </ul>
   </div> -->
-  
+
     <div class="row mt-5">
       <div class="col-md-4 mb-3" *ngFor="let m of menu">
-        <button type="button" (click)="getImageFromService(m.item_image)">Get Image</button>
-        <div class="card text-center">
+        <div class="card text-center" style="width: 18rem;">
+          <img [src]="this.imageToShow" alt="Place image title" *ngIf="!isImageLoading; else noImageFound" class="card-img-top">
+          <ng-template #noImageFound><img src="../../../assets/1.jpg" alt="Fallbackimage" class="card-img-top">
+          </ng-template>
           <div class="card-body" (click)="AddToCart(m._id)">
             <h5 class="card-title">{{m.item_name}}</h5>
-            <p>{{m.item_image}}</p>
-            
-            <img [src]="this.imageToShow" alt="Place image title"> 
-            <!-- *ngIf="!isImageLoading; else noImageFound"> -->
-            <!-- <ng-template #noImageFound>
-              <img src="fallbackImage.png" alt="Fallbackimage">
-            </ng-template> -->
             <p class="card-text">Price: {{ m.item_cost}}</p>
             <a class="btn btn-primary">Add to Cart</a>
-          
-            <hr/>
-            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Edit<i class="fa fa-edit fa-3x" aria-hidden="true" ></i></a>
-            <a *ngIf = "globals.admin"  class = "delete btn btn-primary pull-right text-light">Delete<i class="fa fa-edit fa-3x" aria-hidden="true" ></i>
-            </a>
+            <div *ngIf="globals.admin">
+              <hr>
+              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light">Edit<i class="fa fa-edit fa-3x"
+                  aria-hidden="true"></i></a><span> | </span>
+              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light">Delete<i class="fa fa-edit fa-3x"
+                  aria-hidden="true"></i></a>
+            </div>
           </div>
         </div>
       </div>
@@ -65,9 +63,9 @@
       <div class="sidebar">
         <h3>Cart </h3>
         <div *ngIf="cart;else elseblock">
-        <table class="table">
-          <thead>
-            <tr class = "table-success">
+          <table class="table">
+            <thead>
+              <tr class="table-success">
                 <th scope="col">Item </th>
                 <th scope="col">Price</th>
                 <th scope="col">Quantity</th>
@@ -75,30 +73,32 @@
               </tr>
             </thead>
             <tbody>
-                
-        <tr *ngFor="let food of cart.foods">
-            <th scope="row" >{{food.menu.item_name | uppercase}}</th>
-			      <td>${{food.menu.item_cost}}</td>
-            <td>
-                <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity + 1,cart.total_cost)" ><i class="fa fa-plus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
-                <input (change)="UpdateCart(food.menu._id,food.quantity)" style="width: 50px;" type="number"
-                  [(ngModel)]="food.quantity" name="quantity" min=1 class="quantity" required>
-                <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity - 1,cart.total_cost)"><i class="fa fa-minus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
-            </td>
-            <td><input type="button" (click) = "DeleteFromCart(food.menu._id)" value="X" class ="btn btn-primary"></td>
-          </tr> 
-        
-         
-      </tbody>
-      </table>
 
-      <hr>
-      <label><h4>Cart Total: ${{cart.total_cost}}</h4></label>
-      <hr>
-      <input type="button" (click) = "PlaceOrder()" class="btn btn-primary" value="PLACE ORDER">
+              <tr *ngFor="let food of cart.foods">
+                <th scope="row">{{food.menu.item_name | uppercase}}</th>
+                <td>${{food.menu.item_cost}}</td>
+                <td>
+                  <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity + 1,cart.total_cost)" ><i class="fa fa-plus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
+                  <input (change)="UpdateCart(food.menu._id,food.quantity)" style="width: 50px;" type="number"
+                    [(ngModel)]="food.quantity" name="quantity" min=1 class="quantity" required>
+                  <!-- <button class="btn btn-light" (click) = "UpdateCart(food.menu._id,food.menu.item_cost,food.quantity - 1,cart.total_cost)"><i class="fa fa-minus-square fa-2x text-info" aria-hidden="true" ></i></button> -->
+                </td>
+                <td><input type="button" (click)="DeleteFromCart(food.menu._id)" value="X" class="btn btn-primary"></td>
+              </tr>
+
+
+            </tbody>
+          </table>
+
+          <hr>
+          <label>
+            <h4>Cart Total: ${{cart.total_cost}}</h4>
+          </label>
+          <hr>
+          <input type="button" (click)="PlaceOrder()" class="btn btn-primary" value="PLACE ORDER">
+        </div>
+        <ng-template #elseblock>No items in Cart</ng-template>
+        <hr>
+        <input type="button" (click)="ViewOrders()" class="btn" value="View Order History">
+      </div>
     </div>
-    <ng-template #elseblock>No items in Cart</ng-template>
-      <hr>
-      <input type="button" (click)= "ViewOrders()" class="btn"value="View Order History">
-    </div>
-  </div>
