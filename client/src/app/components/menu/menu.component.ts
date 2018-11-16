@@ -79,8 +79,8 @@ export class MenuComponent implements OnInit {
           this.menu = data; 
           console.log("Menu : "+this.menu[0].item_image);
           this.menu.forEach((m, idx ,menu) => {
-            console.log(m.item_image);
-            this.getImageFromService(m.item_image);
+            console.log("Menu image : " + m.item_image);
+            this.getImageFromService(m.item_image, idx);
           })
         },err => {
           if (err instanceof HttpErrorResponse) {
@@ -96,26 +96,24 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  getImageFromService(image) {
+  getImageFromService(image, idx) {
     this.isImageLoading = true;
     this._foodservice.fetchImage(image).subscribe(data => {
       console.log("fetchImage subscribe");
-      this.createImageFromBlob(data);
       this.isImageLoading = false;
       console.log(this.isImageLoading);
+      this.createImageFromBlob(data, idx);
     }, error => {
       this.isImageLoading = false;
       console.log("Could not find file : " + this.isImageLoading);
     });
   }
 
-  createImageFromBlob(image: Blob) {
+  createImageFromBlob(image: Blob, idx) {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
       console.log(reader);
-      this.imageToShow = reader.result;
-      console.log(this.imageToShow);
-      console.log("image to show is set");
+      this.menu[idx].item_image = reader.result;
     }, false);
 
     if (image) {

@@ -38,7 +38,7 @@
     <div class="row mt-5">
       <div class="col-md-4 mb-3" *ngFor="let m of menu">
         <div class="card text-center" style="width: 18rem;">
-          <img [src]="this.imageToShow" alt="Place image title" *ngIf="!isImageLoading; else noImageFound" class="card-img-top">
+          <img [src]="m.item_image" alt="Place image title" *ngIf="!isImageLoading; else noImageFound" class="card-img-top">
           <ng-template #noImageFound><img src="../../../assets/1.jpg" alt="Fallbackimage" class="card-img-top">
           </ng-template>
           <div class="card-body">
