@@ -61,20 +61,35 @@ export class MenuComponent implements OnInit {
     }
 
     this._foodservice.searchItem(this.itemSearchType, item_name).subscribe(
-        data => {
-          this.menu = data;
-          this.menu.forEach((m, idx ,menu) => {
-            let item_image_name = m.item_image;
-            m.item_image = null;
-            this.getImageFromService(item_image_name, idx);
-          })
-        },err => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              this._router.navigate(['/login']);
+      data => {
+        let m: Menu[];
+        m = data;
+        console.log(m);
+        console.log(this.globals.admin);
+        if (localStorage.getItem("role") === "admin") {
+          this.menu = m;
+        } 
+        else {
+          m.forEach((mn, idx, m) => {
+            if (mn.item_availability == 'Y') {
+              this.menu.push(mn);
             }
+          })
+        }
+        //this.menu = data;
+        console.log(this.menu);
+        this.menu.forEach((m, idx, menu) => {
+          let item_image_name = m.item_image;
+          m.item_image = null;
+          this.getImageFromService(item_image_name, idx);
+        })
+      }, err => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            this._router.navigate(['/login']);
           }
-        });
+        }
+      });
 
     this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
       this.cart = data,
@@ -213,7 +228,7 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  editItem(fid){
+  editItem(fid) {
     localStorage.setItem("fid", fid);
     this._router.navigate(['/edit-food']);
   }
