@@ -227,10 +227,6 @@ export class MenuComponent implements OnInit {
       // }
     })
   }
-
-  editItem(fid) {
-    localStorage.setItem("fid", fid);
-    this._router.navigate(['/edit-food']);
-  }
+  
 }
 

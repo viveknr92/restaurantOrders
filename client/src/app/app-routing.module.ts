@@ -15,7 +15,7 @@ const routes: Routes = [
   { path:'register',component:RegisterComponent},
   { path:'home', component:HomeComponent},
   { path:'food',component:FoodComponent},
-  { path:'edit-food',component:EditFoodComponent},
+  { path:'edit-food/:id',component:EditFoodComponent},
   { path:'order', component:OrderComponent},
   { path:'menu', component:MenuComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo:'/home', pathMatch:'full'}
