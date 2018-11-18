@@ -18,10 +18,18 @@ export class EditFoodComponent implements OnInit {
   availability: string;
   fid: string;
   // modalRef: BsModalRef;
-  public food={
-    success:Boolean,
-    menu:{},
+
+  fileSelected: File;
+
+  public newinfo = {
+    menu_id:String,
     message:String
+  };
+
+  public food = {
+    success: Boolean,
+    menu: {},
+    message: String
   };
 
   constructor(private foodService: FoodService,
@@ -36,7 +44,7 @@ export class EditFoodComponent implements OnInit {
       console.log(this.fid);
       this.foodService.getAvailableFood(this.fid).subscribe(info => {
         this.food = info;
-      //  console.log(this.food);
+        //  console.log(this.food);
         // this.foodService.fetchImage(this.food.item_image).subscribe(data => {
         //   let reader = new FileReader();
         //   reader.addEventListener("load", () => {
@@ -53,14 +61,14 @@ export class EditFoodComponent implements OnInit {
     });
   }
 
-  editItem(e){
+  editItem(e) {
     e.preventDefault();
-    this.foodService.editItem(this.food.menu).subscribe(info=>{
+    this.foodService.editItem(this.food.menu).subscribe(info => {
       // if(info.success == true){
-        this.flashMessages.show("Successfully Updated Item ",{cssClass : "alert-success", timeout: 2000});
-        this.router.navigate(['/menu']);		
+      this.flashMessages.show("Successfully Updated Item ", { cssClass: "alert-success", timeout: 2000 });
+      this.router.navigate(['/menu']);
       // }else{
-        // this.flashMessages.show("Something went wrong",{cssClass : "alert-danger", timeout: 2000});
+      // this.flashMessages.show("Something went wrong",{cssClass : "alert-danger", timeout: 2000});
       // }
       // this.foodService.uploadFile(this.fileSelected,this.newinfo.menu_id)
       // .subscribe( (response) => {
@@ -70,7 +78,22 @@ export class EditFoodComponent implements OnInit {
       //   (error) => {
       //     console.log('FAILED TO UPLOAD IMAGE TO DB');
       //   });
-    })		
+        
+      
+    })
   }
 
+  ImmediateUpload(event, fid) {
+    console.log(fid);
+    console.log("FILE UPLOAD SUCCESSFUL");
+    this.fileSelected = event.target.files[0];
+    this.foodService.uploadFile(this.fileSelected,fid)
+   .subscribe( (response) => {
+      console.log('IMAGE UPLOADED TO DATABASE');
+      return response;
+    },
+     (error) => {
+       console.log('FAILED TO UPLOAD IMAGE TO DB');
+     });
+  }
 }

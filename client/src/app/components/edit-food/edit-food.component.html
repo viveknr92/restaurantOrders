@@ -37,7 +37,7 @@
 
       </div>
       <div class="form-group">
-        <input type="file" (change)="onUploadFinished($event)" name="item_image">
+        <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image">
       </div>
 
       <button type="submit" class="btn btn-primary foot">Update Item</button>
