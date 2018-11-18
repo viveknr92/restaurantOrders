@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 import { Globals } from '../../global';
 import { Menu } from 'src/app/models/menu';
+import * as $ from 'jquery';
 // import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 //import {Cart} from '../../models/cart';
 
@@ -29,6 +30,8 @@ export class MenuComponent implements OnInit {
   todayDate: Date;
   // modalRef: BsModalRef;
   //cart: Cart;
+  curPagefoods : Menu[];
+  dispfoods : Menu[];
 
   public menu = [];
   public cart = {};
@@ -50,7 +53,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.itemSearchType = "all";
     this.itemSearchName = "";
-    this.pageLength = 12;
+    this.pageLength = 2;
     this.fetchFoods();
   }
 
@@ -60,42 +63,123 @@ export class MenuComponent implements OnInit {
       item_name = "all";
     }
 
-    this._foodservice.searchItem(this.itemSearchType, item_name).subscribe(
-      data => {
-        let m: Menu[];
-        m = data;
-        console.log(m);
-        console.log(this.globals.admin);
-        if (localStorage.getItem("role") === "admin") {
-          this.menu = m;
-        } 
-        else {
-          m.forEach((mn, idx, m) => {
-            if (mn.item_availability == 'Y') {
-              this.menu.push(mn);
-            }
-          })
-        }
-        //this.menu = data;
-        console.log(this.menu);
-        this.menu.forEach((m, idx, menu) => {
-          let item_image_name = m.item_image;
-          m.item_image = null;
-          this.getImageFromService(item_image_name, idx);
-        })
-      }, err => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
-            this._router.navigate(['/login']);
+    this._foodservice.searchItem(this.itemSearchType, item_name).subscribe(data => {
+          let m: Menu[];
+          let loopIdx = 0;
+          m = data;
+          console.log(m);
+          this.dispfoods = [];
+          this.menu = [];
+          console.log(this.globals.admin);
+          if (localStorage.getItem("role") === "admin") {
+                this.menu = m;
+          } 
+          else {
+              m.forEach((mn, idx, m) => {
+                  if (mn.item_availability == 'Y') {
+                      this.menu.push(mn);
+                  }
+              })
           }
-        }
-      });
+          //this.menu = data;
+          console.log(this.menu);
+          this.menu.forEach((m, idx, menu) => {
+                let item_image_name = m.item_image;
+                m.item_image = null;
+                this.getImageFromService(item_image_name, idx);
+                //this.foods.push(newFood);
+                this.dispfoods.push(m);
+                loopIdx = idx;
+				        var parent = this;
+        				if (loopIdx == this.dispfoods.length - 1) {
+        					this.getFoodsPage(1);
+        					this.buildPagination();
+        				}
+          }) // end of foreach
+      });//food service subscribe
 
     this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
       this.cart = data,
         console.log(" CART ITEMS " + this.cart);
-    });
-  }
+    });//_foodservice.getCart
+
+
+  }// end of fetch foods
+
+  getFoodsPage(pageNum){
+		$(".page-item").removeClass("active");
+
+		switch(pageNum){
+			case 1 : {
+				$("#1").parent().addClass("active");
+				break;
+			}
+			case 2 : {
+				$("#2").parent().addClass("active");
+				break;
+			}
+			case 3 : {
+				$("#3").parent().addClass("active");
+				break;
+			}
+			case 4 : {
+				$("#4").parent().addClass("active");
+				break;
+			}
+			case 5 : {
+				$("#5").parent().addClass("active");
+				break;
+			}												
+		}
+
+		this.curPage = pageNum;
+		this.curPagefoods = [];
+		for(var i = (pageNum-1) * this.pageLength ; i < pageNum * this.pageLength && i < this.dispfoods.length ; i++){
+			console.log("in loop "+i);
+			this.curPagefoods.push(this.dispfoods[i]);
+		}
+
+  }// getFoodsPage
+  
+  buildPagination(){
+		var parent = this;
+		this.totalPages = Math.ceil(this.dispfoods.length / this.pageLength);
+		$(".pagination").empty();
+		$(".pagination").append('<li _ngcontent-c2 class="page-item "><a _ngcontent-c2 class="page-link" id = "prevPage" (click) = "prevPage()">&laquo;</a></li>');
+			$("#prevPage").click(function(event){
+				parent.prevPage();
+			});					
+		for(var i=1;i<=this.totalPages;i++){
+			if(i==1){
+				$(".pagination").append('<li _ngcontent-c2 class="page-item active"><a _ngcontent-c2 class="page-link" id = "'+i+'" >'+i+'</a></li>'); 
+			}else{
+				$(".pagination").append('<li _ngcontent-c2 class="page-item "><a _ngcontent-c2 class="page-link" id = "'+i+'" >'+i+'</a></li>'); 
+			}
+			$("#"+i).click(function(event){
+				parent.getFoodsPage(parseInt(event.currentTarget.id));
+			});
+		}	
+		$(".pagination").append('<li _ngcontent-c2 class="page-item"><a _ngcontent-c2 class="page-link" id = "nextPage" (click) = "nextPage()">&raquo;</a></li>');
+			$("#nextPage").click(function(event){
+				parent.nextPage();
+			});	
+  } //buildPagination
+  
+  prevPage(){
+		if(this.curPage == 1){
+			return;
+		}else{
+			this.getFoodsPage(this.curPage-1);
+		}
+	}
+	nextPage(){
+		if(this.curPage == this.totalPages){
+			return;
+		}
+		else{
+			this.getFoodsPage(this.curPage+1);
+		}
+	}	
 
   getImageFromService(image, idx) {
     this.isImageLoading = true;
