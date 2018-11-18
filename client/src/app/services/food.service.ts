@@ -3,6 +3,7 @@ import { HttpClient} from '@angular/common/http';
 import { Menu } from '../models/menu';
 import { Cart } from '../models/cart';
 import { Observable } from 'rxjs';
+import { Order } from '../models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -74,10 +75,10 @@ export class FoodService {
     return this._http.post('http://localhost:3000/api/order/'+uid,{headers:headers});
   }
 
-  ViewOrders(uid){
+  ViewOrders(uid):Observable<Order>{
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get('http://localhost:3000/api/order/'+uid);
+    return this._http.get<Order>('http://localhost:3000/api/order/'+uid);
   }
 
   searchItem(item_type, item_name):Observable<Menu[]>{

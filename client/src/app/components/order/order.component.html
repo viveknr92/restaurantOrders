@@ -1,8 +1,8 @@
 <h1>Order History</h1>
 <hr>
 <table class="table">
-  <thead>
-    <tr class = "table-success">
+  <thead class="thead-light">
+    <tr>
         <th scope="col">Order Details </th>
         <th scope="col"> </th>
         <th scope="col">Order Total</th>
@@ -14,8 +14,8 @@
 <tr *ngFor="let food of orders">
     <th scope="row" >{{food.orderDate | uppercase}}</th>
     <table class="table table-bordered">
-        <thead>
-        <tr class = "table-success">
+        <thead class="thead-light">
+        <tr>
             <th scope="col">Item </th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
