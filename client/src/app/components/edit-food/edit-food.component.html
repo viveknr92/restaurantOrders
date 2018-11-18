@@ -1,46 +1,47 @@
-<div class ="container">
+<div class="container">
   <h1>Edit Item</h1>
   <!-- <button type="delete" class="btn btn-primary delete" (click) = "showDelete(template)"><i class="fa fa-trash fa-2x"></i></button> -->
   <hr>
-  <form (submit) = "editItem($event)" ngNativeValidate>
+  <form (submit)="editItem($event)" ngNativeValidate>
     <fieldset>
-	    <div class="form-group">
-	        <label for="name">Item Name</label>
-	        <input type="text" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)] = "food.menu.item_name" name = "food.menu.item_name" required>   
-	    </div>
-		<div class = "form-group">
-			<label for="type">Item Type</label>
-			<select [(ngModel)] = "food.menu.item_type" name = "food.menu.item_type" class ="form-control" >
-			  <option value="all">All</option>
-			  <option value="appetizer">Appetizers</option>
-			  <option value="soup">Soups and Salads</option>
-			  <option value="lunch">Lunch Specials</option>
-			  <option value="burger">Handcrafted Burgers</option>
-			  <option value="sandwich">Sandwiches and Tacos</option>
-			  <option value="pizza">Pizza</option>
-			  <option value="pasta">Pastas</option>
-			  <option value="desert">Deserts</option>
-			  <option value="beverage">Beverages</option>
-			</select>
-		</div>
-	    <div class="form-group">
-	        <label for="price">Item Price</label>
-	        <input type="text" class="form-control" id="price" [(ngModel)] = "food.menu.item_cost" name = "food.menu.item_cost" required>{{food.menu.item_type}}   
-           
+      <div class="form-group">
+        <label for="name">Item Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)]="food.menu.item_name"
+          name="food.menu.item_name" required>
       </div>
       <div class="form-group">
-	        <label for="availability">Item Availability</label>
-	        <input type="text" class="form-control" id="availability" [(ngModel)] = "food.menu.item_availability" name = "food.menu.item_availability" required>   
+        <label for="type">Item Type</label>
+        <select [(ngModel)]="food.menu.item_type" name="food.menu.item_type" class="form-control">
+          <option value="all">All</option>
+          <option value="appetizer">Appetizers</option>
+          <option value="soup">Soups and Salads</option>
+          <option value="lunch">Lunch Specials</option>
+          <option value="burger">Handcrafted Burgers</option>
+          <option value="sandwich">Sandwiches and Tacos</option>
+          <option value="pizza">Pizza</option>
+          <option value="pasta">Pastas</option>
+          <option value="desert">Deserts</option>
+          <option value="beverage">Beverages</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="price">Item Price</label>
+        <input type="text" class="form-control" id="price" [(ngModel)]="food.menu.item_cost" name="food.menu.item_cost"
+          required>{{food.menu.item_type}}
 
-	    </div>
-	    <!-- <div class="form-group">
-	        <image-upload [url]="'http://localhost:3000/upload'" (uploadFinished)="onUploadFinished($event)" buttonCaption="Select Image"
-  			dropBoxMessage="Drop Replacement Image Here" ></image-upload>
-	    </div>	 -->
-	    <!-- <img [src]="image | safeHtml" class = "img-thumbnail" style="width: 100%" />	 -->
-    
+      </div>
+      <div class="form-group">
+        <label for="availability">Item Availability</label>
+        <input type="text" class="form-control" id="availability" [(ngModel)]="food.menu.item_availability" name="food.menu.item_availability"
+          required>
+
+      </div>
+      <div class="form-group">
+        <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image">
+      </div>
+
       <button type="submit" class="btn btn-primary foot">Update Item</button>
-	  <button type="cancel" class="btn btn-secondary foot" [routerLink] = "['/menu']">Cancel</button>       
+      <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
     </fieldset>
   </form>
 </div>
@@ -65,4 +66,3 @@
 	  </div>
 	</div>
 </ng-template> -->
-

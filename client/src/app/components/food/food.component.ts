@@ -11,12 +11,20 @@ import { Menu } from 'src/app/models/menu';
   providers: [FoodService]
 })
 export class FoodComponent implements OnInit {
-  image: string;
+  file: string;
   name: string;
   type: string;
   price: number;
   availability: string;
   menu: Menu;
+  selectedFile = null;
+
+  public newinfo = {
+    menu_id:String,
+    message:String
+  };
+  
+ fileSelected: File
 
   constructor(private foodService: FoodService, private router: Router,
     private flashMessages: FlashMessagesService) { }
@@ -32,12 +40,17 @@ export class FoodComponent implements OnInit {
     };
   }
 
+  // onImageSelected(event){
+  //   this.selectedFile = event.target.files[0];
+  //   console.log(event);
+  // }
+
   addNewItem(e) {
     e.preventDefault();
     console.log("Here");
     console.log(this.name);
-    // if (this.image == undefined)
-    //   this.image = null;
+    if (this.menu.item_image == undefined)
+      this.menu.item_image = null;
     this.menu.item_name = this.name;
     this.menu.item_type = this.type;
     this.menu.item_cost = this.price;
@@ -45,6 +58,8 @@ export class FoodComponent implements OnInit {
     console.log(this.menu.item_cost);
     this.foodService.addNewItem(this.menu).subscribe(info => {
       console.log(info);
+      this.newinfo = info;
+      console.log(this.newinfo.menu_id);
       // if (info.success) {
         // console.log(info.message);
         this.flashMessages.show("Successfully added to cart", { cssClass: "alert-success", timeout: 500 });
@@ -53,11 +68,36 @@ export class FoodComponent implements OnInit {
       //   this.flashMessages.show("Failed to add item " + info.message, { cssClass: "alert-danger", timeout: 500 });
 
       // }
+        //function to 
+      
+    //console.log(this.file);
+    this.foodService.uploadFile(this.fileSelected,this.newinfo.menu_id)
+   .subscribe( (response) => {
+      console.log('IMAGE UPLOADED TO DATABASE');
+      return response;
+    },
+     (error) => {
+       console.log('FAILED TO UPLOAD IMAGE TO DB');
+     });
     })
   }
 
-  // onUploadFinished(event)  {
-	// 	this.image = JSON.parse(event.serverResponse._body).filename;
-  // }
+  onUploadFinished(event)  {
+    console.log(event);
+    console.log("FILE UPLOAD SUCCESSFUL");
+    this.fileSelected = event.target.files[0];
+  //   const fileSelected: File = event.target.files[0];
+  //   //console.log(this.file);
+  //   console.log(fid);
+  //   this.foodService.uploadFile(fileSelected,fid)
+  //  .subscribe( (response) => {
+  //     console.log('set any success actions...');
+  //     return response;
+  //   },
+  //    (error) => {
+  //      console.log('set any error actions...');
+  //    });
+	// 	// this.file = JSON.parse(event.serverResponse._body).filename;
+  }
 
 }
