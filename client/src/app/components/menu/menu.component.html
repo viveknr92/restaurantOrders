@@ -35,7 +35,8 @@
           </ng-template>
           <div class="card-body">
             <h5 class="card-title">{{m.item_name}}</h5>
-            <p class="card-text">Price: {{ m.item_cost}}</p>
+            <p class="card-text">Price: {{ m.item_cost | currency}} </p>
+            <p class="card-text">Availiblity: {{ m.item_availability}}</p>
             <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
 
             <hr />
@@ -63,7 +64,7 @@
     <div class="sidebarParent">
       <div class="sidebar">
         <h3>Cart </h3>
-        <div *ngIf="cart.total_cost != 0 ;else elseblock">
+        <div *ngIf="cart && cart.total_cost != 0 ;else elseblock">
           <table class="table table-light">
             <thead class="thead-light">
               <tr>
