@@ -30,7 +30,7 @@ export class FoodService {
   addNewItem(newItem){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.post('http://localhost:3000/api/menu', newItem);
+    return this._http.post<any>('http://localhost:3000/api/menu', newItem);
       // .map(res =>res.json());  
   }
 
@@ -84,6 +84,15 @@ export class FoodService {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this._http.get<Menu[]>('http://localhost:3000/api/menu/'+ item_type + "/" + item_name);
+  }
+
+  public uploadFile(fileToUpload: File,fid) {
+    const item_image = new FormData();
+    console.log(fileToUpload);
+    item_image.append('item_image', fileToUpload,fileToUpload.name);   
+    return this._http.post<any>('http://localhost:3000/api/menu/image/'+fid, item_image); //note: no HttpHeaders passed as 3d param to POST!
+                                             //So no Content-Type constructed manually.
+                                             //Angular 4.x-6.x does it automatically.
   }
 
 }

@@ -62,6 +62,14 @@ export class EditFoodComponent implements OnInit {
       // }else{
         // this.flashMessages.show("Something went wrong",{cssClass : "alert-danger", timeout: 2000});
       // }
+      // this.foodService.uploadFile(this.fileSelected,this.newinfo.menu_id)
+      // .subscribe( (response) => {
+      //    console.log('IMAGE UPLOADED TO DATABASE');
+      //    return response;
+      //  },
+      //   (error) => {
+      //     console.log('FAILED TO UPLOAD IMAGE TO DB');
+      //   });
     })		
   }
 

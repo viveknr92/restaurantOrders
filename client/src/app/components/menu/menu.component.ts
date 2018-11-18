@@ -64,6 +64,7 @@ export class MenuComponent implements OnInit {
       data => {
         let m: Menu[];
         m = data;
+        this.menu = [];
         console.log(m);
         console.log(this.globals.admin);
         if (localStorage.getItem("role") === "admin") {
