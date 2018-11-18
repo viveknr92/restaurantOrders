@@ -12,10 +12,10 @@ export class FoodService {
   _url = "http://localhost:3000/api/menu/all/all";
   constructor( private _http : HttpClient) { }
 
-  getAvailableFood(fid){
+  getAvailableFood(fid):Observable<any>{
     var url = 'http://localhost:3000/api/menu/'+fid;
     console.log(url);
-    return this._http.get(url);       
+    return this._http.get<any>(url);       
   } 
 
   getMenu():Observable<Menu[]>  {

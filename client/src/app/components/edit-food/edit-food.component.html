@@ -6,11 +6,11 @@
     <fieldset>
 	    <div class="form-group">
 	        <label for="name">Item Name</label>
-	        <input type="text" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)] = "name" name = "name" required>   
+	        <input type="text" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)] = "food.menu.item_name" name = "food.menu.item_name" required>   
 	    </div>
 		<div class = "form-group">
 			<label for="type">Item Type</label>
-			<select [(ngModel)] = "type" name = "type" class ="form-control" >
+			<select [(ngModel)] = "food.menu.item_type" name = "food.menu.item_type" class ="form-control" >
 			  <option value="all">All</option>
 			  <option value="appetizer">Appetizers</option>
 			  <option value="soup">Soups and Salads</option>
@@ -25,7 +25,12 @@
 		</div>
 	    <div class="form-group">
 	        <label for="price">Item Price</label>
-	        <input type="text" class="form-control" id="price" placeholder="Enter price of food" [(ngModel)] = "price" name = "price" required>   
+	        <input type="text" class="form-control" id="price" [(ngModel)] = "food.menu.item_cost" name = "food.menu.item_cost" required>{{food.menu.item_type}}   
+           
+      </div>
+      <div class="form-group">
+	        <label for="availability">Item Availability</label>
+	        <input type="text" class="form-control" id="availability" [(ngModel)] = "food.menu.item_availability" name = "food.menu.item_availability" required>   
 
 	    </div>
 	    <!-- <div class="form-group">

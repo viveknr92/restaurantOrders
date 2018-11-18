@@ -12,13 +12,17 @@ import { FlashMessagesService } from 'angular2-flash-messages/module';
 export class EditFoodComponent implements OnInit {
 
   image: any;
-  food: Menu;
   name: string;
   type: string;
   price: number;
+  availability: string;
   fid: string;
   // modalRef: BsModalRef;
-
+  public food={
+    success:Boolean,
+    menu:{},
+    message:String
+  };
 
   constructor(private foodService: FoodService,
     private flashMessages: FlashMessagesService,
@@ -26,42 +30,32 @@ export class EditFoodComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.food = {
-      _id: null,
-      item_name: null,
-      item_cost: null,
-      item_type: null,
-      item_availability: null,
-      item_image: null
-    };
     this.route.params.subscribe(params => {
-      console.log(params['_id']);
-      this.fid = params['_id'];
-      this.foodService.getAvailableFood(localStorage.getItem("fid")).subscribe(info => {
-        // this.food = info.menu;
-      //   this.foodService.fetchImage(info.food.image).subscribe(data => {
-      //     let reader = new FileReader();
-      //     reader.addEventListener("load", () => {
-      //       this.image = reader.result;
-      //     }, false);
+      console.log(params['id']);
+      this.fid = params['id'];
+      console.log(this.fid);
+      this.foodService.getAvailableFood(this.fid).subscribe(info => {
+        this.food = info;
+      //  console.log(this.food);
+        // this.foodService.fetchImage(this.food.item_image).subscribe(data => {
+        //   let reader = new FileReader();
+        //   reader.addEventListener("load", () => {
+        //     this.image = reader.result;
+        //   }, false);
 
-      //     if (data) {
-      //       reader.readAsDataURL(data);
-      //     }
-      //   }, error => {
-      //     console.log(error);
-      //   });
+        //   if (data) {
+        //     reader.readAsDataURL(data);
+        //   }
+        // }, error => {
+        //   console.log(error);
+        // });
       })
     });
   }
 
   editItem(e){
     e.preventDefault();
-    this.food.item_name = this.name;
-    this.food.item_type = this.type;
-    this.food.item_cost = this.price;
-    this.food.item_availability = "Y";
-    this.foodService.editItem(localStorage.getItem("fid")).subscribe(info=>{
+    this.foodService.editItem(this.food.menu).subscribe(info=>{
       // if(info.success == true){
         this.flashMessages.show("Successfully Updated Item ",{cssClass : "alert-success", timeout: 2000});
         this.router.navigate(['/menu']);		

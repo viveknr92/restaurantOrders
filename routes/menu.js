@@ -98,12 +98,8 @@ router.post("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
     Menu.findById(req.params.id, function (err, menu) {
         if (err) return res.status(500).send({ err });
-        if (menu.item_availability === "Y") {
-            res.send({ success: true, message: "Menu item avaliable" });
-        }
-        else {
-            res.send({ success: false, message: "Menu item not avaliable" });
-        }
+        
+            res.send({ success: true,menu: menu,message: "Menu item avaliable" });
     })
 });
 
