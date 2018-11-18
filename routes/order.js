@@ -45,6 +45,8 @@ router.get("/:user_id", (req, res, next) => {
                 //console.log(order_details);
                 order_array.push(order_details);
                 if (order_array.length === user.orders.length){
+                    console.log("BEFORe ORDER ARRAY----------"+order_array);
+                    order_array.sort(compare);
                     console.log("ORDER ARRAY----------"+order_array);
                     res.json(order_array);
                 }
@@ -52,6 +54,14 @@ router.get("/:user_id", (req, res, next) => {
         });
     })
 });
+
+function compare(a,b) {
+    if (a.orderDate < b.orderDate)
+      return 1;
+    if (a.orderDate > b.orderDate)
+      return -1;
+    return 0;
+  }
 
 router.post("/:user_id", (req, res, next) => {
     User.findById(req.params.user_id, function (err, user) {
