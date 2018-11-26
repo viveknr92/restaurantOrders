@@ -11,11 +11,11 @@
           <br>
           <label for="uname">Username:</label>
           <input type="text" class="form-control" name="user_name" placeholder="Enter Username" [(ngModel)]="user_name">
-
+          
           <br />
 
           <label for="psw">Password :</label>
-          <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
+          <input type="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
 
           <br />
 
