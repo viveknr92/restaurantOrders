@@ -1,7 +1,7 @@
 <!-- <div class="jumbotron big-banner"> -->
   <div class="container-fluid" class=bg>
   <div class="container-fluid row">
-    <div class="col-md-7">
+    <div class="col-md-9">
       <h1>Menu</h1>
       <a *ngIf="globals.admin" [routerLink]="['/food']" class="delete btn btn-primary pull-right text-light">Add item<i
           class="fa fa-edit fa-3x" aria-hidden="true"></i></a>
@@ -38,7 +38,7 @@
             <div class="card-body">
               <h5 class="card-title">{{m.item_name}}</h5>
               <p class="card-text">Price: {{ m.item_cost | currency}} </p>
-              <p class="card-text">Availiblity: {{ m.item_availability}}</p>
+              <p *ngIf="globals.admin" class="card-text">Availiblity: {{ m.item_availability}}</p>
               <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
 
               <hr />
@@ -62,7 +62,7 @@
 
     </div>
 
-    <div class="col-md-5" style="border-left:2px solid grey">
+    <div class="col-md-3" style="border-left:2px solid grey">
       <div class="sidebarParent">
         <div class="sidebar">
           <h3>Cart</h3>
@@ -96,7 +96,7 @@
             <input type="button" (click)="PlaceOrder()" class="btn btn-primary" value="PLACE ORDER">
           </div>
           <ng-template #elseblock>
-            <p>No items in Cart</p>
+            <p id="noitems">No items in Cart</p>
             <button (click)="PlaceOrder()" class="btn btn-primary disabled" value="PLACE ORDER" [disabled]="true">PLACE
               ORDER</button>
           </ng-template>
