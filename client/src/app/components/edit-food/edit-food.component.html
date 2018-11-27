@@ -73,14 +73,13 @@
                 <br>
                 <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image" accept="image/jpeg"
                   id="filechoose">
-                
-                
               </div>
-
-              <button type="submit" class="btn btn-primary foot" [disabled]="editfood.form.invalid">Update Item</button>
-              <span> &nbsp; </span>
-              <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary foot" [disabled]="editfood.form.invalid">Update Item</button>
+                <span> &nbsp; </span>
+                <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
                <br>
+              </div>
             </fieldset>
           </div>
         </form>

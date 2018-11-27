@@ -69,9 +69,9 @@
               </div>
               <br>
               <input type="hidden" class="form-control" name="role" [(ngModel)]="role" value="user" #role_model="ngModel">
-              <button class="btn btn-primary" type="submit" [disabled]="!user_form.form.valid || !comparePassword()">Register</button>
-              <br />
-              <br />
+              <div class="card-footer">
+                <button class="btn btn-primary" type="submit" [disabled]="!user_form.form.valid || !comparePassword()">Register</button>
+              </div>
             </div>
           </form>
         </div>
