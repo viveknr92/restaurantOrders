@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
     private flashMessage: FlashMessagesService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { 
+    
   }
 
   Login() {

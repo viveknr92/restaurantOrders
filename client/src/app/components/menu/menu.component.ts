@@ -54,6 +54,7 @@ export class MenuComponent implements OnInit {
     this.itemSearchType = "all";
     this.itemSearchName = "";
     this.pageLength = 2;
+    this._authService.storeUserRole(localStorage.getItem("role"));
     this.fetchFoods();
   }
 
@@ -103,7 +104,7 @@ export class MenuComponent implements OnInit {
         console.log(" CART ITEMS " + this.cart);
     });//_foodservice.getCart
 
-
+    console.log("GLOBALS-----------"+ this.globals.admin);
   }// end of fetch foods
 
   getFoodsPage(pageNum){

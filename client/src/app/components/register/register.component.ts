@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   password:string;
   mail_id:string;
   role:string;
-  
+  confirm_password:string;
   
 
   constructor(
@@ -26,7 +26,15 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.role="user";
   }
-
+  
+  comparePassword(){
+    if (this.confirm_password === this.password){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   onSubmit() {
     const userInfo={
       user_name:this.user_name,
@@ -39,9 +47,8 @@ export class RegisterComponent implements OnInit {
     .subscribe(
       res => {
         if(res){   //is this condition fine to check??
-         console.log("Login Success");
          localStorage.setItem("token", res.token);
-         this.flashMessage.show("You are now registered. Verification mail has been sent to the email given. Please Verify.", {cssClass : 'alert-success', timeout : 4000})
+         this.flashMessage.show("You are now registered", {cssClass : 'alert-success', timeout : 4000})
          this.route.navigate(['login']);
         }},
       err => console.log(err)

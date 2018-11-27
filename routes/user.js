@@ -46,7 +46,7 @@ router.post("/login", (req, res, next) => {
                     console.log("result : " + result);
                     if(result){
                         let payload = {subject:users};
-                        let token = jwt.sign(payload, "secretKey");
+                        let token = jwt.sign(payload, "secretKey", {expiresIn: '1d'});
                         res.status(200).send({success : true, token : token, user : users});
                     }
                     else{
