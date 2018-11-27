@@ -1,71 +1,70 @@
 <div class="jumbotron big-banner">
-<div class="container">
-  <h1>Add New Item</h1>
-  <hr>
-  <form #addfood="ngForm" (submit)="addNewItem($event)" noValidate>
-    <fieldset>
-      <div class="form-group">
-        <label for="name">Item Name</label>
-        <input type="text" pattern="[-\w\s]+" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)]="name"
-          name="name" required #itemname="ngModel" [class.is-invalid]="itemname.invalid && itemname.touched">
+  <div class="container">
+    <h1>Add New Item</h1>
+    <hr>
+    <form #addfood="ngForm" (submit)="addNewItem($event)" noValidate>
+      <fieldset>
+        <div class="form-group">
+          <label for="name">Item Name</label>
+          <input type="text" pattern="[-\w\s]+" class="form-control" id="name" placeholder="Enter food Name"
+            [(ngModel)]="name" name="name" required #itemname="ngModel" [class.is-invalid]="itemname.invalid && itemname.touched">
 
-        <div *ngIf="itemname.invalid && (itemname.dirty || itemname.touched)" class="alert alert-danger">
-          <div *ngIf="itemname.errors.required ; else invalid_msg_itemname">
-            Item name is required.
+          <div *ngIf="itemname.invalid && (itemname.dirty || itemname.touched)" class="alert alert-danger">
+            <div *ngIf="itemname.errors.required ; else invalid_msg_itemname">
+              Item name is required.
+            </div>
+            <ng-template #invalid_msg_itemname>
+              Item name should only contain aphanumeric characters
+            </ng-template>
           </div>
-          <ng-template #invalid_msg_itemname>
-            Item name should only contain aphanumeric characters
-          </ng-template>
-        </div>
 
-      </div>
-      <div class="form-group">
-        <label for="type">Item Type</label>
-        <select [(ngModel)]="type" name="type" class="form-control" #itemtype="ngModel" [class.is-invalid]="itemtype.invalid && itemtype.touched">
-          <!-- <option value="" selected disabled hidden>Choose here</option> -->
-          <option value="appetizer">Appetizers</option>
-          <option value="soup">Soups and Salads</option>
-          <option value="lunch">Lunch Specials</option>
-          <option value="burger">Handcrafted Burgers</option>
-          <option value="sandwich">Sandwiches and Tacos</option>
-          <option value="pizza">Pizza</option>
-          <option value="pasta">Pastas</option>
-          <option value="desert">Deserts</option>
-          <option value="beverage">Beverages</option>
-        </select>
-        
-        <!-- <div *ngIf="itemtype.errors.required && itemtype.touched" class="alert alert-danger">
+        </div>
+        <div class="form-group">
+          <label for="type">Item Type</label>
+          <select [(ngModel)]="type" name="type" class="form-control" #itemtype="ngModel" [class.is-invalid]="itemtype.invalid && itemtype.touched">
+            <!-- <option value="" selected disabled hidden>Choose here</option> -->
+            <option value="appetizer">Appetizers</option>
+            <option value="soup">Soups and Salads</option>
+            <option value="lunch">Lunch Specials</option>
+            <option value="burger">Handcrafted Burgers</option>
+            <option value="sandwich">Sandwiches and Tacos</option>
+            <option value="pizza">Pizza</option>
+            <option value="pasta">Pastas</option>
+            <option value="desert">Deserts</option>
+            <option value="beverage">Beverages</option>
+          </select>
+
+          <!-- <div *ngIf="itemtype.errors.required && itemtype.touched" class="alert alert-danger">
           Item type is required.
         </div> -->
 
-      </div>
-      <div class="form-group">
-        <label for="price">Item Price</label>
-        <input type="text" class="form-control" id="price" placeholder="Enter price of food" [(ngModel)]="price" name="price"
-          required pattern="[0-9]+(\.[0-9][0-9])?" #itemcost="ngModel" [class.is-invalid]="itemcost.invalid && itemcost.touched">
+        </div>
+        <div class="form-group">
+          <label for="price">Item Price</label>
+          <input type="text" class="form-control" id="price" placeholder="Enter price of food" [(ngModel)]="price" name="price"
+            required pattern="[0-9]+(\.[0-9][0-9])?" #itemcost="ngModel" [class.is-invalid]="itemcost.invalid && itemcost.touched">
 
-        <div *ngIf="itemcost.invalid && (itemcost.dirty || itemcost.touched)">
-          <div *ngIf="itemcost.errors.required ; else invalid_msg_itemcost" class="alert alert-danger">
-            Item cost is required.
-          </div>
-          <ng-template #invalid_msg_itemcost>
-            <div *ngIf="itemcost.invalid && itemcost.touched" class="alert alert-danger">
-              Item Cost can only contain currency
+          <div *ngIf="itemcost.invalid && (itemcost.dirty || itemcost.touched)">
+            <div *ngIf="itemcost.errors.required ; else invalid_msg_itemcost" class="alert alert-danger">
+              Item cost is required.
             </div>
-          </ng-template>
+            <ng-template #invalid_msg_itemcost>
+              <div *ngIf="itemcost.invalid && itemcost.touched" class="alert alert-danger">
+                Item Cost can only contain currency
+              </div>
+            </ng-template>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label for="item_image">Upload new image</label>
+          <br>
+          <input type="file" (change)="onUploadFinished($event)" name="item_image">
         </div>
 
-      </div>
-      <div class="form-group">
-        <label for="item_image">Upload new image</label>
-        <br>
-        <input type="file" (change)="onUploadFinished($event)" name="item_image">
-      </div>
-
-      <button type="submit" class="btn btn-primary" [disabled]="addfood.form.invalid">Add food</button>
-      <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
-    </fieldset>
-  </form>
+        <button type="submit" class="btn btn-primary" [disabled]="addfood.form.invalid">Add food</button>
+        <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
+      </fieldset>
+    </form>
   </div>
-</div>
 </div>
