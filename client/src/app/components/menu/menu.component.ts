@@ -53,7 +53,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.itemSearchType = "all";
     this.itemSearchName = "";
-    this.pageLength = 2;
+    this.pageLength = 6;
     this._authService.storeUserRole(localStorage.getItem("role"));
     this.fetchFoods();
   }

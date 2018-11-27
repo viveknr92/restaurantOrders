@@ -10,79 +10,83 @@
         <!-- <button type="delete" class="btn btn-primary delete" (click) = "showDelete(template)"><i class="fa fa-trash fa-2x"></i></button> -->
         <form #editfood="ngForm" (submit)="editItem($event)" novalidate>
           <div class="container">
-          <fieldset>
-            <div class="form-group">
-              <br>
-              <label for="name">Item Name:</label>
-              <input type="text" pattern="[-\w\s]+" class="form-control" id="name" placeholder="Enter food Name"
-                [(ngModel)]="food.menu.item_name" name="food.menu.item_name" required #itemname="ngModel"
-                [class.is-invalid]="itemname.invalid && itemname.touched">
+            <fieldset>
+              <div class="form-group">
+                <br>
+                <label for="name">Item Name:</label>
+                <input type="text" pattern="[-\w\s]+" class="form-control" id="name" placeholder="Enter food Name"
+                  [(ngModel)]="food.menu.item_name" name="food.menu.item_name" required #itemname="ngModel"
+                  [class.is-invalid]="itemname.invalid && itemname.touched">
 
-              <div *ngIf="itemname.invalid && (itemname.dirty || itemname.touched)" class="alert alert-danger">
-                <div *ngIf="itemname.errors.required ; else invalid_msg_itemname">
-                  Item name is required.
-                </div>
-                <ng-template #invalid_msg_itemname>
-                  Item name should only contain aphanumeric characters
-                </ng-template>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="type">Item Type:</label>
-              <select [(ngModel)]="food.menu.item_type" name="food.menu.item_type" class="form-control">
-                <option value="appetizer">Appetizers</option>
-                <option value="soup">Soups and Salads</option>
-                <option value="lunch">Lunch Specials</option>
-                <option value="burger">Handcrafted Burgers</option>
-                <option value="sandwich">Sandwiches and Tacos</option>
-                <option value="pizza">Pizza</option>
-                <option value="pasta">Pastas</option>
-                <option value="desert">Deserts</option>
-                <option value="beverage">Beverages</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="price">Item Price:</label>
-              <input type="text" class="form-control" id="price" [(ngModel)]="food.menu.item_cost" name="food.menu.item_cost"
-                required pattern="[0-9]+(\.[0-9][0-9])?" #itemcost="ngModel" [class.is-invalid]="itemcost.invalid && itemcost.touched">
-
-              <div *ngIf="itemcost.invalid && (itemcost.dirty || itemcost.touched)">
-                <div *ngIf="itemcost.errors.required ; else invalid_msg_itemcost" class="alert alert-danger">
-                  Item cost is required.
-                </div>
-                <ng-template #invalid_msg_itemcost>
-                  <div *ngIf="itemcost.invalid && itemcost.touched" class="alert alert-danger">
-                    Item Cost can only contain currency
+                <div *ngIf="itemname.invalid && (itemname.dirty || itemname.touched)" class="alert alert-danger">
+                  <div *ngIf="itemname.errors.required ; else invalid_msg_itemname">
+                    Item name is required.
                   </div>
-                </ng-template>
+                  <ng-template #invalid_msg_itemname>
+                    Item name should only contain aphanumeric characters
+                  </ng-template>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="type">Item Type:</label>
+                <select [(ngModel)]="food.menu.item_type" name="food.menu.item_type" class="form-control">
+                  <option value="appetizer">Appetizers</option>
+                  <option value="soup">Soups and Salads</option>
+                  <option value="lunch">Lunch Specials</option>
+                  <option value="burger">Handcrafted Burgers</option>
+                  <option value="sandwich">Sandwiches and Tacos</option>
+                  <option value="pizza">Pizza</option>
+                  <option value="pasta">Pastas</option>
+                  <option value="desert">Deserts</option>
+                  <option value="beverage">Beverages</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="price">Item Price:</label>
+                <input type="text" class="form-control" id="price" [(ngModel)]="food.menu.item_cost" name="food.menu.item_cost"
+                  required pattern="[0-9]+(\.[0-9][0-9])?" #itemcost="ngModel" [class.is-invalid]="itemcost.invalid && itemcost.touched">
+
+                <div *ngIf="itemcost.invalid && (itemcost.dirty || itemcost.touched)">
+                  <div *ngIf="itemcost.errors.required ; else invalid_msg_itemcost" class="alert alert-danger">
+                    Item cost is required.
+                  </div>
+                  <ng-template #invalid_msg_itemcost>
+                    <div *ngIf="itemcost.invalid && itemcost.touched" class="alert alert-danger">
+                      Item Cost can only contain currency
+                    </div>
+                  </ng-template>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label for="availability">Item Availability:</label>
+                <!-- <input type="radio" class="form-control" id="availability" [(ngModel)]="food.menu.item_availability" name="food.menu.item_availability"
+          required> -->
+                <select [(ngModel)]="food.menu.item_availability" name="food.menu.item_availability" class="form-control"
+                  id="availability">
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="item_image">Upload new image:</label>
+                <br>
+                <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image" accept="image/jpeg"
+                  id="filechoose">
+                
+                
               </div>
 
-            </div>
-            <div class="form-group">
-              <label for="availability">Item Availability:</label>
-              <!-- <input type="radio" class="form-control" id="availability" [(ngModel)]="food.menu.item_availability" name="food.menu.item_availability"
-          required> -->
-        <select [(ngModel)]="food.menu.item_availability" name="food.menu.item_availability" class="form-control" id="availability">
-            <option value="Y">Y</option>
-            <option value="N">N</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image"  accept="image/jpeg" id="filechoose">
-        <label for="item_image">Upload new image</label>
-        <br>
-      </div>
-
-            <button type="submit" class="btn btn-primary foot" [disabled]="editfood.form.invalid">Update Item</button>
-            <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
-          </fieldset>
-        </div>
+              <button type="submit" class="btn btn-primary foot" [disabled]="editfood.form.invalid">Update Item</button>
+              <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
+               <br>
+            </fieldset>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-<!-- </div> -->
 
 <!-- <ng-template #template>
 <div class="modal-md">

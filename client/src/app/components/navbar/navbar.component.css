@@ -41,6 +41,9 @@
   }
 
   .topnav-centered a{
+    font-size: 17px;
+    font-weight: bold;
+    font-variant: small-caps;
     position: relative;
     left: 40%;
     color: white;
