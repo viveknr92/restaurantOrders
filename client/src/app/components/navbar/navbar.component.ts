@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(private _authService:AuthService, private globals : Globals,private router: Router,) {
+  isCollapsed : Boolean;
+  constructor(private _authService:AuthService, private globals : Globals,private router: Router) {
     
   }
 
   ngOnInit() {
+    this.isCollapsed = true;
   }
 }

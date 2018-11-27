@@ -1,37 +1,47 @@
-<div class="row pt-5">
-  <div class="col-md-6 mx-auto">
-    <div class="card rounded-0">
-      <div class="card-header">
-    <label>
-      <h3>Register</h3>
-    </label>
-  </div>
-    <form #user_form="ngForm" (ngSubmit)="onSubmit()" novalidate>
-      <div class="container">
-        <!-- (from login component)
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<body>
+
+  <div class="jumbotron big-banner">
+    <div class="row pt-5">
+      <div class="col-md-6 mx-auto">
+        <div class="card rounded-0">
+          <div class="card-header">
+            <label>
+              <h3>Register</h3>
+            </label>
+          </div>
+          <form #user_form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="container">
+              <!-- (from login component)
     {{user_form.value | json}}
     <hr />
     {{userdataModel | json}} -->
-        <br>
-        <label>Username:</label>
-        <input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control"
-          name="user_name" placeholder="Enter Username" [(ngModel)]="user_name">
+              <br>
+              <label>Username:</label>
+              <input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control"
+                name="user_name" placeholder="Enter Username" [(ngModel)]="user_name">
 
-        <br />
-        <label>Mail id:</label>
-        <input type="email" class="form-control" name="mail_id" placeholder="Enter Mail Id" [(ngModel)]="mail_id">
+              <br />
+              <label>Mail id:</label>
+              <input type="email" class="form-control" name="mail_id" placeholder="Enter Mail Id" [(ngModel)]="mail_id">
 
-        <br />
-        <label>Password :</label>
-        <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
+              <br />
+              <label>Password :</label>
+              <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
 
-        <br />
-        <input type="hidden" class="form-control" name="role" [(ngModel)]="role" value="user">
+              <br />
+              <input type="hidden" class="form-control" name="role" [(ngModel)]="role" value="user">
 
-        <button class="btn btn-primary" type="submit">Register</button>
-        <br />
+              <button class="btn btn-primary" type="submit">Register</button>
+              <br />
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
-  </div>
-</div>
+</body>
+
+</html>

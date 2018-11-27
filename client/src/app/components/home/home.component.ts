@@ -12,4 +12,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUrl() {
+    return "url('http://127.0.0.1:8887/img.jpeg')";
+  }
+
 }

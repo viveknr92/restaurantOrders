@@ -1,12 +1,31 @@
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container">
-    <a href="#" class="navbar-brand"> XYZ Restaurant</a>
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<body>
+  <div class="topnav">
+
+    <a class="active" href="#home">Home</a>
+
+
+    <div class="topnav-centered"> 
+        <a>Restaurant</a>
+    </div>
+
+    <!-- <a href="#news">News</a>
+    <a href="#contact">Contact</a> -->
+    <div class="topnav-right">
+      <a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout</a>
+      <a *ngIf="! _authService.loggedIn()" [routerLink]="['/login']">Login</a>
+      <a *ngIf="! _authService.loggedIn()" [routerLink]="['/register']">Register</a>
+    </div>
   </div>
-  <ul class="nav">
+
+</body>
+
+</html>
+
+<!-- <ul class="nav">
     <li class="nav-link"><a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout</a></li>
     <li class="nav-link"><a *ngIf="! _authService.loggedIn()" [routerLink]="['/login']">Login</a></li>
     <li class="nav-link"><a *ngIf="! _authService.loggedIn()" [routerLink]="['/register']">Register</a></li>
-  </ul>
-
-</nav>
-
+  </ul> -->

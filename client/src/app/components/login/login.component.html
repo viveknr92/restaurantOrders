@@ -1,28 +1,37 @@
-<div class="row pt-5">
-  <div class="col-md-6 mx-auto">
-    <div class="card rounded-0">
-      <div class="card-header">
-        <label>
-          <h3>Login</h3>
-        </label>
-      </div>
-      <form #user_form="ngForm" (ngSubmit)="Login()" >
-        <div class="container">
-          <br>
-          <label for="uname">Username:</label>
-          <input type="text" class="form-control" name="user_name" placeholder="Enter Username" [(ngModel)]="user_name">
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-          <br />
+<body>
+  <div class="jumbotron big-banner">
+    <div class="row pt-5">
+      <div class="col-md-6 mx-auto">
+        <div class="card rounded-0">
+          <div class="card-header">
+            <label>
+              <h3>Login</h3>
+            </label>
+          </div>
+          <form #user_form="ngForm" (ngSubmit)="Login()">
+            <div class="container">
+              <br>
+              <label for="uname">Username:</label>
+              <input type="text" class="form-control" name="user_name" placeholder="Enter Username" [(ngModel)]="user_name">
 
-          <label for="psw">Password :</label>
-          <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
+              <br />
 
-          <br />
+              <label for="psw">Password :</label>
+              <input type="password" class="form-control" name="password" placeholder="Enter Password" [(ngModel)]="password">
 
-          <button class="btn btn-primary" type="submit">Login</button>
-          <br />
+              <br />
+
+              <button class="btn btn-primary" type="submit">Login</button>
+              <br />
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+</body>
+
+</html>
