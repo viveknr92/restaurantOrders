@@ -1,28 +1,20 @@
-<html>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="topnav">
 
-<body>
-  <div class="topnav">
-
-    <a class="active" href="#home">Home</a>
+  <a class="active" href="#home">Home</a>
 
 
-    <div class="topnav-centered"> 
-        <a>Restaurant</a>
-    </div>
-
-    <!-- <a href="#news">News</a>
-    <a href="#contact">Contact</a> -->
-    <div class="topnav-right">
-      <a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout</a>
-      <a *ngIf="! _authService.loggedIn()" [routerLink]="['/login']">Login</a>
-      <a *ngIf="! _authService.loggedIn()" [routerLink]="['/register']">Register</a>
-    </div>
+  <div class="topnav-centered">
+    <a>Restaurant</a>
   </div>
 
-</body>
-
-</html>
+  <!-- <a href="#news">News</a>
+    <a href="#contact">Contact</a> -->
+  <div class="topnav-right">
+    <a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout</a>
+    <a *ngIf="! _authService.loggedIn()" [routerLink]="['/login']">Login</a>
+    <a *ngIf="! _authService.loggedIn()" [routerLink]="['/register']">Register</a>
+  </div>
+</div>
 
 <!-- <ul class="nav">
     <li class="nav-link"><a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout</a></li>
