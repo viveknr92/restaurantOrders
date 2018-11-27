@@ -33,21 +33,22 @@
           <div class="card text-center" style="width: 18rem;">
             <img [src]="m.item_image" alt="Place image title" *ngIf="m.item_image && !isImageLoading; else noImageFound"
               class="card-img-top" style="height:200px">
-            <ng-template #noImageFound><img src="../../../assets/1.jpg" alt="Fallbackimage" class="card-img-top">
+            <ng-template #noImageFound><img src="../../../assets/1.jpg" alt="Fallbackimage" class="card-img-top" style="height:200px">
             </ng-template>
             <div class="card-body">
               <h5 class="card-title">{{m.item_name}}</h5>
               <p class="card-text">Price: {{ m.item_cost | currency}} </p>
-              <p *ngIf="globals.admin && m.item_availability == 'Y'" class="card-text">Available</p>
-              <p *ngIf="globals.admin && m.item_availability == 'N'" class="card-text">Not Available</p>
-              <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
-
-              <hr />
-              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light" [routerLink]="['/edit-food', m._id]">Edit<i
-                  class="fa fa-edit fa-3x" aria-hidden="true"></i></a>
-              <a *ngIf="globals.admin" class="delete btn btn-primary pull-right text-light" (click)="deleteItem(m._id)">Delete<i
-                  class="fa fa-edit fa-3x" aria-hidden="true"></i>
-              </a>
+              <p *ngIf="globals.admin && m.item_availability == 'Y'" class="card-text text-success">Available</p>
+              <p *ngIf="globals.admin && m.item_availability == 'N'" class="card-text text-danger">Not Available</p>
+              <button [disabled]="m.item_availability == 'N'" class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</button>
+              <div *ngIf="globals.admin" class="card-text">
+                <br>
+                <button class="btn btn-primary pull-right text-light btn-sm" [routerLink]="['/edit-food', m._id]">Edit<i
+                    class="fa fa-edit fa-3x" aria-hidden="true"></i></button><span> &nbsp; </span>
+                <button [disabled]="m.item_availability == 'N'" class="btn-sm btn btn-danger pull-right text-light" (click)="deleteItem(m._id)">Delete<i
+                    class="fa fa-edit fa-3x" aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
