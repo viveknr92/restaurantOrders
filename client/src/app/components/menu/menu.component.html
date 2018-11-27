@@ -38,7 +38,8 @@
             <div class="card-body">
               <h5 class="card-title">{{m.item_name}}</h5>
               <p class="card-text">Price: {{ m.item_cost | currency}} </p>
-              <p *ngIf="globals.admin" class="card-text">Availiblity: {{ m.item_availability}}</p>
+              <p *ngIf="globals.admin && m.item_availability == 'Y'" class="card-text">Available</p>
+              <p *ngIf="globals.admin && m.item_availability == 'N'" class="card-text">Not Available</p>
               <a class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</a>
 
               <hr />
