@@ -1,6 +1,6 @@
 <div class="topnav">
 
-  <a class="active" href="#home">Home</a>
+  <a class="active" *ngIf="!_authService.loggedIn()" [routerLink]="['/home']">Home</a>
 
 
   <div class="topnav-centered">
