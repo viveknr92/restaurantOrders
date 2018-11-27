@@ -1,3 +1,4 @@
+<div class="container-fluid" class=bg>
 <h1>Order History</h1>
 <hr>
 <table class="table table-condensed" style="border-collapse:collapse;">
@@ -12,7 +13,7 @@
     <tbody>
         
 <tr *ngFor="let food of orders">
-    <th scope="row" >{{food.orderDate | date:'medium' | uppercase}}</th>
+    <th scope="row" id="date">{{food.orderDate | date:'medium' | uppercase}}</th>
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
@@ -30,7 +31,7 @@
         </tbody>
       </table>
       
-    <td>
+    <td id="cost">
       $ {{food.total_cost}}
     </td>
     <td></td>
@@ -41,3 +42,4 @@
 </table>
 
 <input type="button" [routerLink]="['/menu']" class="btn btn-primary"value="Continue Ordering">
+</div>

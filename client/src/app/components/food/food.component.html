@@ -1,39 +1,40 @@
-<div class="container">
-  <h1>Add New Item</h1>
-  <hr>
-  <form (submit)="addNewItem($event)" ngNativeValidate>
-    <fieldset>
-      <div class="form-group">
-        <label for="name">Item Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)]="name" name="name"
-          required>
-      </div>
-      <div class="form-group">
-        <label for="type">Item Type</label>
-        <select [(ngModel)]="type" name="type" class="form-control" placeholder="Enter food Name">
-          <option value="appetizer">Appetizers</option>
-          <option value="soup">Soups and Salads</option>
-          <option value="lunch">Lunch Specials</option>
-          <option value="burger">Handcrafted Burgers</option>
-          <option value="sandwich">Sandwiches and Tacos</option>
-          <option value="pizza">Pizza</option>
-          <option value="pasta">Pastas</option>
-          <option value="desert">Deserts</option>
-          <option value="beverage" selected>Beverages</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="price">Item Price</label>
-        <input type="text" class="form-control" id="price" placeholder="Enter price of food" [(ngModel)]="price" name="price"
-          required>
+<div class="jumbotron big-banner">
+  <div class="container">
+    <h1>Add New Item</h1>
+    <hr>
+    <form (submit)="addNewItem($event)" ngNativeValidate>
+      <fieldset>
+        <div class="form-group">
+          <label for="name">Item Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter food Name" [(ngModel)]="name" name="name"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="type">Item Type</label>
+          <select [(ngModel)]="type" name="type" class="form-control" placeholder="Enter food Name">
+            <option value="appetizer">Appetizers</option>
+            <option value="soup">Soups and Salads</option>
+            <option value="lunch">Lunch Specials</option>
+            <option value="burger">Handcrafted Burgers</option>
+            <option value="sandwich">Sandwiches and Tacos</option>
+            <option value="pizza">Pizza</option>
+            <option value="pasta">Pastas</option>
+            <option value="desert">Deserts</option>
+            <option value="beverage" selected>Beverages</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="price">Item Price</label>
+          <input type="text" class="form-control" id="price" placeholder="Enter price of food" [(ngModel)]="price" name="price"
+            required>
 
-      </div>
-      <div class="form-group">
-        <input type="file" (change)="onUploadFinished($event)" name="item_image">
-      </div>
-      
-      <button type="submit" class="btn btn-primary">Add food</button>
-    </fieldset>
-  </form>
+        </div>
+        <div class="form-group">
+          <input type="file" (change)="onUploadFinished($event)" name="item_image" id="filechoose">
+        </div>
 
+        <button type="submit" class="btn btn-primary">Add food</button>
+      </fieldset>
+    </form>
+  </div>
 </div>

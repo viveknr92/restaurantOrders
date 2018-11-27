@@ -1,3 +1,4 @@
+<div class="jumbotron big-banner">
 <div class="container">
   <h1>Edit Item</h1>
   <!-- <button type="delete" class="btn btn-primary delete" (click) = "showDelete(template)"><i class="fa fa-trash fa-2x"></i></button> -->
@@ -36,13 +37,14 @@
 
       </div>
       <div class="form-group">
-        <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image">
+        <input type="file" (change)="ImmediateUpload($event,food.menu._id)" name="item_image" id="filechoose">
       </div>
 
       <button type="submit" class="btn btn-primary foot">Update Item</button>
       <button type="cancel" class="btn btn-secondary foot" [routerLink]="['/menu']">Cancel</button>
     </fieldset>
   </form>
+</div>
 </div>
 
 <!-- <ng-template #template>
