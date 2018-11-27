@@ -1,6 +1,12 @@
 /* .navbar{
     margin-bottom: 0!important;
  } */
+ #home{
+  background-image: linear-gradient(
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5)
+      ),url("/assets/img.jpeg");
+ }
  body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
