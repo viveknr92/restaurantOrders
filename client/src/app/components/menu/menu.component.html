@@ -2,10 +2,9 @@
   <div class="container-fluid" class=bg>
   <div class="container-fluid row">
     <div class="col-md-9">
-      <h1>Menu</h1>
-      <a *ngIf="globals.admin" [routerLink]="['/food']" class="delete btn btn-primary pull-right text-light">Add item<i
-          class="fa fa-edit fa-3x" aria-hidden="true"></i></a>
-      <hr>
+      <a *ngIf="globals.admin" [routerLink]="['/food']" class="delete btn btn-primary text-light">Add item <i
+          class="fa fa-plus" aria-hidden="true"></i></a>
+          <br><br>
       <form>
         <div class="form-group query">
           <input class="form-control" type="text" name="itemSearchName" placeholder="Search" [(ngModel)]="itemSearchName"
@@ -37,16 +36,17 @@
             </ng-template>
             <div class="card-body">
               <h5 class="card-title">{{m.item_name}}</h5>
-              <p class="card-text">Price: {{ m.item_cost | currency}} </p>
+              <p class="card-text">Price: {{ m.item_cost | currency}}</p>
               <p *ngIf="globals.admin && m.item_availability == 'Y'" class="card-text text-success">Available</p>
               <p *ngIf="globals.admin && m.item_availability == 'N'" class="card-text text-danger">Not Available</p>
-              <button [disabled]="m.item_availability == 'N'" class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart</button>
+              <button [disabled]="m.item_availability == 'N'" class="btn btn-primary" (click)="AddToCart(m._id)">Add to Cart 
+                <i class="fa fa-shopping-cart"></i></button>
               <div *ngIf="globals.admin" class="card-text">
                 <br>
-                <button class="btn btn-primary pull-right text-light btn-sm" [routerLink]="['/edit-food', m._id]">Edit<i
-                    class="fa fa-edit fa-3x" aria-hidden="true"></i></button><span> &nbsp; </span>
-                <button [disabled]="m.item_availability == 'N'" class="btn-sm btn btn-danger pull-right text-light" (click)="deleteItem(m._id)">Delete<i
-                    class="fa fa-edit fa-3x" aria-hidden="true"></i>
+                <button class="btn btn-primary text-light btn-sm" [routerLink]="['/edit-food', m._id]">Edit <i
+                    class="fa fa-edit" aria-hidden="true"></i></button><span> &nbsp; </span>
+                <button [disabled]="m.item_availability == 'N'" class="btn-sm btn btn-danger text-light" (click)="deleteItem(m._id)">Delete <i
+                    class="fa fa-trash" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
@@ -67,7 +67,7 @@
     <div class="col-md-3" style="border-left:2px solid grey">
       <div class="sidebarParent">
         <div class="sidebar">
-          <h3>Cart</h3>
+          <h3>Cart <i class="fa fa-shopping-cart fa-2x"></i></h3>
           <div *ngIf="cart && cart.total_cost != 0 ;else elseblock">
             <table class="table table-light">
               <thead class="thead-light">
@@ -99,11 +99,11 @@
           </div>
           <ng-template #elseblock>
             <p id="noitems">No items in Cart</p>
-            <button class="btn btn-primary disabled" value="PLACE ORDER" [disabled]="true">PLACE ORDER</button>
+            <button class="btn btn-primary disabled" value="PLACE ORDER" [disabled]="true">PLACE ORDER </button>
               
           </ng-template>
           <hr>
-          <input type="button" (click)="ViewOrders()" class="btn" value="View Order History">
+          <button type="button" (click)="ViewOrders()" class="btn" >View Order History <i class="fa fa-history"></i></button>
         </div>
       </div>
     </div>

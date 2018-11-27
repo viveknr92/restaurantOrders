@@ -1,6 +1,6 @@
 <div class="topnav">
 
-  <a class="active" *ngIf="!_authService.loggedIn()" [routerLink]="['/home']">Home</a>
+  <a class="active" *ngIf="!_authService.loggedIn()" [routerLink]="['/home']">Home <i class="fa fa-home"></i></a>
 
 
   <div class="topnav-centered">
@@ -10,9 +10,9 @@
   <!-- <a href="#news">News</a>
     <a href="#contact">Contact</a> -->
   <div class="topnav-right">
-    <a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout</a>
-    <a *ngIf="! _authService.loggedIn()" [routerLink]="['/login']">Login</a>
-    <a *ngIf="! _authService.loggedIn()" [routerLink]="['/register']">Register</a>
+    <a *ngIf="_authService.loggedIn()" [routerLink]="['/login']" (click)="_authService.logoutUser()">Logout <i class="fa fa-sign-out"></i></a>
+    <a *ngIf="! _authService.loggedIn()" [routerLink]="['/login']">Login <i class="fa fa-sign-in"></i></a>
+    <a *ngIf="! _authService.loggedIn()" [routerLink]="['/register']">Register <i class="fa fa-user-plus"></i></a>
   </div>
 </div>
 
