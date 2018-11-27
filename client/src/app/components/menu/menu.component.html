@@ -93,12 +93,12 @@
               <h4>Cart Total: ${{cart.total_cost}}</h4>
             </label>
             <hr>
-            <input type="button" (click)="PlaceOrder()" class="btn btn-primary" value="PLACE ORDER">
+            <input type="button" data-toggle="modal" data-target="#confirm-order" class="btn btn-primary" value="PLACE ORDER">
           </div>
           <ng-template #elseblock>
             <p>No items in Cart</p>
-            <button (click)="PlaceOrder()" class="btn btn-primary disabled" value="PLACE ORDER" [disabled]="true">PLACE
-              ORDER</button>
+            <button class="btn btn-primary disabled" value="PLACE ORDER" [disabled]="true">PLACE ORDER</button>
+              
           </ng-template>
           <hr>
           <input type="button" (click)="ViewOrders()" class="btn" value="View Order History">
@@ -106,4 +106,21 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="confirm-order" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Place Order Confirmation
+            </div>
+            <div class="modal-body">
+                Are you sure you want to place the order?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger btn-ok" (click)="PlaceOrder()" data-dismiss="modal">PLACE ORDER</button>
+            </div>
+        </div>
+    </div>
 </div>
