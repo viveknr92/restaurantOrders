@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient, private globals : Globals) { }
 
   storeUserRole(role){
-     console.log(role);
+     console.log("IN AUTH SERVICE--------"+role);
      this.role = role;
      if(role == "admin"){
        this.globals.admin = true;
