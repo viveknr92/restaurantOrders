@@ -18,6 +18,7 @@ export class FoodComponent implements OnInit {
   availability: string;
   menu: Menu;
   selectedFile = null;
+  types = [];
 
   public newinfo = {
     menu_id:String,
@@ -38,12 +39,20 @@ export class FoodComponent implements OnInit {
       item_availability: null,
       item_image: null
     };
-  }
 
-  // onImageSelected(event){
-  //   this.selectedFile = event.target.files[0];
-  //   console.log(event);
-  // }
+    this.types = [
+      {name: 'Appetizers', value: 'appetizer'},
+      {name: 'Soups and Salads', value: 'soup'},
+      {name: 'Lunch Specials', value: 'lunch'},
+      {name: 'Handcrafted Burgers', value: 'burger'},
+      {name: 'Sandwiches and Tacos', value: 'sandwich'},
+      {name: 'Pizza', value: 'pizza'},
+      {name: 'Pastas', value: 'pasta'},
+      {name: 'Deserts', value: 'desert'},
+      {name: 'Beverages', value: 'beverage'}
+    ];
+    this.type = this.types[0].value;
+  }
 
   addNewItem(e) {
     e.preventDefault();

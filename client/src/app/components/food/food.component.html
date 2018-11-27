@@ -22,22 +22,10 @@
         <div class="form-group">
           <label for="type">Item Type</label>
           <select [(ngModel)]="type" name="type" class="form-control" #itemtype="ngModel" [class.is-invalid]="itemtype.invalid && itemtype.touched">
-            <!-- <option value="" selected disabled hidden>Choose here</option> -->
-            <option value="appetizer">Appetizers</option>
-            <option value="soup">Soups and Salads</option>
-            <option value="lunch">Lunch Specials</option>
-            <option value="burger">Handcrafted Burgers</option>
-            <option value="sandwich">Sandwiches and Tacos</option>
-            <option value="pizza">Pizza</option>
-            <option value="pasta">Pastas</option>
-            <option value="desert">Deserts</option>
-            <option value="beverage">Beverages</option>
+            <option *ngFor="let item of types" [ngValue]="item.value">
+              {{item.name}}
+            </option>
           </select>
-
-          <!-- <div *ngIf="itemtype.errors.required && itemtype.touched" class="alert alert-danger">
-          Item type is required.
-        </div> -->
-
         </div>
         <div class="form-group">
           <label for="price">Item Price</label>
