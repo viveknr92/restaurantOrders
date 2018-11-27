@@ -47,11 +47,14 @@ export class RegisterComponent implements OnInit {
     .subscribe(
       res => {
         if(res){   //is this condition fine to check??
-         localStorage.setItem("token", res.token);
+         //localStorage.setItem("token", res.token);
          this.flashMessage.show("You are now registered", {cssClass : 'alert-success', timeout : 4000})
          this.route.navigate(['login']);
         }},
-      err => console.log(err)
+      err => {
+               console.log(err);
+               this.flashMessage.show("UserName already Exists!!!!", {cssClass : "alert-danger", timeout: 1000})
+      }
       
     )  
   }

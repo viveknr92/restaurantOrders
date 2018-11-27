@@ -90,6 +90,12 @@ router.post("/register", (req, res, next) => {
         cart:req.body.cart
     });
 
+    User.findOne({user_name: req.body.user_name},function(err,user){
+        console.log("ERR--->"+err);
+        console.log("user---->"+ user);
+
+    //check if user name exists....if no..then continue..else throw err
+    if(user == null){
     User.addUser(newUser,(err,user) =>{
         if(err){
             res.json({success: false,msg:'Failed to register user'});
@@ -99,6 +105,13 @@ router.post("/register", (req, res, next) => {
             res.status(200).send({token});
         }
     });
+   // console.log("HERE----------------");
+}
+else{
+    console.log("USER NAME ALREADY EXISTS");
+    res.status(400).send({success: false,msg:'user name already exists'});
+}
+});
 });
 
 router.get("/:id",verifyToken, (req, res, next) => {
