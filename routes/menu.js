@@ -5,21 +5,21 @@ const jwt = require("jsonwebtoken");
 var multer = require('multer');
 const path = require("path");
 
-// router.use(function (req, res, next) {
-//     if (req.headers.authorization === undefined) {
-//         return res.status(401).send('Unauthorized request')
-//     }
-//     let token = req.headers.authorization.split(" ")[1];
-//     if (token === undefined || token === 'null') {
-//         return res.status(401).send('Unauthorized request')
-//     }
-//     let payload = jwt.verify(token, 'secretKey');
-//     if (!payload) {
-//         return res.status(401).send('Unauthorized request')
-//     }
-//     req.userId = payload.subject
-//     next()
-// });
+router.use(function (req, res, next) {
+    if (req.headers.authorization === undefined) {
+        return res.status(401).send('Unauthorized request')
+    }
+    let token = req.headers.authorization.split(" ")[1];
+    if (token === undefined || token === 'null') {
+        return res.status(401).send('Unauthorized request')
+    }
+    let payload = jwt.verify(token, 'secretKey');
+    if (!payload) {
+        return res.status(401).send('Unauthorized request')
+    }
+    req.userId = payload.subject
+    next()
+});
 
 router.get('/image/:name', (req, res) => {
     var dir = path.join(__dirname, '../public/uploads/' + req.params.name)
@@ -62,19 +62,19 @@ router.get("/:item_type/:item_name", (req, res) => {
         })
     } else if (item.item_name !== "all" && item.item_type === "all") {
         console.log(item.item_type + " " + item.item_name)
-        Menu.find({ item_name: item.item_name.toLowerCase() }, (err, menu) => {
+        Menu.find({ item_name: { $regex: '.*' + item.item_name + '.*' } }, (err, menu) => {
             if (err) return res.status(500).send({ err });
             res.json(menu);
         });
     } else if (item.item_name === "all" && item.item_type !== "all") {
         console.log(item.item_type + " " + item.item_name)
-        Menu.find({ item_type: item.item_type.toLowerCase() }, (err, menu) => {
+        Menu.find({ item_type: item.item_type }, (err, menu) => {
             if (err) return res.status(500).send({ err });
             res.json(menu);
         });
     } else {
         console.log(item.item_type + " " + item.item_name)
-        Menu.find({ item_type: item.item_type.toLowerCase(), item_name: item.item_name.toLowerCase() }, (err, menu) => {
+        Menu.find({ item_type: item.item_type, item_name: { $regex: '.*' + item.item_name + '.*' } }, (err, menu) => {
             if (err) return res.status(500).send({ err });
             res.json(menu);
         });

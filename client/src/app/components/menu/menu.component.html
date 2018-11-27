@@ -27,7 +27,7 @@
         </div>
       </form>
 
-      <div class="row mt-5">
+      <div class="row mt-5" *ngIf="menu.length !== 0 ; else no_search_results">
         <div class="col-md-4 mb-3" *ngFor="let m of curPagefoods">
           <div class="card text-center" style="width: 18rem;">
             <img [src]="m.item_image" alt="Place image title" *ngIf="m.item_image && !isImageLoading; else noImageFound"
@@ -53,14 +53,14 @@
           </div>
         </div>
       </div>
-
-      <div *ngIf="!menu" class="row">
+      <ng-template #no_search_results class="row">
         <h4>No search results</h4>
-      </div>
+      </ng-template>
+      <div class="row justify-content-center align-items-center">
       <div class="paging">
         <ul class="pagination">
         </ul>
-      </div>
+      </div></div>
 
     </div>
 
