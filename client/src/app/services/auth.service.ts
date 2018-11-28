@@ -10,7 +10,17 @@ export class AuthService {
   role : any;
   private _registerurl = "http://localhost:3000/api/users/register"
   private _loginurl = "http://localhost:3000/api/users/login"
+  private _checkusernameurl = "http://localhost:3000/api/users/checkusername/";
+  private _checkemailurl = "http://localhost:3000/api/users/checkemail/";
   constructor(private http: HttpClient, private globals : Globals) { }
+
+  checkusername(name){
+    return this.http.get<any>(this._checkusernameurl + name);
+  }
+
+  checkemail(email){
+    return this.http.get<any>(this._checkemailurl + email);
+  }
 
   storeUserRole(role){
      console.log("IN AUTH SERVICE--------"+role);

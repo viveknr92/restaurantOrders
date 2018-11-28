@@ -11,9 +11,10 @@
             <div class="container">
               <br>
               <label>Username:</label>
-              <input type="text" pattern="\w+" required #Username="ngModel" [class.is-invalid]="Username.invalid && Username.touched"
-                class="form-control" name="user_name" placeholder="Enter Username" [(ngModel)]="user_name">
+              <input type="text" pattern="\w+" required #Username="ngModel" [class.is-invalid]="(Username.invalid && Username.touched) || isuserexists"
+                class="form-control" name="user_name" placeholder="Enter Username" [(ngModel)]="user_name" (input)="checkUsername()">
 
+              <div *ngIf="isuserexists" class="alert alert-danger">Username already exists</div>
               <div *ngIf="Username.invalid && (Username.dirty || Username.touched)" class="alert alert-danger">
                 <div *ngIf="Username.errors.required ; else invalid_msg_username">
                   Username is required.
@@ -25,8 +26,9 @@
               <br>
               <label>Email:</label>
               <input type="email" pattern="\w+@\w+\.\w{3}" required class="form-control" name="mail_id" placeholder="Enter Mail Id"
-                [(ngModel)]="mail_id" #email="ngModel" [class.is-invalid]="email.invalid && email.touched">
+                [(ngModel)]="mail_id" #email="ngModel" [class.is-invalid]="(email.invalid && email.touched) || isemailexists" (input)="checkemail()">
 
+              <div *ngIf="isemailexists" class="alert alert-danger">Email already exists</div>
               <div *ngIf="email.invalid && (email.dirty || email.touched)">
                 <div *ngIf="email.errors.required ; else invalid_msg_email" class="alert alert-danger">
                   Email is required.
@@ -70,7 +72,7 @@
               <br>
               <input type="hidden" class="form-control" name="role" [(ngModel)]="role" value="user" #role_model="ngModel">
               <div class="card-footer">
-                <button class="btn btn-primary" type="submit" [disabled]="!user_form.form.valid || !comparePassword()">Register</button>
+                <button class="btn btn-primary" type="submit" [disabled]="!user_form.form.valid || !comparePassword() || isuserexists || isemailexists">Register</button>
               </div>
             </div>
           </form>

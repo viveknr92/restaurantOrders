@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
   role:string;
   confirm_password:string;
   
+  isuserexists:Boolean;
+  isemailexists:Boolean;
 
   constructor(
     private authService : AuthService,
@@ -35,6 +37,35 @@ export class RegisterComponent implements OnInit {
       return false;
     }
   }
+
+  checkUsername(){
+    if(this.user_name == ""){
+      this.isuserexists = false;
+      return;
+    }
+    this.authService.checkusername(this.user_name).subscribe(
+      res=> {
+        this.isuserexists = false;
+      },
+      err =>{
+        this.isuserexists = true;
+      } )
+  }
+
+  checkemail(){
+    if(this.mail_id == ""){
+      this.isemailexists = false;
+      return;
+    }
+    this.authService.checkemail(this.mail_id).subscribe(
+      res=> {
+        this.isemailexists = false;
+      },
+      err =>{
+        this.isemailexists = true;
+      } )
+  }
+
   onSubmit() {
     const userInfo={
       user_name:this.user_name,
@@ -52,8 +83,8 @@ export class RegisterComponent implements OnInit {
          this.route.navigate(['login']);
         }},
       err => {
-               console.log(err);
-               this.flashMessage.show("UserName already Exists!!!!", {cssClass : "alert-danger", timeout: 1000})
+        console.log(err);
+        this.flashMessage.show("UserName already Exists!!!!", {cssClass : "alert-danger", timeout: 1000})
       }
       
     )  
