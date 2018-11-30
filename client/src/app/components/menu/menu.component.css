@@ -27,7 +27,7 @@
   color: black;
 } */
 
-h3,h1,h4,#noitems{
+h3,h1,h4,#noitems{  
   position: relative; 
   color: rgb(241, 247, 243);
 }
@@ -36,3 +36,11 @@ h3,h1,h4,#noitems{
 background-color:red  
 }
 
+#leftdiv{
+  height: 720px;
+  overflow:auto; 
+}
+
+/* #rightdiv{
+  overflow:hidden; 
+} */
