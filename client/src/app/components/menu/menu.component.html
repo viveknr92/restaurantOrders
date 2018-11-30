@@ -88,7 +88,7 @@
                     <input (change)="UpdateCart(food.menu._id,food.quantity)" style="width: 50px;" type="number"
                       [(ngModel)]="food.quantity" name="quantity" min=1 class="quantity" required>
                   </td>
-                  <td><input type="button" (click)="DeleteFromCart(food.menu._id)" value="X" class="btn btn-primary"></td>
+                  <td><button type="button" (click)="DeleteFromCart(food.menu._id)" class="btn btn-primary"><i class="fa fa-remove"></i></button></td>
                 </tr>
                 
               </tbody>
