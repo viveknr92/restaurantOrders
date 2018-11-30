@@ -32,6 +32,7 @@ export class MenuComponent implements OnInit {
   //cart: Cart;
   curPagefoods : Menu[];
   dispfoods : Menu[];
+  ready: boolean;
 
   public menu = [];
   public cart = {};
@@ -275,7 +276,19 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  PlaceOrder() {
+  PlaceOrder(cartdata) {
+
+    // this.fetchFoods();
+
+    // this.ready = true;
+    // cartdata.foods.forEach((item,idx,foods)=>{
+    //   console.log("---------"+item.menu.item_availability);
+    //     if(item.menu.item_availability=="N"){
+    //         this.ready = false;
+    //     }
+    // })
+    
+    if(this.ready){
     this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
       console.log(info);
 
@@ -293,7 +306,10 @@ export class MenuComponent implements OnInit {
     })
 
 
+  }else{
+    this._flashMessages.show("Highlighted item in Cart is no longer Available",{ cssClass: "alert-danger", timeout: 2500 })
   }
+}
 
   ViewOrders() {
 
@@ -307,6 +323,8 @@ export class MenuComponent implements OnInit {
       this._flashMessages.show("Successfully deleted Item ", { cssClass: "alert-success", timeout: 2000 });
       // this._router.navigate(['/menu']);
       this.fetchFoods();
+
+
       // } else {
       // this. _flashMessages.show("Something went wrong", { cssClass: "alert-danger", timeout: 2000 });
       // }

@@ -72,15 +72,16 @@
             <table class="table table-light">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Item </th>
+                  <th scope="col">Item </th>  
                   <th scope="col">Price</th>
                   <th scope="col">Quantity</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let food of cart.foods">
+                <tr *ngFor="let food of cart.foods" id={{food.menu.item_availability}}>
                   <th scope="row">{{food.menu.item_name | uppercase}}</th>
+                  
                   <td>${{food.menu.item_cost}}</td>
                   <td>
                     <input (change)="UpdateCart(food.menu._id,food.quantity)" style="width: 50px;" type="number"
@@ -88,6 +89,7 @@
                   </td>
                   <td><input type="button" (click)="DeleteFromCart(food.menu._id)" value="X" class="btn btn-primary"></td>
                 </tr>
+                
               </tbody>
             </table>
             <hr>
@@ -117,11 +119,11 @@
                 Place Order Confirmation
             </div>
             <div class="modal-body">
-                Are you sure you want to place the order?
+                Press "Confirm" to place order, "Cancel" to go back
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-danger btn-ok" (click)="PlaceOrder()" data-dismiss="modal">PLACE ORDER</button>
+                <button class="btn btn-ok btn-primary" (click)="PlaceOrder(cart)" data-dismiss="modal">Confirm</button>
             </div>
         </div>
     </div>
