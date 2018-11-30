@@ -40,6 +40,9 @@ background-color:red
   height: 92.8vh;
   overflow:auto; 
 }
+.white{
+  color:white;
+}
 
 /* #rightdiv{
   overflow:hidden; 

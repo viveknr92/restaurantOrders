@@ -30,9 +30,12 @@ export class MenuComponent implements OnInit {
   todayDate: Date;
   // modalRef: BsModalRef;
   //cart: Cart;
-  curPagefoods : Menu[];
-  dispfoods : Menu[];
+  curPagefoods: Menu[];
+  dispfoods: Menu[];
   ready: boolean;
+  flag:boolean;
+  username: String;
+  loop:number;
 
   public menu = [];
   public cart = {};
@@ -55,6 +58,7 @@ export class MenuComponent implements OnInit {
     this.itemSearchType = "all";
     this.itemSearchName = "";
     this.pageLength = 6;
+    this.username = this._authService.getUser();
     this._authService.storeUserRole(localStorage.getItem("role"));
     this.fetchFoods();
   }
@@ -66,122 +70,122 @@ export class MenuComponent implements OnInit {
     }
 
     this._foodservice.searchItem(this.itemSearchType, item_name).subscribe(data => {
-          let m: Menu[];
-          let loopIdx = 0;
-          m = data;
-          console.log(m);
-          this.dispfoods = [];
-          this.menu = [];
-          console.log(this.globals.admin);
-          if (localStorage.getItem("role") === "admin") {
-                this.menu = m;
-          } 
-          else {
-              m.forEach((mn, idx, m) => {
-                  if (mn.item_availability == 'Y') {
-                      this.menu.push(mn);
-                  }
-              })
+      let m: Menu[];
+      let loopIdx = 0;
+      m = data;
+      console.log(m);
+      this.dispfoods = [];
+      this.menu = [];
+      console.log(this.globals.admin);
+      if (localStorage.getItem("role") === "admin") {
+        this.menu = m;
+      }
+      else {
+        m.forEach((mn, idx, m) => {
+          if (mn.item_availability == 'Y') {
+            this.menu.push(mn);
           }
-          //this.menu = data;
-          console.log(this.menu);
-          this.menu.forEach((m, idx, menu) => {
-                let item_image_name = m.item_image;
-                m.item_image = null;
-                this.getImageFromService(item_image_name, idx);
-                //this.foods.push(newFood);
-                this.dispfoods.push(m);
-                loopIdx = idx;
-				        var parent = this;
-        				if (loopIdx == this.dispfoods.length - 1) {
-        					this.getFoodsPage(1);
-        					this.buildPagination();
-        				}
-          }) // end of foreach
-      });//food service subscribe
+        })
+      }
+      //this.menu = data;
+      console.log(this.menu);
+      this.menu.forEach((m, idx, menu) => {
+        let item_image_name = m.item_image;
+        m.item_image = null;
+        this.getImageFromService(item_image_name, idx);
+        //this.foods.push(newFood);
+        this.dispfoods.push(m);
+        loopIdx = idx;
+        var parent = this;
+        if (loopIdx == this.dispfoods.length - 1) {
+          this.getFoodsPage(1);
+          this.buildPagination();
+        }
+      }) // end of foreach
+    });//food service subscribe
 
     this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
       this.cart = data,
         console.log(" CART ITEMS " + this.cart);
     });//_foodservice.getCart
 
-    console.log("GLOBALS-----------"+ this.globals.admin);
+    console.log("GLOBALS-----------" + this.globals.admin);
   }// end of fetch foods
 
-  getFoodsPage(pageNum){
-		$(".page-item").removeClass("active");
+  getFoodsPage(pageNum) {
+    $(".page-item").removeClass("active");
 
-		switch(pageNum){
-			case 1 : {
-				$("#1").parent().addClass("active");
-				break;
-			}
-			case 2 : {
-				$("#2").parent().addClass("active");
-				break;
-			}
-			case 3 : {
-				$("#3").parent().addClass("active");
-				break;
-			}
-			case 4 : {
-				$("#4").parent().addClass("active");
-				break;
-			}
-			case 5 : {
-				$("#5").parent().addClass("active");
-				break;
-			}												
-		}
+    switch (pageNum) {
+      case 1: {
+        $("#1").parent().addClass("active");
+        break;
+      }
+      case 2: {
+        $("#2").parent().addClass("active");
+        break;
+      }
+      case 3: {
+        $("#3").parent().addClass("active");
+        break;
+      }
+      case 4: {
+        $("#4").parent().addClass("active");
+        break;
+      }
+      case 5: {
+        $("#5").parent().addClass("active");
+        break;
+      }
+    }
 
-		this.curPage = pageNum;
-		this.curPagefoods = [];
-		for(var i = (pageNum-1) * this.pageLength ; i < pageNum * this.pageLength && i < this.dispfoods.length ; i++){
-			console.log("in loop "+i);
-			this.curPagefoods.push(this.dispfoods[i]);
-		}
+    this.curPage = pageNum;
+    this.curPagefoods = [];
+    for (var i = (pageNum - 1) * this.pageLength; i < pageNum * this.pageLength && i < this.dispfoods.length; i++) {
+      console.log("in loop " + i);
+      this.curPagefoods.push(this.dispfoods[i]);
+    }
 
   }// getFoodsPage
-  
-  buildPagination(){
-		var parent = this;
-		this.totalPages = Math.ceil(this.dispfoods.length / this.pageLength);
-		$(".pagination").empty();
-		$(".pagination").append('<li _ngcontent-c2 class="page-item "><a _ngcontent-c2 class="page-link" id = "prevPage" (click) = "prevPage()">&laquo;</a></li>');
-			$("#prevPage").click(function(event){
-				parent.prevPage();
-			});					
-		for(var i=1;i<=this.totalPages;i++){
-			if(i==1){
-				$(".pagination").append('<li _ngcontent-c2 class="page-item active"><a _ngcontent-c2 class="page-link" id = "'+i+'" >'+i+'</a></li>'); 
-			}else{
-				$(".pagination").append('<li _ngcontent-c2 class="page-item "><a _ngcontent-c2 class="page-link" id = "'+i+'" >'+i+'</a></li>'); 
-			}
-			$("#"+i).click(function(event){
-				parent.getFoodsPage(parseInt(event.currentTarget.id));
-			});
-		}	
-		$(".pagination").append('<li _ngcontent-c2 class="page-item"><a _ngcontent-c2 class="page-link" id = "nextPage" (click) = "nextPage()">&raquo;</a></li>');
-			$("#nextPage").click(function(event){
-				parent.nextPage();
-			});	
+
+  buildPagination() {
+    var parent = this;
+    this.totalPages = Math.ceil(this.dispfoods.length / this.pageLength);
+    $(".pagination").empty();
+    $(".pagination").append('<li _ngcontent-c2 class="page-item "><a _ngcontent-c2 class="page-link" id = "prevPage" (click) = "prevPage()">&laquo;</a></li>');
+    $("#prevPage").click(function (event) {
+      parent.prevPage();
+    });
+    for (var i = 1; i <= this.totalPages; i++) {
+      if (i == 1) {
+        $(".pagination").append('<li _ngcontent-c2 class="page-item active"><a _ngcontent-c2 class="page-link" id = "' + i + '" >' + i + '</a></li>');
+      } else {
+        $(".pagination").append('<li _ngcontent-c2 class="page-item "><a _ngcontent-c2 class="page-link" id = "' + i + '" >' + i + '</a></li>');
+      }
+      $("#" + i).click(function (event) {
+        parent.getFoodsPage(parseInt(event.currentTarget.id));
+      });
+    }
+    $(".pagination").append('<li _ngcontent-c2 class="page-item"><a _ngcontent-c2 class="page-link" id = "nextPage" (click) = "nextPage()">&raquo;</a></li>');
+    $("#nextPage").click(function (event) {
+      parent.nextPage();
+    });
   } //buildPagination
-  
-  prevPage(){
-		if(this.curPage == 1){
-			return;
-		}else{
-			this.getFoodsPage(this.curPage-1);
-		}
-	}
-	nextPage(){
-		if(this.curPage == this.totalPages){
-			return;
-		}
-		else{
-			this.getFoodsPage(this.curPage+1);
-		}
-	}	
+
+  prevPage() {
+    if (this.curPage == 1) {
+      return;
+    } else {
+      this.getFoodsPage(this.curPage - 1);
+    }
+  }
+  nextPage() {
+    if (this.curPage == this.totalPages) {
+      return;
+    }
+    else {
+      this.getFoodsPage(this.curPage + 1);
+    }
+  }
 
   getImageFromService(image, idx) {
     this.isImageLoading = true;
@@ -279,37 +283,65 @@ export class MenuComponent implements OnInit {
   PlaceOrder(cartdata) {
 
     // this.fetchFoods();
+    this.loop=0;
+    this.flag = false;
+    this.ready = true;
+    cartdata.foods.forEach((item, idx, foods) => {
+      console.log("---------" + item.menu._id);
+      
+      console.log(cartdata.foods.length);
+     // console.log("loop---------" + this.loop);
+      this._foodservice.getAvailableFood(item.menu._id).subscribe((info: any) => {
+        console.log(info);
+        this.food = info.menu;
+        console.log("AVAILABILITY---- " + this.food.item_availability);
+        this.loop = this.loop + 1;
+        console.log("printing outside--"+ this.loop);
+        if (this.food.item_availability == "N") {
+          this.ready = false;
+          this.flag = true;
+        }
+        
+        if (this.ready && this.loop === cartdata.foods.length) {
+          //console.log("printing");
+          this.loop = 0;
+          this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
+            console.log(info);
 
-    // this.ready = true;
-    // cartdata.foods.forEach((item,idx,foods)=>{
-    //   console.log("---------"+item.menu.item_availability);
-    //     if(item.menu.item_availability=="N"){
-    //         this.ready = false;
-    //     }
-    // })
-    
-    if(this.ready){
-    this._foodservice.PlaceOrder(localStorage.getItem("user_id")).subscribe((info: any) => {
-      console.log(info);
+            if (info.success) {
+              console.log(info.message);
+              this._flashMessages.show("Successfully placed order", { cssClass: "alert-success", timeout: 1000 });
+              this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
+                this.cart = data,
+                  console.log("CART--> " + this.cart);
+              });
 
-      if (info.success) {
-        console.log(info.message);
-        this._flashMessages.show("Successfully placed order", { cssClass: "alert-success", timeout: 1000 });
-        this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
-          this.cart = data,
-            console.log("CART--> " + this.cart);
-        });
+            } else {
+              this._flashMessages.show("Failed to place Order", { cssClass: "alert-danger", timeout: 2500 });
+            }
+          })
 
-      } else {
-        this._flashMessages.show("Failed to place Order", { cssClass: "alert-danger", timeout: 2500 });
-      }
+
+        } else {
+          if(this.loop == cartdata.foods.length ){
+            console.log("printing--"+ this.loop);
+            this.loop = 0;
+          this._foodservice.getCart(localStorage.getItem("user_id")).subscribe(data => {
+            this.cart = data,
+              console.log("CART--> " + this.cart);
+          });
+          this._flashMessages.show("Highlighted item in Cart is no longer Available", { cssClass: "alert-danger", timeout: 2500 })
+        }
+        }
+
+      })
+      //console.log("AVAILABILITY---- "+this.food);
+
     })
+    this.loop = 0;
 
 
-  }else{
-    this._flashMessages.show("Highlighted item in Cart is no longer Available",{ cssClass: "alert-danger", timeout: 2500 })
   }
-}
 
   ViewOrders() {
 
@@ -330,6 +362,6 @@ export class MenuComponent implements OnInit {
       // }
     })
   }
-  
+
 }
 

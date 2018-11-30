@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { FlashMessagesService } from 'angular2-flash-messages/module'
+import { FlashMessagesService } from 'angular2-flash-messages/module';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", res.token);
         localStorage.setItem("user_id", res.user._id);
         localStorage.setItem("role", res.user.role);
+        localStorage.setItem("username",res.user.user_name);
         //Set role here
         this.authservice.storeUserRole(res.user.role);
         console.log("Login Success");

@@ -50,10 +50,16 @@ export class AuthService {
     return localStorage.getItem("token");
   }
 
+  getUser(){
+    return localStorage.getItem("username");
+  }
+
   logoutUser(){
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
     localStorage.removeItem("role");
+    localStorage.removeItem("username");
   }
+
   
 }

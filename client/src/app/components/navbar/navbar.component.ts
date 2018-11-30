@@ -10,11 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   isCollapsed : Boolean;
+  username :String;
   constructor(private _authService:AuthService, private globals : Globals,private router: Router) {
-    
+  //this.username = this._authService.getUser();
+  
   }
 
   ngOnInit() {
     this.isCollapsed = true;
+    //this.username = this._authService.getUser();
   }
 }
