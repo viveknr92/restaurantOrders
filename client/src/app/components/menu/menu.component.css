@@ -44,6 +44,11 @@ background-color:red
   color:white;
 }
 
+#noitems1{
+  font-weight: bold;
+  font-size: 30px;
+  color: white;
+}
 /* #rightdiv{
   overflow:hidden; 
 } */
