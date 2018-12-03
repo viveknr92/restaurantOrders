@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { OrderComponent } from './components/order/order.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { FoodComponent } from './components/food/food.component';
 import { EditFoodComponent } from './components/edit-food/edit-food.component';
 
@@ -14,8 +15,8 @@ const routes: Routes = [
   { path:'login',component:LoginComponent},
   { path:'register',component:RegisterComponent},
   { path:'home', component:HomeComponent},
-  { path:'food',component:FoodComponent},
-  { path:'edit-food/:id',component:EditFoodComponent},
+  { path:'food',component:FoodComponent, canActivate: [AdminGuard]},
+  { path:'edit-food/:id',component:EditFoodComponent, canActivate: [AdminGuard]},
   { path:'order', component:OrderComponent},
   { path:'menu', component:MenuComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo:'/home', pathMatch:'full'}

@@ -29,10 +29,9 @@ export class FoodComponent implements OnInit {
  fileSelected: File
 
   constructor(private foodService: FoodService, private router: Router,
-    private flashMessages: FlashMessagesService, private admin : AdminGuard) { }
+    private flashMessages: FlashMessagesService) { }
 
   ngOnInit() {
-    this.admin.canActivate();
     this.menu = {
       _id: null,
       item_name: null,
