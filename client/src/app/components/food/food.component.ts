@@ -3,6 +3,7 @@ import { FoodService } from '../../services/food.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages/module';
 import { Menu } from 'src/app/models/menu';
+import { AdminGuard } from 'src/app/guards/admin.guard'
 
 @Component({
   selector: 'app-food',
@@ -28,9 +29,10 @@ export class FoodComponent implements OnInit {
  fileSelected: File
 
   constructor(private foodService: FoodService, private router: Router,
-    private flashMessages: FlashMessagesService) { }
+    private flashMessages: FlashMessagesService, private admin : AdminGuard) { }
 
   ngOnInit() {
+    this.admin.canActivate();
     this.menu = {
       _id: null,
       item_name: null,
