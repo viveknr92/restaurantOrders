@@ -1,3 +1,7 @@
+To Run MongoDB: > mongod.exe
+Run Server: > node app.js
+Run Client: > npm start
+
 	User signup: Register a new user to the system. 
 o	Check the new username or email address if it’s already registered to the system using AJAX. 
 o	Form validation: Check if all mandatory fields are filled out. (JQuery)
