@@ -1,4 +1,8 @@
-To Run MongoDB: > mongod.exe
+Install node_modules 
+For server: root > npm install
+For client: root/client > npm install
+
+MongoDB: > mongod.exe
 Run Server: > node app.js
 Run Client: > npm start
 
