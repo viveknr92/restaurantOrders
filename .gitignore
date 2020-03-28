@@ -2,3 +2,5 @@
 *.node
 *.9e3787a92a127548da6c8ce7a10b3856
 node_modules/bcrypt/**
+node_modules/
+package-lock.json
