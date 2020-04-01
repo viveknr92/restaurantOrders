@@ -1,4 +1,4 @@
-import {FoodQuant} from './FoodQuant';
+import {FoodQuant} from './foodQuant';
 
 export class Cart{
 	_id		: string
