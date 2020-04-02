@@ -1,5 +1,13 @@
 # restaurantOrders
 
+Dockerized the full project and restructured
+pre-reqs are to have docker and docker-compose installed
+sudo apt install docker
+sudo apt install docker-compose
+to start:
+sudo docker-compose build
+sudo docker-compose up
+
 Install node_modules 
 For server: root > npm install
 For client: root/client > npm install
