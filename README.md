@@ -1,5 +1,22 @@
 # restaurantOrders
 
+=================================================================================================
+Improvizations during COVID-19 quarantine:
+
+- Dockerized and Restructured with dockerfile's for frontend and backend
+- Created and uploaded docker images to dockerhub: karthikreddyvkr1794/mean_stack_with_dockers
+- To run: pull the images from the above repo and also a mongo image and docker run with appropriate commands to expose ports     and also --net=host
+OR
+- There is docker-compose.yml file which runs the dockerfile's for us.
+- docker-compose build          #builds the docker images
+- docker-compose up             #starts the containers and application is ready to use.
+
+(pre-req: install docker and docker-compose)
+sudo apt install docker
+sudo apt install docker-compose
+
+=================================================================================================
+
 Install node_modules 
 For server: root > npm install
 For client: root/client > npm install

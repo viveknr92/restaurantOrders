@@ -1,0 +1,30 @@
+version: '2.0'
+
+services:
+  angular:
+    build: client
+    container_name: frontend
+    ports:
+      - "127.0.0.1:4200:4200"
+    network_mode: "host"
+    depends_on:
+      - express
+
+  express:
+    build: backend
+    container_name: backend
+    ports:
+      - "127.0.0.1:3000:3000"
+    network_mode: "host"
+    depends_on:
+      - database
+
+  
+  database:
+    image: mongo
+    container_name: db
+    ports:
+      - "127.0.0.1:27017:27017"
+    network_mode: "host"
+    volumes: 
+      - ./mongo-volume:/data/db
