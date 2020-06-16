@@ -3,6 +3,7 @@ For server: root > npm install
 For client: root/client > npm install
 
 MongoDB: > mongod.exe
+Or login to https://cloud.mongodb.com/ to use MongoDB Atlas
 Run Server: > node app.js
 Run Client: > npm start
 

@@ -25,8 +25,9 @@ var mongoose = require("mongoose");
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-    
-mongoose.connect('mongodb://localhost:27017/Restaurant', { useNewUrlParser: true });
+
+// mongoose.connect('mongodb://localhost:27017/Restaurant', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://vivek:1992@cluster0-gvsxo.mongodb.net/Restaurant', { useNewUrlParser: true });
 
 mongoose.connection.on('connected', ()=>{
     console.log("Connected to db");
