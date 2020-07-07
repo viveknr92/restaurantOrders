@@ -1,9 +1,10 @@
 Install Docker:
-> sudo apt-get update
-> sudo apt-get remove docker docker-engine docker.io
-> sudo apt-get install docker.io docker-compose
-> sudo systemctl start docker
-> sudo docker-compose up
+git checkout with_docker
+sudo apt-get update
+sudo apt-get remove docker docker-engine docker.io
+sudo apt-get install docker.io docker-compose
+sudo systemctl start docker
+sudo docker-compose up
 
 Install node_modules 
 For server: root > npm install
