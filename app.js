@@ -40,6 +40,6 @@ mongoose.connection.on('error', (err) =>{
 });
 
 
-app.listen(3000, "localhost", function(){
+app.listen(3000, "0.0.0.0", function(){
     console.log("Server started at 3000");
 });
