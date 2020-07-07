@@ -26,7 +26,7 @@ var mongoose = require("mongoose");
 app.use(passport.initialize());
 app.use(passport.session());
     
-mongoose.connect('mongodb://localhost:27017/Restaurant', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://vivek:1992@cluster0-gvsxo.mongodb.net/Restaurant', { useNewUrlParser: true });
 
 mongoose.connection.on('connected', ()=>{
     console.log("Connected to db");
@@ -39,6 +39,6 @@ mongoose.connection.on('error', (err) =>{
 });
 
 
-app.listen(3000, "localhost", function(){
+app.listen(3000, "0.0.0.0", function(){
     console.log("Server started at 3000");
 });
