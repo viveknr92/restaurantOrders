@@ -6,7 +6,6 @@ services:
     container_name: frontend
     ports:
       - "4200:4200"
-    network_mode: "host"
     depends_on:
       - express
 
@@ -15,16 +14,3 @@ services:
     container_name: backend
     ports:
       - "3000:3000"
-    network_mode: "host"
-    depends_on:
-      - database
-
-  
-  database:
-    image: mongo
-    container_name: db
-    ports:
-      - "27017:27017"
-    network_mode: "host"
-    volumes: 
-      - ./mongo-volume:/data/db
