@@ -78,10 +78,10 @@ Due date for submission is December 5, 2018, 11:59 PM.
 
 
 List all containers (only IDs)
-docker ps -aq
+sudo docker ps -aq
 Stop all running containers
-docker stop $(docker ps -aq)
+sudo docker stop $(sudo docker ps -aq)
 Remove all containers
-docker rm $(docker ps -aq)
+sudo docker rm $(sudo docker ps -aq)
 Remove all images
 sudo docker rmi $(sudo docker images -q) -f
