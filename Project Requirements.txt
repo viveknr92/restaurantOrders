@@ -75,3 +75,13 @@ o	Source files (zip your home directory for your project)
 o	Sql dump file for your database if you are using a relational database. JSON files if you are using MongoDB.
 
 Due date for submission is December 5, 2018, 11:59 PM.
+
+
+List all containers (only IDs)
+docker ps -aq
+Stop all running containers
+docker stop $(docker ps -aq)
+Remove all containers
+docker rm $(docker ps -aq)
+Remove all images
+sudo docker rmi $(sudo docker images -q) -f

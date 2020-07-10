@@ -38,8 +38,8 @@ export class AuthService {
     return this.http.post<any>(this._registerurl, userInfo)
   }
 
-  LoginUser(LoginInfo){
-    return this.http.post<any>(this._loginurl,LoginInfo)
+  LoginUser(LoginInfo, host){
+    return this.http.post<any>(`http://${host}:3000/api/users/login`,LoginInfo)
   }
 
   loggedIn(){

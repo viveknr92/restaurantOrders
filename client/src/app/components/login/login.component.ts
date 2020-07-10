@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages/module';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   user_name: string;
   password: string;
   role: string;
+  host: string;
 
   constructor(
     private authservice: AuthService,
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() { 
-    
+    this.host = window.location.host.split(':')[0]
   }
 
   Login() {
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
       role: this.role
     }
     console.log(loginInfo);
-    this.authservice.LoginUser(loginInfo)
+    this.authservice.LoginUser(loginInfo, this.host)
       .subscribe(res => {
         console.log("token");
         localStorage.setItem("token", res.token);
