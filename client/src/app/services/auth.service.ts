@@ -8,18 +8,18 @@ import { Globals } from '../global';
 export class AuthService {
 
   role : any;
-  private _registerurl = "http://localhost:3000/api/users/register"
-  private _loginurl = "http://localhost:3000/api/users/login"
-  private _checkusernameurl = "http://localhost:3000/api/users/checkusername/";
-  private _checkemailurl = "http://localhost:3000/api/users/checkemail/";
+  // private _registerurl = this._remoteAddress + "/api/users/register"
+  // private _loginurl = this._remoteAddress + "/api/users/login"
+  // private _checkusernameurl = this._remoteAddress + "/api/users/checkusername/";
+  // private _checkemailurl = this._remoteAddress + "/api/users/checkemail/";
   constructor(private http: HttpClient, private globals : Globals) { }
 
-  checkusername(name){
-    return this.http.get<any>(this._checkusernameurl + name);
+  checkusername(name, host){
+    return this.http.get<any>(`http://${host}:3000/api/users/checkusername/` + name);
   }
 
-  checkemail(email){
-    return this.http.get<any>(this._checkemailurl + email);
+  checkemail(email, host){
+    return this.http.get<any>(`http://${host}:3000/api/users/checkemail/` + email);
   }
 
   storeUserRole(role){
@@ -34,11 +34,12 @@ export class AuthService {
      }    
    }
 
-  registerUser(userInfo){
-    return this.http.post<any>(this._registerurl, userInfo)
+  registerUser(userInfo, host){
+    return this.http.post<any>(`http://${host}:3000/api/users/register`, userInfo)
   }
 
   LoginUser(LoginInfo, host){
+    this.globals.hostname = host
     return this.http.post<any>(`http://${host}:3000/api/users/login`,LoginInfo)
   }
 

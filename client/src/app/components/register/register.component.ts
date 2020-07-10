@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   mail_id:string;
   role:string;
   confirm_password:string;
+  host: string;
   
   isuserexists:Boolean;
   isemailexists:Boolean;
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.role="user";
+    this.host = window.location.host.split(':')[0]
   }
   
   comparePassword(){
@@ -43,7 +45,7 @@ export class RegisterComponent implements OnInit {
       this.isuserexists = false;
       return;
     }
-    this.authService.checkusername(this.user_name).subscribe(
+    this.authService.checkusername(this.user_name, this.host).subscribe(
       res=> {
         this.isuserexists = false;
       },
@@ -57,7 +59,7 @@ export class RegisterComponent implements OnInit {
       this.isemailexists = false;
       return;
     }
-    this.authService.checkemail(this.mail_id).subscribe(
+    this.authService.checkemail(this.mail_id, this.host).subscribe(
       res=> {
         this.isemailexists = false;
       },
@@ -74,7 +76,7 @@ export class RegisterComponent implements OnInit {
       role:this.role
     }
     console.log(userInfo);
-    this.authService.registerUser(userInfo)
+    this.authService.registerUser(userInfo, this.host)
     .subscribe(
       res => {
         if(res){   //is this condition fine to check??
