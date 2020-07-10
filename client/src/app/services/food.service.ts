@@ -12,11 +12,11 @@ import { Globals } from '../global';
 export class FoodService {
   private _remoteAddress = `http://${this.globals.hostname}:3000`
   
-  _url = this._remoteAddress + '/menu/all/all';
+  _url = this._remoteAddress + '/api/menu/all/all';
   constructor( private _http : HttpClient, private globals : Globals) { }
 
   getAvailableFood(fid):Observable<any>{
-    var url = this._remoteAddress + '/menu/'+fid;
+    var url = this._remoteAddress + '/api/menu/'+fid;
     console.log(url);
     return this._http.get<any>(url);       
   } 
