@@ -14,13 +14,11 @@ export class AuthService {
   // private _checkemailurl = this._remoteAddress + "/api/users/checkemail/";
   constructor(private http: HttpClient, private globals : Globals) { }
 
-  checkusername(name, host){
-    this.setHostName(host)
+  checkusername(name){
     return this.http.get<any>(`/api/users/checkusername/` + name);
   }
 
-  checkemail(email, host){
-    this.setHostName(host)
+  checkemail(email){
     return this.http.get<any>(`/api/users/checkemail/` + email);
   }
 
@@ -40,13 +38,8 @@ export class AuthService {
     return this.http.post<any>(`/api/users/register`, userInfo)
   }
 
-  LoginUser(LoginInfo, host){
-    this.setHostName(host)
+  LoginUser(LoginInfo){
     return this.http.post<any>(`/api/users/login`, LoginInfo)
-  }
-
-  setHostName (host) {
-    localStorage.setItem('hostname', host)
   }
 
   loggedIn(){
@@ -62,7 +55,7 @@ export class AuthService {
   }
 
   getHostName(){
-    return localStorage.getItem("hostname");
+    return sessionStorage.getItem("hostname");
   }
 
   logoutUser(){
@@ -70,7 +63,7 @@ export class AuthService {
     localStorage.removeItem("user_id");
     localStorage.removeItem("role");
     localStorage.removeItem("username");
-    localStorage.removeItem("hostname");
+    sessionStorage.removeItem("hostname");
   }
 
   

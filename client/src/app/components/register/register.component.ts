@@ -26,9 +26,13 @@ export class RegisterComponent implements OnInit {
     private flashMessage : FlashMessagesService,
   ) { }
 
+  setHostName (host) {
+    sessionStorage.setItem('hostname', host)
+  }
+
   ngOnInit() {
     this.role="user";
-    this.host = window.location.host.split(':')[0]
+    this.setHostName(window.location.host.split(':')[0])
   }
   
   comparePassword(){
@@ -45,7 +49,7 @@ export class RegisterComponent implements OnInit {
       this.isuserexists = false;
       return;
     }
-    this.authService.checkusername(this.user_name, this.host).subscribe(
+    this.authService.checkusername(this.user_name).subscribe(
       res=> {
         this.isuserexists = false;
       },
@@ -59,7 +63,7 @@ export class RegisterComponent implements OnInit {
       this.isemailexists = false;
       return;
     }
-    this.authService.checkemail(this.mail_id, this.host).subscribe(
+    this.authService.checkemail(this.mail_id).subscribe(
       res=> {
         this.isemailexists = false;
       },

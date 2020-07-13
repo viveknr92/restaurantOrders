@@ -22,8 +22,12 @@ export class LoginComponent implements OnInit {
     private flashMessage: FlashMessagesService,
   ) { }
 
+  setHostName (host) {
+    sessionStorage.setItem('hostname', host)
+  }
+
   ngOnInit() { 
-    this.host = window.location.host.split(':')[0]
+    this.setHostName(window.location.host.split(':')[0])
   }
 
   Login() {
@@ -33,7 +37,7 @@ export class LoginComponent implements OnInit {
       role: this.role
     }
     console.log(loginInfo);
-    this.authservice.LoginUser(loginInfo, this.host)
+    this.authservice.LoginUser(loginInfo)
       .subscribe(res => {
         console.log("token");
         localStorage.setItem("token", res.token);
