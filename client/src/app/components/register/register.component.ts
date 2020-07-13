@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
       role:this.role
     }
     console.log(userInfo);
-    this.authService.registerUser(userInfo, this.host)
+    this.authService.registerUser(userInfo)
     .subscribe(
       res => {
         if(res){   //is this condition fine to check??

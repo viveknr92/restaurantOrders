@@ -10,13 +10,12 @@ import { Globals } from '../global';
   providedIn: 'root'
 })
 export class FoodService {
-  private _remoteAddress = `http://${this.globals.hostname}:3000`
   
-  _url = this._remoteAddress + '/api/menu/all/all';
+  _url = '/api/menu/all/all';
   constructor( private _http : HttpClient, private globals : Globals) { }
 
   getAvailableFood(fid):Observable<any>{
-    var url = this._remoteAddress + '/api/menu/'+fid;
+    var url = '/api/menu/'+fid;
     console.log(url);
     return this._http.get<any>(url);       
   } 
@@ -27,73 +26,73 @@ export class FoodService {
   }
 
   getCartQuantById(fid,uid){
-     return this._http.get(this._remoteAddress + '/api/cart/'+uid+'/'+fid);
+     return this._http.get('/api/cart/'+uid+'/'+fid);
   }
 
   addNewItem(newItem){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.post<any>(this._remoteAddress + '/api/menu', newItem);
+    return this._http.post<any>('/api/menu', newItem);
       // .map(res =>res.json());  
   }
 
   deleteItem(fid){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.delete(this._remoteAddress + '/api/menu/'+ fid); 
+    return this._http.delete('/api/menu/'+ fid); 
   }
 
   editItem(editedItem){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.put(this._remoteAddress + '/api/menu/'+ editedItem._id,editedItem); 
+    return this._http.put('/api/menu/'+ editedItem._id,editedItem); 
   }  
 
   addToCart(fid,uid){
   	var headers = new Headers();
   	headers.append('Content-Type', 'application/json');
-  	return this._http.post(this._remoteAddress + '/api/cart/'+ uid +'/'+ fid,{headers:headers});  	
+  	return this._http.post('/api/cart/'+ uid +'/'+ fid,{headers:headers});  	
   }
 
   UpdateCart(fid,uid,info){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     console.log("In FS ------------------"+info.quantity);
-  	return this._http.put(this._remoteAddress + '/api/cart/'+ uid +'/'+ fid, info);
+  	return this._http.put('/api/cart/'+ uid +'/'+ fid, info);
   }
 
   getCart(uid):Observable<Cart>{
-  	return this._http.get<Cart>(this._remoteAddress + '/api/cart/'+uid);
+  	return this._http.get<Cart>('/api/cart/'+uid);
   }
 
   fetchImage(name:string): Observable<Blob>{
     //return this._http.get('https://picsum.photos/200/300/?random',{ responseType: 'blob' });
-    return this._http.get(this._remoteAddress + '/api/menu/image/'+ name,{ responseType: 'blob' });
+    return this._http.get('/api/menu/image/'+ name,{ responseType: 'blob' });
   }
   
   PlaceOrder(uid){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.post(this._remoteAddress + '/api/order/'+uid,{headers:headers});
+    return this._http.post('/api/order/'+uid,{headers:headers});
   }
 
   ViewOrders(uid):Observable<Order>{
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get<Order>(this._remoteAddress + '/api/order/'+uid);
+    return this._http.get<Order>('/api/order/'+uid);
   }
 
   searchItem(item_type, item_name):Observable<Menu[]>{
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this._http.get<Menu[]>(this._remoteAddress + '/api/menu/'+ item_type + "/" + item_name);
+    return this._http.get<Menu[]>('/api/menu/'+ item_type + "/" + item_name);
   }
 
   public uploadFile(fileToUpload: File,fid) {
     const item_image = new FormData();
     console.log(fileToUpload);
     item_image.append('item_image', fileToUpload,fileToUpload.name);   
-    return this._http.post<any>(this._remoteAddress + '/api/menu/image/'+fid, item_image); //note: no HttpHeaders passed as 3d param to POST!
+    return this._http.post<any>('/api/menu/image/'+fid, item_image); //note: no HttpHeaders passed as 3d param to POST!
                                              //So no Content-Type constructed manually.
                                              //Angular 4.x-6.x does it automatically.
   }

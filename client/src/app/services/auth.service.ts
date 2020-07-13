@@ -15,11 +15,13 @@ export class AuthService {
   constructor(private http: HttpClient, private globals : Globals) { }
 
   checkusername(name, host){
-    return this.http.get<any>(`http://${host}:3000/api/users/checkusername/` + name);
+    this.setHostName(host)
+    return this.http.get<any>(`/api/users/checkusername/` + name);
   }
 
   checkemail(email, host){
-    return this.http.get<any>(`http://${host}:3000/api/users/checkemail/` + email);
+    this.setHostName(host)
+    return this.http.get<any>(`/api/users/checkemail/` + email);
   }
 
   storeUserRole(role){
@@ -34,13 +36,17 @@ export class AuthService {
      }    
    }
 
-  registerUser(userInfo, host){
-    return this.http.post<any>(`http://${host}:3000/api/users/register`, userInfo)
+  registerUser(userInfo){
+    return this.http.post<any>(`/api/users/register`, userInfo)
   }
 
   LoginUser(LoginInfo, host){
-    this.globals.hostname = host
-    return this.http.post<any>(`http://${host}:3000/api/users/login`,LoginInfo)
+    this.setHostName(host)
+    return this.http.post<any>(`/api/users/login`, LoginInfo)
+  }
+
+  setHostName (host) {
+    localStorage.setItem('hostname', host)
   }
 
   loggedIn(){
@@ -55,11 +61,16 @@ export class AuthService {
     return localStorage.getItem("username");
   }
 
+  getHostName(){
+    return localStorage.getItem("hostname");
+  }
+
   logoutUser(){
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
     localStorage.removeItem("role");
     localStorage.removeItem("username");
+    localStorage.removeItem("hostname");
   }
 
   

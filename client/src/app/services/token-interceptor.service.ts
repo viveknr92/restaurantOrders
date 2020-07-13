@@ -12,9 +12,12 @@ export class TokenInterceptorService implements HttpInterceptor{
 
   intercept(req, next){
     let authService = this.injector.get(AuthService);
+    const url = `http://${authService.getHostName()}:3000`
     let tokenizedReq = req.clone({
+      url: url + req.url,
       setHeaders :{
-        Authorization : `Bearer ${authService.getToken() }`
+        'Authorization' : `Bearer ${authService.getToken() }`,
+        'Content-Type': 'application/json'
       }
     })
     return next.handle(tokenizedReq);
