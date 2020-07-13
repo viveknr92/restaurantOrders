@@ -1,10 +1,28 @@
 Install Docker:
-git checkout with_docker
 sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
 sudo apt-get remove docker docker-engine docker.io
-sudo apt-get install docker.io docker-compose
-sudo systemctl start docker
-sudo docker-compose up
+sudo apt-get install docker-io containerd.io
+sudo apt-get install docker-compose
+
+List all containers (only IDs)
+sudo docker ps -aq
+Stop all running containers
+sudo docker stop $(sudo docker ps -aq)
+Remove all containers
+sudo docker rm $(sudo docker ps -aq)
+Remove all images
+sudo docker rmi $(sudo docker images -q) -f
+
+git checkout with_docker
+sudo docker system prune
+sudo docker-compose build --no-cache
+sudo docker-compose up -d --force-recreate
 
 Install node_modules 
 For server: root > npm install
@@ -31,7 +49,6 @@ o	Delete item
 o	Update item
 
 Admin user will have the same interface with regular users, except that he/she will be provided extra features (buttons/links) for update and deletion of products/services.
-
 While adding items to the system, admin user should be able to upload pictures for the items and while updating items, should be able to change pictures.
 For delete, soft-delete should be implemented.
 
@@ -39,32 +56,19 @@ Front-end design
 You can use Bootstrap and Bootstrap templates for user interface design. You can also use design tools (i.e. FrontPage, Dream Weaver). You are flexible for page designs but it is important to have a professional look for all pages (i.e. the same menu or navigation bar appears on top of every page etc.). 
 You can also use frameworks (i.e. Angular JS) for client-side scripting.
 
-
 Back-end design
 You can use relational databases or MongoDB for database component. In case a relational database system is used, tables should be normalized to Third Normal Form.
 For server side scripting, you can use PHP, Ruby on Rails and Node.JS You are also allowed to use PHP frameworks such as Laravel, CodeIgniter, CakePHP, etc. 
 
-
-Project Report
-
 Project Report should include following items:
-
 	Project Title 
-
 	Name for the Website
-
 	Project Description: a brief description of the website. If you make any assumptions, make sure to include those assumptions.
-
 	Database Design: Database structure including the tables and primary and foreign key definitions on tables.  Alternatively, you can include your “Create Table” statements for this. In case you use MongoDB, provide information about your data model.
-
 	Languages/frameworks used for implementation
-
 	Screenshots for main functionalities (5-6 screenshots will be sufficient)
-
 	Team Members: Names and Net-IDs for team members
-
 	Work division among team members: who has completed which part (be specific and try to give page names). Please note that every team member should be actively involved in every step of the project development (database design, client-side and server side scripting) and work should be equally divided between team members.
-
 
 Deliverables:
 
@@ -75,17 +79,3 @@ o	Source files (zip your home directory for your project)
 o	Sql dump file for your database if you are using a relational database. JSON files if you are using MongoDB.
 
 Due date for submission is December 5, 2018, 11:59 PM.
-
-
-List all containers (only IDs)
-sudo docker ps -aq
-Stop all running containers
-sudo docker stop $(sudo docker ps -aq)
-Remove all containers
-sudo docker rm $(sudo docker ps -aq)
-Remove all images
-sudo docker rmi $(sudo docker images -q) -f
-
-sudo docker system prune
-sudo docker-compose build --no-cache
-sudo docker-compose up -d --force-recreate 
