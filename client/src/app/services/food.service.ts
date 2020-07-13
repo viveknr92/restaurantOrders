@@ -10,19 +10,14 @@ import { Globals } from '../global';
   providedIn: 'root'
 })
 export class FoodService {
-  
-  _url = '/api/menu/all/all';
-  constructor( private _http : HttpClient, private globals : Globals) { }
+  constructor( private _http : HttpClient) { }
 
   getAvailableFood(fid):Observable<any>{
-    var url = '/api/menu/'+fid;
-    console.log(url);
-    return this._http.get<any>(url);       
+    return this._http.get<any>('/api/menu/'+fid);       
   } 
 
   getMenu():Observable<Menu[]>  {
-    console.log(this._url);
-  	return this._http.get<Menu[]>(this._url);   
+  	return this._http.get<Menu[]>('/api/menu/all/all');   
   }
 
   getCartQuantById(fid,uid){
@@ -30,33 +25,23 @@ export class FoodService {
   }
 
   addNewItem(newItem){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this._http.post<any>('/api/menu', newItem);
       // .map(res =>res.json());  
   }
 
   deleteItem(fid){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this._http.delete('/api/menu/'+ fid); 
   }
 
   editItem(editedItem){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this._http.put('/api/menu/'+ editedItem._id,editedItem); 
   }  
 
   addToCart(fid,uid){
-  	var headers = new Headers();
-  	headers.append('Content-Type', 'application/json');
-  	return this._http.post('/api/cart/'+ uid +'/'+ fid,{headers:headers});  	
+  	return this._http.post('/api/cart/'+ uid +'/'+ fid, null);  	
   }
 
   UpdateCart(fid,uid,info){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     console.log("In FS ------------------"+info.quantity);
   	return this._http.put('/api/cart/'+ uid +'/'+ fid, info);
   }
@@ -71,20 +56,14 @@ export class FoodService {
   }
   
   PlaceOrder(uid){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this._http.post('/api/order/'+uid,{headers:headers});
+    return this._http.post('/api/order/'+uid, null);
   }
 
   ViewOrders(uid):Observable<Order>{
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this._http.get<Order>('/api/order/'+uid);
   }
 
   searchItem(item_type, item_name):Observable<Menu[]>{
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this._http.get<Menu[]>('/api/menu/'+ item_type + "/" + item_name);
   }
 
