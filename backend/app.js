@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+var cookieParser = require('cookie-parser')
 var bodyParser = require("body-parser");
 const passport = require("passport");
 var morgan  = require('morgan')
@@ -7,11 +8,13 @@ var morgan  = require('morgan')
 const route = require("./routes/route");
 
 app.use(morgan('combined'))
+app.use(cookieParser());
 var cors = require('cors');
-app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "http://localhost:4200/");
+    // res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE");
     next();
@@ -22,9 +25,9 @@ app.use(bodyParser.json());
 app.use('/api', route);
 var mongoose = require("mongoose");
 
-//passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+// //passport middleware
+// app.use(passport.initialize());
+// app.use(passport.session());
     
 mongoose.connect('mongodb+srv://vivek:1992@cluster0-gvsxo.mongodb.net/Restaurant', { useNewUrlParser: true });
 

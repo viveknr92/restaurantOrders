@@ -8,7 +8,8 @@ function verifyToken(req, res, next) {
     if (req.headers.authorization === undefined) {
         return res.status(401).send('Unauthorized request')
     }
-    let token = req.headers.authorization.split(" ")[1];
+    // let token = req.headers.authorization.split(" ")[1];
+    let token = req.cookies.Authtoken
     if (token === undefined || token === 'null') {
         return res.status(401).send('Unauthorized request')
     }
@@ -47,6 +48,7 @@ router.post("/login", (req, res, next) => {
                     if (result) {
                         let payload = { subject: users };
                         let token = jwt.sign(payload, "secretKey", { expiresIn: '1d' });
+                        res.cookie('Authtoken', token, { httpOnly: true });
                         res.status(200).send({ success: true, token: token, user: users });
                     }
                     else {

@@ -9,7 +9,8 @@ router.use(function (req, res, next) {
     if (req.headers.authorization === undefined) {
         return res.status(401).send('Unauthorized request')
     }
-    let token = req.headers.authorization.split(" ")[1];
+    // let token = req.headers.authorization.split(" ")[1];
+    let token = req.cookies.Authtoken
     if (token === undefined || token === 'null') {
         return res.status(401).send('Unauthorized request')
     }

@@ -18,7 +18,8 @@ export class TokenInterceptorService implements HttpInterceptor{
       setHeaders :{
         'Authorization' : `Bearer ${authService.getToken() }`,
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     })
     return next.handle(tokenizedReq);
   }
